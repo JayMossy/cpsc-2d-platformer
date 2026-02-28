@@ -19,16 +19,51 @@ html, body {
     background-attachment: fixed;
     background-size: cover; */
 
-    background: linear-gradient(90deg, rgba(33, 40, 46, 1) 10%, rgba(47, 47, 56, 1) 41%, rgba(64, 65, 74, 1) 74%);  
-}
+    /* background: linear-gradient(
+    90deg, 
+    rgba(33, 40, 46, 1) 10%, 
+    rgba(47, 47, 56, 1) 41%, 
+    rgba(64, 65, 74, 1) 74%); */
 
-.btn-hover:hover {
-    /* background-color: rgb(217, 77, 230); */
-    background: rgba(217, 77, 230, .85);
-    border-color: rgba(217, 77, 230, .845);
+    background: linear-gradient(
+    90deg,
+    rgb(47, 48, 53) 0%,
+    rgb(35, 35, 40) 50%, 
+    rgb(42, 44, 48) 100%
+    );
 }
 
 .btn-custom-color  {
-    background: linear-gradient(90deg, rgb(46, 55, 62) 10%, rgb(71, 71, 82) 41%, rgb(80, 81, 90) 74%); 
-    border-color: white;
+    /* Text color in buttons */
+    color: rgb(245, 247, 255);
+    /* Button color*/
+    background: rgb(32, 34, 40);
+    /* background: linear-gradient(90deg, rgb(46, 55, 62) 10%, rgb(71, 71, 82) 41%, rgb(80, 81, 90) 74%);  */
+    border-color: rgb(90, 100, 255);
+    box-shadow: 0 0 15px rgba(90, 100, 255, 0.4);
+}
+
+.btn-hover:hover {
+    /* color: white; */
+    color: rgb(255, 255, 255);
+    background: rgb(20, 22, 28);
+    border: 2px solid rgb(230, 140, 255);
+    box-shadow: 0 0 15px rgba(200, 80, 255, 0.4);
+}
+
+.btn-custom-color i {
+    /* Icon color */
+    color: rgb(120, 130, 255);
+}
+
+.btn-custom-color:hover i {
+    /* Changes icon color on hover*/
+    color: rgb(230, 140, 255);
+}
+
+/* This is so the button shrinks at smaller screens */
+@media (max-width: 576px) {
+    .fs-custom-sm {
+        font-size: 1.2rem !important;
+    }
 }

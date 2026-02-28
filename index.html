@@ -14,41 +14,41 @@
 		<div class="container"> 
 
 			<!-- Padding on top is visible at sm and bigger breakpoints -->
-			<div class="row d-none d-sm-block"> 
-				<div class="col-6 col-md-5 col-lg-4 col-xl-3 offset-.5 transparent-edges">
-					<div style="height: 5em;"></div>
-				</div>
-			</div>
-
-			<!-- Padding on top is visible only at less than sm -->
-			<div class="row d-block d-sm-none">
-				<div class="col-6 col-md-5 col-lg-4 col-xl-3 offset-.5 transparent-edges">
-					<div style="height: 2em;"></div>
+			<div class="row"> 
+				<div class="col-6 col-md-5 col-lg-4 col-xl-3 offset-1 offset-sm-0 transparent-edges">
+					<div class="pt-5"></div>
 				</div>
 			</div>
 
 			<!-- Picture for game title -->
 			<div class="row">
-				<div class="col-6 col-md-5 col-lg-4 col-xl-3 offset-.5  transparent-edges">
+				<div class="col-6 col-md-5 col-lg-4 col-xl-3 offset-1 offset-sm-0 transparent-edges">
 					<img src="src/assets/sprites/ui/temp-transparent-title.png" alt="" class="img-fluid rounded-2 mb-5 text-start">
 				</div>
 			</div>
 
 			<!-- Where all the buttons go -->
 			<div class="row">
-				<div class="col-6 col-md-5 col-lg-4 col-xl-3 offset-.5 vh-100 transparent-edges">
+				<div class="col-6 col-md-5 col-lg-4 col-xl-3 offset-1 offset-sm-0 transparent-edges">
 					<!-- Used a flexbox to arrage buttons -->
-					<div class="d-flex flex-column justify-content-top align-items-center">
-						<a href="#" class="btn btn-lg btn-custom-color text-white my-3 rounded-0 fs-4 btn-hover text-nowrap">
-							<i class="bi bi-suit-diamond-fill text-danger "></i> Start New Game <i class="bi bi-suit-diamond-fill text-danger"></i>
+					<div class="d-flex flex-column justify-content-top align-items-center"> 
+						<a href="#" class="btn btn-lg btn-custom-color btn-hover rounded-1 mb-3 fs-4 fs-custom-sm text-nowrap" >
+							<i class="bi bi-suit-diamond-fill"></i> Start New Game <i class="bi bi-suit-diamond-fill"></i>
 						</a>
-						<a href="#" class="btn btn-lg btn-custom-color text-white mb-3 rounded-0 fs-4 btn-hover">
-							<i class="bi bi-suit-diamond-fill text-danger "></i> Setting <i class="bi bi-suit-diamond-fill text-danger"></i>
+						<a href="#" class="btn btn-lg btn-custom-color btn-hover rounded-1 mb-3 fs-4 fs-custom-sm">
+							<i class="bi bi-suit-diamond-fill"></i> Settings <i class="bi bi-suit-diamond-fill"></i>
 						</a>
-						<a href="#" class="btn btn-lg btn-custom-color text-white mb-3 rounded-0 fs-4 btn-hover">
-							<i class="bi bi-suit-diamond-fill text-danger "></i> Credits <i class="bi bi-suit-diamond-fill text-danger"></i>
+						<a href="#" class="btn btn-lg btn-custom-color btn-hover rounded-1 fs-4 fs-custom-sm">
+							<i class="bi bi-suit-diamond-fill"></i> Credits <i class="bi bi-suit-diamond-fill"></i>
 						</a>
 					</div>
+				</div>
+			</div> 
+
+			<!-- If we want to add stuff below the buttons -->
+			<div class="row"> 
+				<div class="col-6 col-md-5 col-lg-4 col-xl-3 offset-1 offset-sm-0 vh-100 transparent-edges">
+					
 				</div>
 			</div>
 
