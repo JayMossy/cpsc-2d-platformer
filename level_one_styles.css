@@ -1,0 +1,28 @@
+/* Sky */
+.sky {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Brick wall */
+.wall {
+    background-color: #b22222;
+    border: .25px solid #8b0000;
+    background-image: linear-gradient(to right, #8b0000 .5px, transparent .5px),
+                      linear-gradient(to bottom, #8b0000 .5px, transparent .5px);
+    background-size: 4px 4px;
+}
+
+/* Dirt road */
+.dirt {
+    background-color: #c2a36b;
+}
+
+/* Grass */
+.grass {
+    background-color: #4caf50;
+}
+
+/* Flower */
+.flower {
+    background-color: pink;
+}
