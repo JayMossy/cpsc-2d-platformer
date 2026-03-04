@@ -1,11 +1,12 @@
 import { Mrows, Mcols, tileSize,map } from "../tileMap.js";
-import { player } from "./playerMovement.js";
+import { player, animator } from "./playerMovement.js";
+// import { animator } from "./playerMovement.js";
 
 export const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-canvas.width = Mrows * tileSize;
-canvas.height = Mcols * tileSize;
+canvas.width = Mcols * tileSize;
+canvas.height = Mrows * tileSize;
 
 // Makes map from tile map
 function makeMap() {
@@ -27,11 +28,17 @@ function makeMap() {
     }
 }
 
-
 export function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     makeMap();
 
-    ctx.fillStyle = "black";
-    ctx.fillRect(player.x, player.y, player.w, player.h);
+    ctx.strokeStyle = "dark";
+    ctx.strokeRect(player.x, player.y, player.w, player.h);
+    animator.draw(
+        ctx,
+        player.x,
+        player.y,
+        player.w,
+        player.h
+    )
 }

@@ -1,6 +1,6 @@
-export const Mrows = 100;
-export const Mcols = 100;
-export const tileSize = 10;
+export const Mrows = 90;
+export const Mcols = 150;
+export const tileSize = 6;
 
 /*
 These make a tile map like this 
