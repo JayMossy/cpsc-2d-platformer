@@ -1,4 +1,4 @@
-class Animator {
+export class Animator {
     constructor(spriteSheet, frameWidth, frameHeight) {
         this.spriteSheet = spriteSheet;
         this.frameWidth = frameWidth; // So we can single out each sprite on sheet
