@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background-image: url("sky.PNG");
+    background-image: url("../assets/backgrounds/sky.PNG");
     background-size: cover;
 }
 
