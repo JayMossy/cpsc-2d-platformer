@@ -1,5 +1,6 @@
 import { keys } from "./userInput.js";
 import { Animator } from "./animator.js";
+import { isGroundedFunc } from "./collision.js"
 
 const gravity = 1250;
 
@@ -44,7 +45,8 @@ export function playerMovement(dt) {
         player.lastDir = "right";
     }
 
-    if (keys.up && player.vy === 0) {
+    // If you try to do it by checking when player.vy === 0 it doesn't work.
+    if (keys.up && isGroundedFunc()) {
         player.vy = -700;
     }
 
@@ -59,4 +61,6 @@ export function playerMovement(dt) {
         if (player.lastDir === "left") animator.setAnimation("idle left");
         else animator.setAnimation("idle right");
     }
+
+    if (player.x <= 0) player.x = 0;
 }

@@ -1,5 +1,7 @@
 import { map, tileSize } from "../tileMap.js";
 
+let isGrounded;
+
 export function tileCollision(player) {
 
     const left = Math.floor(player.x / tileSize);
@@ -22,6 +24,7 @@ export function tileCollision(player) {
                 const tileBottom = tileTop + tileSize;
 
                 if (player.vy >= 0 && player.y + player.h <= tileTop + player.vy) {
+                    isGrounded = true;
                     player.y = tileTop - player.h;
                     player.vy = 0;
                 }
@@ -43,4 +46,12 @@ export function tileCollision(player) {
             }
         }
     }
+}
+
+export function isGroundedFunc() {
+    if (isGrounded){
+        isGrounded = false;
+        return true;
+    }
+    return false;
 }

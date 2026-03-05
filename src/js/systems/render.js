@@ -34,6 +34,9 @@ function updateCamera() {
 
     camera.x = Math.max(0, Math.min(camera.x, mapWidth - canvas.width));
     camera.y = Math.max(0, Math.min(camera.y, mapHeight - canvas.height));
+
+    camera.x = Math.round(camera.x);
+    camera.y = Math.round(camera.y);
 }
 
 /* Draw Map */
