@@ -1,44 +1,83 @@
-import { Mrows, Mcols, tileSize,map } from "../tileMap.js";
+import { Mrows, Mcols, tileSize, map } from "../tileMap.js";
 import { player, animator } from "./playerMovement.js";
-// import { animator } from "./playerMovement.js";
 
 export const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-canvas.width = Mcols * tileSize;
-canvas.height = Mrows * tileSize;
+/* Canvas resize */
 
-// Makes map from tile map
-function makeMap() {
-    for (let y = 0; y < map.length; y++) {
-        for (let x = 0; x < map[y].length; x++) {
-            if (map[y][x] === 0) {
-                ctx.fillStyle = "rgba(0, 0, 255, 0.5)"; 
-            } else if (map[y][x] === 1)  {
-                ctx.fillStyle = "rgb(25, 53, 211)";
-            } else if (map[y][x] === 2)  {
-                ctx.fillStyle = "darkblue";
-            } else if (map[y][x] === 3) {
-                ctx.fillStyle = "rgb(44, 227, 7)";;
-            } else if (map[y][x] === 4)  {
-                ctx.fillStyle = "red"
-            }
-            ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+/* Camera */
+
+const camera = {
+    x: 0,
+    y: 0
+};
+
+function updateCamera() {
+
+    const targetX = player.x + player.w / 2 - canvas.width / 2;
+    const targetY = player.y + player.h / 2 - canvas.height / 2;
+
+    camera.x += (targetX - camera.x) * 0.1;
+    camera.y += (targetY - camera.y) * 0.1;
+
+    const mapWidth = Mcols * tileSize;
+    const mapHeight = Mrows * tileSize;
+
+    camera.x = Math.max(0, Math.min(camera.x, mapWidth - canvas.width));
+    camera.y = Math.max(0, Math.min(camera.y, mapHeight - canvas.height));
+}
+
+/* Draw Map */
+
+function drawMap() {
+
+    for (let y = 0; y < Mrows; y++) {
+        for (let x = 0; x < Mcols; x++) {
+
+            const tileX = x * tileSize - camera.x;
+            const tileY = y * tileSize - camera.y;
+
+            if (
+                tileX < -tileSize ||
+                tileX > canvas.width ||
+                tileY < -tileSize ||
+                tileY > canvas.height
+            ) continue;
+
+            const tile = map[y][x];
+
+            if (tile === 0) ctx.fillStyle = "#90d7f380";
+            if (tile === 1) ctx.fillStyle = "#2b4f81";
+            if (tile === 2) ctx.fillStyle = "#1a2f5a";
+            if (tile === 3) ctx.fillStyle = "#3b7d2a";
+            if (tile === 4) ctx.fillStyle = "#5a3c1a";
+
+            ctx.fillRect(tileX, tileY, tileSize, tileSize);
         }
     }
 }
 
 export function render() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    makeMap();
 
-    ctx.strokeStyle = "dark";
-    ctx.strokeRect(player.x, player.y, player.w, player.h);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    updateCamera();
+    drawMap();
+
     animator.draw(
         ctx,
-        player.x,
-        player.y,
+        player.x - camera.x,
+        player.y - camera.y,
         player.w,
         player.h
-    )
+    );
 }

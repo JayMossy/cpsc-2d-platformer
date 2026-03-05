@@ -1,23 +1,23 @@
-import { collision } from "./systems/collision.js";
+import { tileCollision } from "./systems/collision.js";
 import { playerMovement, player } from "./systems/playerMovement.js";
-import { render } from "./systems/render.js"
-import { floor, platform1 } from "./objects.js";
+import { render } from "./systems/render.js";
 
-let lastTime = 0; // Stores previous timestamp
-// let gameState = "playing";
+let lastTime = 0;
 
 function loop(timestamp) {
-    // Timestamp in milliseconds, convert to seconds
-    if (lastTime === 0) lastTime = timestamp; // First Frame
-    const dt = (timestamp - lastTime) / 1000;
-    lastTime = timestamp
 
-    render();
+    if (lastTime === 0) lastTime = timestamp;
+
+    let dt = (timestamp - lastTime) / 1000;
+    lastTime = timestamp;
+
+    if (dt > 0.1) dt = 0.1;
+
     playerMovement(dt);
-    collision(player, floor, dt);
-    collision(player, platform1, dt);
+    tileCollision(player);
+    render();
+
     requestAnimationFrame(loop);
 }
 
-// Start loop
 requestAnimationFrame(loop);
