@@ -1,5 +1,6 @@
 import { Mrows, Mcols, tileSize, map } from "../tileMap.js";
-import { player, animator } from "./playerMovement.js";
+import { animator } from "./playerMovement.js";
+import { player } from "../entities/player.js";
 
 export const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");

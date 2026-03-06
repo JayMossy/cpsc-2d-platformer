@@ -1,12 +1,13 @@
 import { keys } from "./userInput.js";
 import { Animator } from "./animator.js";
-import { isGroundedFunc } from "./collision.js"
-
-const gravity = 1250;
+import { player } from "../entities/player.js";
+import { applyGravity, applyFallSpeedUp, clampFallSpeed, setMovementX, 
+    stopMovingX, integrate 
+} from "./physics.js";
 
 const spriteSheet = new Image();
 spriteSheet.src =
-"./src/assets/sprites/player/main_character/SpriteSheet/spritesheetmcwalkrun.png";
+    "./src/assets/sprites/player/main_character/SpriteSheet/spritesheetmcwalkrun.png";
 
 export const animator = new Animator(spriteSheet, 48, 43);
 
@@ -15,43 +16,37 @@ animator.addAnimation("idle left", [1]);
 animator.addAnimation("run right", [2,3,4,5]);
 animator.addAnimation("run left", [6,7,8,9]);
 
-export const player = {
-  x: 200,
-  y: 1500,
-  w: 40,
-  h: 40,
-  vx: 0,
-  vy: 0,
-  velocity: 600,
-  lastDir: "right"
-};
-
 export function playerMovement(dt) {
-
     animator.update(dt);
 
     player.vx = 0;
 
-    if (player.vy > 0) player.vy += gravity * 1.5 * dt;
-    else player.vy += gravity * dt;
+    // Uses physics.js helper for movement behavior
+    // Adds gravity and max fall speed clamp
+    // before collision check
+    applyGravity(player, dt);
+    applyFallSpeedUp(player, dt);
+
+    clampFallSpeed(player);
 
     if (keys.left && !keys.right) {
-        player.vx = -player.velocity;
+        setMovementX(player, -1);
         player.lastDir = "left";
-    }
-
-    else if (keys.right && !keys.left) {
-        player.vx = player.velocity;
+    } else if (keys.right && !keys.left) {
+        setMovementX(player, 1);
         player.lastDir = "right";
+    } else {
+        stopMovingX(player);
     }
 
-    // If you try to do it by checking when player.vy === 0 it doesn't work.
-    if (keys.up && isGroundedFunc()) {
-        player.vy = -700;
+    // Player can only jump when on the ground.
+    if (keys.up && player.grounded) {
+        player.vy = -player.jump;
+        player.grounded = false;
     }
 
-    player.x += player.vx * dt;
-    player.y += player.vy * dt;
+    // Applies current speed to player posiition this frame
+    integrate(player, dt);
 
     if (player.vx !== 0) {
         if (player.lastDir === "left") animator.setAnimation("run left");
@@ -62,5 +57,5 @@ export function playerMovement(dt) {
         else animator.setAnimation("idle right");
     }
 
-    if (player.x <= 0) player.x = 0;
+    if (player.x < 0) player.x = 0;
 }
