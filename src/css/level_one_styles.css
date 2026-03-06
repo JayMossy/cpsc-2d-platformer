@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-image: url('../assets/backgrounds/sky.PNG');
+    background-size: cover;
+    background-position: center;
+}
+
+canvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+}
