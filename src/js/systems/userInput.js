@@ -4,20 +4,41 @@ export const keys = {
     right: false,
     up: false,
     down: false,
-    space: false,
+    space: false
 };
 
-// Key listeners
 window.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") keys.left = true;
-    if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") keys.right = true;
-    if (e.key === "ArrowUp" || e.key === "w" || e.key === "W" || e.key === " ") keys.up = true;
-    if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") keys.down = true;
+
+    const key = e.key.toLowerCase();
+
+    if (["arrowleft","arrowright","arrowup","arrowdown"," "].includes(key)) {
+        e.preventDefault();
+    }
+
+    if (key === "arrowleft" || key === "a") keys.left = true;
+    if (key === "arrowright" || key === "d") keys.right = true;
+    if (key === "arrowup" || key === "w" || key === " ") keys.up = true;
+    if (key === "arrowdown" || key === "s") keys.down = true;
 });
 
 window.addEventListener("keyup", (e) => {
-  if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") keys.left = false;
-  if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") keys.right = false;
-  if (e.key === "ArrowUp" || e.key === "w" || e.key === "W" || e.key === " ") keys.up = false;
-  if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") keys.down = false;
+
+    const key = e.key.toLowerCase();
+
+    if (key === "arrowleft" || key === "a") keys.left = false;
+    if (key === "arrowright" || key === "d") keys.right = false;
+    if (key === "arrowup" || key === "w" || key === " ") keys.up = false;
+    if (key === "arrowdown" || key === "s") keys.down = false;
 });
+
+/*
+These make a tile map like this 
+const map = [
+    [0,0,0],
+    [0,0,0],
+    [0,0,0]
+]
+Every number 0-4 for now
+corresponds to a color
+we could later make it correspond to image later on?
+*/
