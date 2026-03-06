@@ -4,6 +4,9 @@ import { player, animator } from "./playerMovement.js";
 export const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
+const bg_body = document.querySelector("body");
+let dx = 0;
+
 const floor = new Image();
 floor.src = "../../src/assets/sprites/tiles/temp-floor.png"
 
@@ -77,9 +80,18 @@ function drawMap() {
     }
 }
 
+function moveClouds() {
+    bg_body.style.backgroundPosition = `${dx}% 90%`;
+    if (player.vx === 0) dx += 0;
+    else if (player.vx > 0) dx += .09;
+    else if (player.vx < 0) dx -= .09;
+}
+
 export function render() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    moveClouds();
 
     updateCamera();
     drawMap();
