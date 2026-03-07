@@ -1,5 +1,6 @@
 import { tileCollision } from "./systems/collision.js";
-import { playerMovement, player } from "./systems/playerMovement.js";
+import { playerMovement } from "./systems/playerMovement.js";
+import { player } from "./entities/player.js";
 import { render } from "./systems/render.js";
 
 let lastTime = 0;
