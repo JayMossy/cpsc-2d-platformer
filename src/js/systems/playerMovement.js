@@ -1,8 +1,8 @@
 import { keys } from "./userInput.js";
 import { Animator } from "./animator.js";
 import { player } from "../entities/player.js";
-import { applyGravity, applyFallSpeedUp, clampFallSpeed, setMovementX, 
-    stopMovingX, integrate 
+import { applyGravity, clampFallSpeed, 
+        setMovementX, integrate 
 } from "./physics.js";
 
 const spriteSheet = new Image();
@@ -25,8 +25,6 @@ export function playerMovement(dt) {
     // Adds gravity and max fall speed clamp
     // before collision check
     applyGravity(player, dt);
-    applyFallSpeedUp(player, dt);
-
     clampFallSpeed(player);
 
     if (keys.left && !keys.right) {
@@ -36,7 +34,7 @@ export function playerMovement(dt) {
         setMovementX(player, 1);
         player.lastDir = "right";
     } else {
-        stopMovingX(player);
+        setMovementX(player, 0);
     }
 
     // Player can only jump when on the ground.

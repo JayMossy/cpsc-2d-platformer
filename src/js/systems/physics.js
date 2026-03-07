@@ -3,14 +3,15 @@
 // and position integrates with our delta time
 const GRAVITY = 1250;
 
-export function applyGravity(player, dt) {
-    player.vy += GRAVITY * dt;
-}
 
-export function applyFallSpeedUp(player, dt) {
+export function applyGravity(player, dt) {
     if (player.vy > 0) {
-            player.vy += GRAVITY * 0.5 * dt;
-        }
+        // falling faster
+        player.vy += GRAVITY * 1.5 * dt;
+    } else {
+        // normal gravity while rising
+        player.vy += GRAVITY * dt;
+    }
 }
 
 export function clampFallSpeed(player) {
@@ -19,12 +20,13 @@ export function clampFallSpeed(player) {
     }
 }
 
+/**
+* Sets player velocity in the x direction
+* @param {object} player - The player object.
+* @param {number} direction - The direction, 1 is right, -1 is left, 0 is for no movement.
+*/
 export function setMovementX(player, direction) {
     player.vx = direction * player.moveSpeed;
-}
-
-export function stopMovingX(player) {
-    player.vx = 0;
 }
 
 export function integrate(player, dt) {
