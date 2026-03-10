@@ -64,9 +64,6 @@ export function vertical(player){
                 }
 
             }
-            if(!player.grounded){
-                
-            }
         }
     }
 
