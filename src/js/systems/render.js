@@ -1,6 +1,6 @@
 import { Mrows, Mcols, tileSize, map, tileLocation } from "../tileMap.js";
 import { animator } from "./playerMovement.js";
-import { coinAnimator } from "./coins.js";
+import { coins } from "./coins.js";
 import { player } from "../entities/player.js";
 
 export const canvas = document.getElementById("game");
@@ -15,11 +15,9 @@ tileSet.src = "../../src/assets/sprites/tiles/world_tileset.png";
 const ogSize = tileLocation.tileSize;
 const [gsx, gsy] = tileLocation.grass;
 
+/* Random number for dirt */
 const now = new Date();
-const hours = now.getHours();
-const minutes = now.getMinutes();
-const seconds = now.getSeconds();
-const rndNumber = hours * 439 + minutes * 577 + seconds * 727;
+const rndNumber = now.getHours() * 439 + now.getMinutes() * 577 + now.getSeconds() * 727;
 
 /* Canvas resize */
 
@@ -85,10 +83,10 @@ function drawMap() {
             ctx.fillRect(tileX, tileY, tileSize, tileSize);
 
             // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) s = source, d = destination
-
             if (tile === 3) ctx.drawImage(tileSet, gsx, gsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
             
             if (tile === 4) {
+                // "Random number generator" to pick from options of dirt
                 let i = (Math.ceil(Math.sqrt(x) * y *Math.pow(x,2) * y + rndNumber) % tileLocation.floors.length);
 
                 let [fsx, fsy] = tileLocation.floors[i];
@@ -105,10 +103,6 @@ function moveClouds() {
     else if (player.vx > 0) dx -= 1;
     else if (player.vx < 0) dx += 1;
 }
-
-let coin = (x, y) => coinAnimator.draw( ctx, x - camera.x, y - camera.y, 50, 50);
-
-let coin1Drawn = true; 
 
 export function render() {
 
@@ -127,18 +121,12 @@ export function render() {
         player.h
     );
 
-    coin(2000, 1730)
+    coins.forEach(coin => {
+        coin.draw(ctx, camera);
+        coin.checkCollision(player);
+        /* Could do ->
+        if (coin.checkCollision(player)) player.score++;
+        */
+    });
 
-    
-    if (coin1Drawn) { 
-        coin(2300, 1500);
-            if ((player.x + player.w/2 < 2350  &&
-                player.x + player.w/2 > 2300 &&
-                player.y + player.h/2 > 1500  &&
-                player.y + player.h/2 < 1550)) {
-                
-                coin1Drawn = false;
-                console.log(coin1Drawn)
-            }
-    }
 }

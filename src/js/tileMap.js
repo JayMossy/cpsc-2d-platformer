@@ -2,12 +2,13 @@ export const Mrows = 60;
 export const Mcols = 200;
 export const tileSize = 32;
 
-//4: floor
+//4: dirt
 //3: grass
 //2: undecided
 //1: water
 //0: sky
 
+// Top left position in tile set
 export const tileLocation = {
   tileSize: 16,
   floors: [

@@ -16,7 +16,7 @@ function loop(timestamp) {
     if (dt > 0.1) dt = 0.1;
 
     playerMovement(dt);
-    coinAnimator.update(dt); // Should make a file in the future that will hold all collectibles to not clutterup main.js.
+    coinAnimator.update(dt); // Should make a file in the future that will hold all collectibles to not clutter up main.js.
     tileCollision(player);
     render();
 
