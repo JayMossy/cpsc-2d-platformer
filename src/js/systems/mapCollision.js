@@ -64,7 +64,9 @@ export function vertical(player){
                 }
 
             }
-            if(player.grounded || player.vy === 0 )break;
+            if(!player.grounded){
+                
+            }
         }
     }
 

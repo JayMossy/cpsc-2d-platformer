@@ -1,4 +1,4 @@
-import { horizontal, vertical} from "./systems/mapCollison.js";
+import { horizontal, vertical} from "./systems/mapCollision.js";
 import { playerMovement } from "./systems/playerMovement.js";
 import { player } from "./entities/player.js";
 import { render } from "./systems/render.js";
@@ -15,8 +15,8 @@ function loop(timestamp) {
     if (dt > 0.1) dt = 0.1;
 
     playerMovement(dt);
-    horizontal(player);
     vertical(player);
+    horizontal(player);
     render();
 
     requestAnimationFrame(loop);
