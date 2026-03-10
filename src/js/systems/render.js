@@ -113,6 +113,16 @@ export function render() {
     updateCamera();
     drawMap();
 
+    // Easier debug we can see out "hit box"
+    ctx.strokeStyle = "red";
+    ctx.strokeRect(
+        player.x - camera.x,
+        player.y - camera.y,
+        player.w,
+        player.h
+    )
+
+
     animator.draw(
         ctx,
         player.x - camera.x,

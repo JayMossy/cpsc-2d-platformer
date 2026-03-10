@@ -51,3 +51,10 @@ for (let x = 180; x < 195; x++) map[Mrows - 10][x] = 3;
 
 for (let x = 55; x < 60; x++) map[Mrows - 20][x] = 4;
 for (let x = 165; x < 170; x++) map[Mrows - 22][x] = 4;
+
+/* --------- Testing horizontal collision ----------*/
+map[Mrows - 8][33] = 3;
+map[Mrows - 7][33] = 4;
+map[Mrows - 6][33] = 4;
+map[Mrows - 5][33] = 4;
+map[Mrows - 4][33] = 4;
