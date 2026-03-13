@@ -61,7 +61,7 @@ for (let x = 165; x < 170; x++) map[Mrows - 22][x] = 4;
 makePlatform(4, 8, 33, 33, 4, 3); // same as above
 
 /* ---- WATER ------ */
-makePlatform(1, 4, 36, 44, 2);
+makePlatform(1, 4, 36, 44, 2, 1);
 
 // Functions to help make platform
 /**
