@@ -37,11 +37,11 @@ export class Animator {
             this.frameTimer = 0;
             this.frameIndex++;
 
-        if (this.frameIndex >= this.currentAnimation.length) {
-            this.frameIndex = 0;
+            if (this.frameIndex >= this.currentAnimation.length) {
+                this.frameIndex = 0;
+            }
         }
     }
-  }
     //method to draw each image
     draw(ctx, x, y, width, height) {
         if (!this.currentAnimation) return;
