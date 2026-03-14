@@ -21,81 +21,122 @@
       crossorigin
       src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
     ></script>
-    <script src="./ReactTest.js" defer></script>
+    <script
+      crossorigin
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    ></script>
+    <script src="./src/js/systems/savedScore.js" defer></script>
   </head>
 
   <body class="bg-image">
     <!-- Main Container For Grid -->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <!-- Padding on top -->
-          <div class="row">
-            <div
-              class="col-6 w-100 col-md-5 col-lg-4 col-xl-3 offset-1 offset-sm-0 transparent-edges"
-            >
-              <div class="pt-5"></div>
-            </div>
-          </div>
-
-          <!-- Picture for game title -->
-          <div class="row">
-            <div
-              class="col-6 w-100 col-md-5 col-lg-4 col-xl-3 offset-1 offset-sm-0 transparent-edges"
-            >
-              <img
-                src="src/assets/sprites/ui/temp-transparent-title.png"
-                alt=""
-                class="img-fluid rounded-2 mb-5 text-start"
-              />
-            </div>
-          </div>
-
-          <!-- Where all the buttons go -->
-          <div class="row">
-            <div
-              class="col-6 w-100 col-md-5 col-lg-4 col-xl-3 offset-1 offset-sm-0 transparent-edges"
-            >
-              <!-- Used a flexbox to arrage buttons -->
+    <div class="container min-vh-100">
+      <div class="row h-100">
+        <div class="col-md-6 vh-100 px-2 h-100">
+          <div
+            class="transparent-edges h-100 d-flex flex-column justify-content-around"
+          >
+            <div class="row">
               <div
-                class="d-flex flex-column justify-content-top align-items-center"
+                class="col-6 col-md-5 col-lg-4 col-xl-3 offset-1 offset-sm-0"
               >
-                <a
-                  href="level_one.html"
-                  class="btn btn-lg btn-custom-color btn-hover rounded-1 mb-3 fs-4 fs-custom-sm text-nowrap"
-                >
-                  <i class="bi bi-suit-diamond-fill"></i> Start New Game
-                  <i class="bi bi-suit-diamond-fill"></i>
-                </a>
-                <a
-                  href="#"
-                  class="btn btn-lg btn-custom-color btn-hover rounded-1 mb-3 fs-4 fs-custom-sm"
-                >
-                  <i class="bi bi-suit-diamond-fill"></i> Settings
-                  <i class="bi bi-suit-diamond-fill"></i>
-                </a>
-                <a
-                  href="#"
-                  class="btn btn-lg btn-custom-color btn-hover rounded-1 fs-4 fs-custom-sm"
-                >
-                  <i class="bi bi-suit-diamond-fill"></i> Credits
-                  <i class="bi bi-suit-diamond-fill"></i>
-                </a>
+                <div class="pt-5"></div>
               </div>
             </div>
-          </div>
 
-          <!-- If we want to add stuff below the buttons. -->
-          <div class="row d-flex justify-content-center">
-            <div
-              class="col-6 w-100 col-md-5 col-lg-4 col-xl-3 offset-1 offset-sm-0 vh-100 transparent-edges"
-            ></div>
+            <!-- Picture for game title -->
+            <div class="row justify-content-center">
+              <div
+                class="col-6 w-75 col-md-5 col-lg-4 col-xl-3 transparent-edges"
+              >
+                <img
+                  src="src/assets/sprites/ui/temp-transparent-title.png"
+                  alt=""
+                  class="img-fluid rounded-2 mb-5 text-center w-100"
+                />
+              </div>
+            </div>
+
+            <!-- Where all the buttons go -->
+            <div class="row justify-content-center">
+              <div
+                class="col-6 w-75 col-md-5 col-lg-4 col-xl-3 transparent-edges"
+              >
+                <!-- Used a flexbox to arrage buttons -->
+                <div
+                  class="d-flex flex-column justify-content-top align-items-center"
+                >
+                  <a
+                    href="level_one.html"
+                    class="btn btn-custom-color btn-hover rounded-1 mb-3 fs-4 fs-custom-sm text-nowrap"
+                  >
+                    <i class="bi bi-suit-diamond-fill"></i> Start New Game
+                    <i class="bi bi-suit-diamond-fill"></i>
+                  </a>
+                  <button
+                    type="button"
+                    class="btn btn-custom-color btn-hover rounded-1 mb-3 fs-4 fs-custom-sm d-md-none"
+                    data-bs-toggle="modal"
+                    data-bs-target="#scoresModal"
+                  >
+                    <i class="bi bi-trophy-fill"></i> View Scores
+                    <i class="bi bi-trophy-fill"></i>
+                  </button>
+                  <a
+                    href="#"
+                    class="btn btn-custom-color btn-hover rounded-1 mb-3 fs-4 fs-custom-sm"
+                  >
+                    <i class="bi bi-suit-diamond-fill"></i> Settings
+                    <i class="bi bi-suit-diamond-fill"></i>
+                  </a>
+                  <a
+                    href="#"
+                    class="btn btn-custom-color btn-hover rounded-1 fs-4 mb-2 fs-custom-sm"
+                  >
+                    <i class="bi bi-suit-diamond-fill"></i> Credits
+                    <i class="bi bi-suit-diamond-fill"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <!-- If we want to add stuff below the buttons. -->
+            <div class="row d-flex justify-content-center">
+              <div
+                class="col-6 col-md-5 col-lg-4 col-xl-3 offset-1 offset-sm-0"
+              ></div>
+            </div>
           </div>
         </div>
         <div
-          id="saved_score_inject"
-          class="col-md-6 d-flex justify-content-center"
-        ></div>
+          class="col-md-6 vh-100 d-none d-md-flex justify-content-center align-items-center"
+        >
+          <div id="saved_score_inject" class="w-100"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scores Modal -->
+    <div
+      class="modal fade"
+      id="scoresModal"
+      tabindex="-1"
+      aria-labelledby="scoresModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div id="saved_score_modal_inject"></div>
+          </div>
+        </div>
       </div>
     </div>
   </body>

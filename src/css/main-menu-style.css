@@ -79,3 +79,54 @@ body {
     -4px 4px 0 0 black;
   padding: 10px;
 }
+/* Modal & Saved Scores Styling */
+.modal-content {
+  background-color: rgba(10, 10, 15, 0.95);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+.modal-backdrop.show {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.score-board {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  font-family: "Courier New", monospace; /* Pixelated font */
+  image-rendering: pixelated; /* Crisp edges for pixel art */
+}
+
+.score-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.score-item {
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s;
+}
+
+.score-item:hover {
+  transform: scale(1.02);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.score-name {
+  font-size: 1.2rem;
+}
+
+.score-label {
+  font-weight: bold;
+  color: #ccc;
+}
+
+.score-value {
+  font-size: 1.1rem;
+}
+
+.score-empty {
+  font-style: italic;
+  padding: 20px;
+}
