@@ -20,12 +20,6 @@ body {
     background-attachment: fixed;
     background-size: cover; */
 
-  /* background: linear-gradient(
-    90deg, 
-    rgba(33, 40, 46, 1) 10%, 
-    rgba(47, 47, 56, 1) 41%, 
-    rgba(64, 65, 74, 1) 74%); */
-
   background: linear-gradient(
     90deg,
     rgb(47, 48, 53) 0%,
@@ -39,9 +33,12 @@ body {
   color: rgb(245, 247, 255);
   /* Button color*/
   background: rgb(32, 34, 40);
-  /* background: linear-gradient(90deg, rgb(46, 55, 62) 10%, rgb(71, 71, 82) 41%, rgb(80, 81, 90) 74%);  */
   border-color: rgb(90, 100, 255);
   box-shadow: 0 0 15px rgba(90, 100, 255, 0.4);
+  /* Icon color */
+  i {
+    color: rgb(120, 130, 255);
+  }
 }
 
 .btn-hover:hover {
@@ -50,16 +47,10 @@ body {
   background: rgb(20, 22, 28);
   border: 2px solid rgb(230, 140, 255);
   box-shadow: 0 0 15px rgba(200, 80, 255, 0.4);
-}
-
-.btn-custom-color i {
-  /* Icon color */
-  color: rgb(120, 130, 255);
-}
-
-.btn-custom-color:hover i {
-  /* Changes icon color on hover*/
-  color: rgb(230, 140, 255);
+  /* Icon color when hovering */
+  i {
+    color: rgb(230, 140, 255);
+  }
 }
 
 /* This is so the button shrinks at smaller screens */
