@@ -1,5 +1,4 @@
 import { horizontal, vertical } from "./systems/mapCollision.js";
-import { horizontal, vertical } from "./systems/mapCollision.js";
 import { playerMovement } from "./systems/playerMovement.js";
 import { render } from "./systems/render.js";
 import { coinAnimator } from "./systems/coins.js";
