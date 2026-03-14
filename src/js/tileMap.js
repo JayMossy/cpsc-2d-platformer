@@ -65,14 +65,14 @@ makePlatform(1, 4, 36, 44, 2, 1);
 
 // Functions to help make platform
 /**
- * Makes vertical platfrom
- * @param {*} bottom - Start position
- * @param {*} top - End position
- * @param {*} left - Left beginning position
- * @param {*} right - Right end position
- * @param {*} tile - Tile type
- * @param {*} topTile - Tile type for top tile, leave empty if you don't want a different type on top
- */
+* Makes vertical platfrom
+* @param {*} bottom - Start position
+* @param {*} top - End position
+* @param {*} left - Left beginning position
+* @param {*} right - Right end position
+* @param {*} tile - Tile type
+* @param {*} topTile - Tile type for top tile, leave empty if you don't want a different type on top
+*/
 export function makePlatform(bottom, top, left, right, tile, topTile = tile) {
   for (let d = left; d <= right; d++) {
     for (let i = bottom; i < top; i++) {
