@@ -1,69 +1,132 @@
-html, body {
-    height: 100%;
-    overflow: hidden;
+html,
+body {
+  height: 100%;
+  overflow: hidden;
 }
 
 .bg-image {
-    background-image: url("../assets/backgrounds/temp-menu-clouds-background.jpg");
-    background-repeat: no-repeat;
-    background-position: 50% 80%;
-    background-attachment: fixed;
-    background-size: cover;
+  background-image: url("../assets/backgrounds/temp-menu-clouds-background.jpg");
+  background-repeat: no-repeat;
+  background-position: 50% 80%;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .transparent-edges {
-    /* Could set the background to an image if you wanted to */
+  /* Could set the background to an image if you wanted to */
 
-    /* background-image: url("");
+  /* background-image: url("");
     background-repeat: repeat;
     background-attachment: fixed;
     background-size: cover; */
 
-    /* background: linear-gradient(
+  /* background: linear-gradient(
     90deg, 
     rgba(33, 40, 46, 1) 10%, 
     rgba(47, 47, 56, 1) 41%, 
     rgba(64, 65, 74, 1) 74%); */
 
-    background: linear-gradient(
+  background: linear-gradient(
     90deg,
     rgb(47, 48, 53) 0%,
-    rgb(35, 35, 40) 50%, 
+    rgb(35, 35, 40) 50%,
     rgb(42, 44, 48) 100%
-    );
+  );
 }
 
-.btn-custom-color  {
-    /* Text color in buttons */
-    color: rgb(245, 247, 255);
-    /* Button color*/
-    background: rgb(32, 34, 40);
-    /* background: linear-gradient(90deg, rgb(46, 55, 62) 10%, rgb(71, 71, 82) 41%, rgb(80, 81, 90) 74%);  */
-    border-color: rgb(90, 100, 255);
-    box-shadow: 0 0 15px rgba(90, 100, 255, 0.4);
+.btn-custom-color {
+  /* Text color in buttons */
+  color: rgb(245, 247, 255);
+  /* Button color*/
+  background: rgb(32, 34, 40);
+  /* background: linear-gradient(90deg, rgb(46, 55, 62) 10%, rgb(71, 71, 82) 41%, rgb(80, 81, 90) 74%);  */
+  border-color: rgb(90, 100, 255);
+  box-shadow: 0 0 15px rgba(90, 100, 255, 0.4);
 }
 
 .btn-hover:hover {
-    /* color: white; */
-    color: rgb(255, 255, 255);
-    background: rgb(20, 22, 28);
-    border: 2px solid rgb(230, 140, 255);
-    box-shadow: 0 0 15px rgba(200, 80, 255, 0.4);
+  /* color: white; */
+  color: rgb(255, 255, 255);
+  background: rgb(20, 22, 28);
+  border: 2px solid rgb(230, 140, 255);
+  box-shadow: 0 0 15px rgba(200, 80, 255, 0.4);
 }
 
 .btn-custom-color i {
-    /* Icon color */
-    color: rgb(120, 130, 255);
+  /* Icon color */
+  color: rgb(120, 130, 255);
 }
 
 .btn-custom-color:hover i {
-    /* Changes icon color on hover*/
-    color: rgb(230, 140, 255);
+  /* Changes icon color on hover*/
+  color: rgb(230, 140, 255);
 }
 
 /* This is so the button shrinks at smaller screens */
 @media (max-width: 576px) {
-    .fs-custom-sm {
-        font-size: 1.2rem !important;
-    }
+  .fs-custom-sm {
+    font-size: 1.2rem !important;
+  }
+}
+
+.pixelated {
+  border: 2px solid black;
+  /* Multiple shadows to create the staggered, pixelated edge appearance */
+  box-shadow:
+    4px 4px 0 0 black,
+    -4px -4px 0 0 black,
+    4px -4px 0 0 black,
+    -4px 4px 0 0 black;
+  padding: 10px;
+}
+/* Modal & Saved Scores Styling */
+.modal-content {
+  background-color: rgba(10, 10, 15, 0.95);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+.modal-backdrop.show {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.score-board {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  font-family: "Courier New", monospace; /* Pixelated font */
+  image-rendering: pixelated; /* Crisp edges for pixel art */
+}
+
+.score-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.score-item {
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s;
+}
+
+.score-item:hover {
+  transform: scale(1.02);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.score-name {
+  font-size: 1.2rem;
+}
+
+.score-label {
+  font-weight: bold;
+  color: #ccc;
+}
+
+.score-value {
+  font-size: 1.1rem;
+}
+
+.score-empty {
+  font-style: italic;
+  padding: 20px;
 }
