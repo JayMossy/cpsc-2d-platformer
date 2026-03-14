@@ -1,4 +1,5 @@
 import { horizontal, vertical } from "./systems/mapCollision.js";
+import { horizontal, vertical } from "./systems/mapCollision.js";
 import { playerMovement } from "./systems/playerMovement.js";
 import { render } from "./systems/render.js";
 import { coinAnimator } from "./systems/coins.js";
@@ -9,6 +10,8 @@ let lastTime = 0;
 
 export const enemies = [];
 enemies.push(new Enemy(240, 1200))
+
+
 
 function loop(timestamp) {
 
