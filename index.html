@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Main Menu Test</title>
+    <title>Main Menu</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
@@ -29,89 +29,86 @@
   </head>
 
   <body class="bg-image">
+
     <!-- Main Container For Grid -->
     <div class="container min-vh-100">
+      <!-- Main row for everything -->
       <div class="row h-100">
+
+        <!-- Left column -->
         <div class="col-md-6 vh-100 px-2 h-100">
-          <div
-            class="transparent-edges h-100 d-flex flex-column justify-content-around"
-          >
-            <div class="row">
-              <div
-                class="col-6 col-md-5 col-lg-4 col-xl-3 offset-1 offset-sm-0"
-              >
-                <div class="pt-5"></div>
-              </div>
-            </div>
+          <!-- Uses a flexbox to arrage items inside the column -->
+          <div class="transparent-edges h-100 d-flex flex-column justify-content-around align-items-center">
 
             <!-- Picture for game title -->
-            <div class="row justify-content-center">
-              <div
-                class="col-6 w-75 col-md-5 col-lg-4 col-xl-3 transparent-edges"
-              >
+            <div class="row justify-content-center pt-5">
+              <div class="w-75" >
                 <img
                   src="src/assets/sprites/ui/temp-transparent-title.png"
-                  alt=""
+                  alt="Game Title"
                   class="img-fluid rounded-2 mb-5 text-center w-100"
                 />
               </div>
             </div>
 
             <!-- Where all the buttons go -->
-            <div class="row justify-content-center">
+            <div class="row justify-content-center w-100 pb-5 px-5 px-md-4 px-lg-5"> <!-- the px- are for when using -around -->
+              <!-- Used a flexbox to arrage buttons -->
               <div
-                class="col-6 w-75 col-md-5 col-lg-4 col-xl-3 transparent-edges"
-              >
-                <!-- Used a flexbox to arrage buttons -->
-                <div
-                  class="d-flex flex-column justify-content-top align-items-center"
+                class="d-flex flex-column align-items-center" 
+              > <!-- try this, align-items-around, instead of -center for another option-->
+                <a
+                  href="level_one.html"
+                  class="btn btn-custom-color btn-hover rounded-1 mb-3 fs-4 fs-custom-sm"
                 >
-                  <a
-                    href="level_one.html"
-                    class="btn btn-custom-color btn-hover rounded-1 mb-3 fs-4 fs-custom-sm text-nowrap"
-                  >
-                    <i class="bi bi-suit-diamond-fill"></i> Start New Game
-                    <i class="bi bi-suit-diamond-fill"></i>
-                  </a>
-                  <button
-                    type="button"
-                    class="btn btn-custom-color btn-hover rounded-1 mb-3 fs-4 fs-custom-sm d-md-none"
-                    data-bs-toggle="modal"
-                    data-bs-target="#scoresModal"
-                  >
-                    <i class="bi bi-trophy-fill"></i> View Scores
-                    <i class="bi bi-trophy-fill"></i>
-                  </button>
-                  <a
-                    href="#"
-                    class="btn btn-custom-color btn-hover rounded-1 mb-3 fs-4 fs-custom-sm"
-                  >
-                    <i class="bi bi-suit-diamond-fill"></i> Settings
-                    <i class="bi bi-suit-diamond-fill"></i>
-                  </a>
-                  <a
-                    href="#"
-                    class="btn btn-custom-color btn-hover rounded-1 fs-4 mb-2 fs-custom-sm"
-                  >
-                    <i class="bi bi-suit-diamond-fill"></i> Credits
-                    <i class="bi bi-suit-diamond-fill"></i>
-                  </a>
-                </div>
+                  <i class="bi bi-suit-diamond-fill"></i> Start New Game
+                  <i class="bi bi-suit-diamond-fill"></i>
+                </a>
+                <button
+                  type="button"
+                  class="btn btn-custom-color btn-hover rounded-1 mb-3 fs-4 fs-custom-sm d-md-none"
+                  data-bs-toggle="modal"
+                  data-bs-target="#scoresModal"
+                >
+                  <i class="bi bi-trophy-fill"></i> View Scores
+                  <i class="bi bi-trophy-fill"></i>
+                </button>
+                <a
+                  href="#"
+                  class="btn btn-custom-color btn-hover rounded-1 mb-3 fs-4 fs-custom-sm"
+                >
+                  <i class="bi bi-suit-diamond-fill"></i> Settings
+                  <i class="bi bi-suit-diamond-fill"></i>
+                </a>
+                <a
+                  href="#"
+                  class="btn btn-custom-color btn-hover rounded-1 mb-2 fs-4 fs-custom-sm"
+                >
+                  <i class="bi bi-suit-diamond-fill"></i> Credits
+                  <i class="bi bi-suit-diamond-fill"></i>
+                </a>
               </div>
             </div>
+
             <!-- If we want to add stuff below the buttons. -->
-            <div class="row d-flex justify-content-center">
-              <div
-                class="col-6 col-md-5 col-lg-4 col-xl-3 offset-1 offset-sm-0"
-              ></div>
+            <div class="row justify-content-center w-100">
+              <div class="w-75">
+                <!-- Stuff goes here -->
+              </div>
             </div>
+
           </div>
         </div>
-        <div
-          class="col-md-6 vh-100 d-none d-md-flex justify-content-center align-items-center"
-        >
-          <div id="saved_score_inject" class="w-100"></div>
+
+        <!-- Right column where scores stuff is displayed -->
+        <div class="col-md-6 vh-100 d-none d-md-flex justify-content-center align-items-center" >
+          <div 
+            id="saved_score_inject" 
+            class="w-100"
+          >
+          </div>
         </div>
+
       </div>
     </div>
 
@@ -139,5 +136,6 @@
         </div>
       </div>
     </div>
+
   </body>
 </html>
