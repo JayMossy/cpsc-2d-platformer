@@ -1,21 +1,36 @@
 // @ts-nocheck
 function SavedScore() {
-  function getScores() {
-    //NOTE scores object will look like this, we can add more later if needed.
-    const scores = [{
-      name: "Evan",
-      highestLevelAchieved: 2,
-      highScore: 13
-    }, {
-      name: "John",
-      highestLevelAchieved: 3,
-      highScore: 19
-    }];
-    // const jsonScores = localStorage.getItem("scores")
-    // const scores = JSON.parse(jsonScores)
-    return scores;
-  }
-  const scores = getScores();
+  const [scores, setScores] = React.useState(() => {
+    const stored = localStorage.getItem("scores");
+    return stored ? JSON.parse(stored) : [];
+  });
+  React.useEffect(() => {
+    const handleScoresUpdate = () => {
+      const stored = localStorage.getItem("scores");
+      setScores(stored ? JSON.parse(stored) : []);
+    };
+    window.addEventListener("scoresUpdated", handleScoresUpdate);
+    return () => window.removeEventListener("scoresUpdated", handleScoresUpdate);
+  }, []);
+
+  //   function getScores() {
+  //     //NOTE scores object will look like this, we can add more to this later if needed.
+  //     const scores = [
+  //       {
+  //         name: "Evan",
+  //         highestLevelAchieved: 2,
+  //         highScore: 13,
+  //       },
+  //       {
+  //         name: "John",
+  //         highestLevelAchieved: 3,
+  //         highScore: 19,
+  //       },
+  //     ];
+  //     // const jsonScores = localStorage.getItem("scores")
+  //     // const scores = JSON.parse(jsonScores)
+  //     return scores;
+  //   }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "container score-board"
   }, /*#__PURE__*/React.createElement("div", {
