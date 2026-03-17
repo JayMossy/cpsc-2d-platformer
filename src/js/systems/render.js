@@ -1,7 +1,8 @@
-import { Mrows, Mcols, tileSize, map, tileLocation } from "../tileMap.js";
+import { Mrows, Mcols, tileSize, map, tileLocation, makePlatform } from "../tileMap.js";
 import { animator } from "./playerMovement.js";
 import { coins } from "./coins.js";
 import { player } from "../entities/player.js";
+import { enemies } from "../main.js";
 
 export const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
@@ -104,14 +105,51 @@ function moveClouds() {
     else if (player.vx < 0) dx += 1;
 }
 
+
+let b = 5;
+let t = 11;
+let slow = 1;
+let swtchDown = false;
+
 export function render() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Cool way we can use makePlatform()
+    let prevB = b;
+    let prevT = t;
+    if (slow % 5 == 0) {
+        if (!swtchDown && t !== Mrows-3) {
+            b++;
+            t++;
+            if (t === Mrows-3) swtchDown = true;
+        } else if (swtchDown) {
+            b--;
+            t--;
+            if (b === 5) swtchDown = false;
+        }
+    }
+    // erase previous platform
+    makePlatform(prevB, prevT, 10, 10, 0);
+    // draw new platform
+    makePlatform(b, t, 10, 10, 4, 3);
+    slow++;
+
 
     moveClouds();
 
     updateCamera();
     drawMap();
+
+    // Easier debug we can see out "hit box"
+    ctx.strokeStyle = "red";
+    ctx.strokeRect(
+        player.x - camera.x,
+        player.y - camera.y,
+        player.w,
+        player.h
+    )
+
 
     animator.draw(
         ctx,
@@ -120,6 +158,11 @@ export function render() {
         player.w,
         player.h
     );
+
+    for (const enemy of enemies) {
+        ctx.fillStyle = "red";
+        ctx.fillRect(enemy.x - camera.x, enemy.y - camera.y, enemy.w, enemy.h);
+    }
 
     coins.forEach(coin => {
         coin.draw(ctx, camera);

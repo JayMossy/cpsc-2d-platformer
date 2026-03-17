@@ -1,10 +1,14 @@
 import { horizontal, vertical } from "./systems/mapCollision.js";
 import { playerMovement } from "./systems/playerMovement.js";
-import { player } from "./entities/player.js";
 import { render } from "./systems/render.js";
 import { coinAnimator } from "./systems/coins.js";
+import { player } from "./entities/player.js";
+import { Enemy } from "./entities/enemy.js";
 
 let lastTime = 0;
+
+export const enemies = [];
+enemies.push(new Enemy(240, 1200))
 
 
 
@@ -18,9 +22,10 @@ function loop(timestamp) {
     if (dt > 0.1) dt = 0.1;
 
     playerMovement(dt);
+    for (const enemy of enemies) {
+        enemy.update(dt, player);
+    }
     coinAnimator.update(dt); // Should make a file in the future that will hold all collectibles to not clutter up main.js.
-    vertical(player);
-    horizontal(player);
     render();
 
     requestAnimationFrame(loop);
