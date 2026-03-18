@@ -133,9 +133,14 @@ export function render() {
     );
 
     for (const enemy of enemies) {
-        ctx.fillStyle = "red";
-        ctx.fillRect(enemy.x - camera.x, enemy.y - camera.y, enemy.w, enemy.h);
-    }
+    enemy.animator.draw(
+        ctx,
+        enemy.x - camera.x,
+        enemy.y - camera.y +8,
+        enemy.w,
+        enemy.h
+    );
+}
 
     coins.forEach(coin => {
         coin.draw(ctx, camera);
