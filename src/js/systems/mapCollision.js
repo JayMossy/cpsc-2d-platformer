@@ -1,12 +1,12 @@
-import { map, tileSize, TILE_BOX, TILE_GRASS, TILE_DIRT, TILE_SPIKE } from "../tileMap.js";
+import { map, tileSize, TILES } from "../maps/tileMap.js";
 
-const solidTiles = [TILE_BOX, TILE_GRASS, TILE_DIRT];
+const solidTiles = [TILES.GRASS, TILES.DIRT, TILES.BOX];
 const horizontalBuffer = .3;
 const verticalBuffer = .01;
 
 function getTile(col,row) {
-     if(row < 0 || row >= map.length) return 4;
-     if(col < 0 || col >= map[0].length) return 4;
+     if(row < 0 || row >= map.length) return TILES.BOX;
+     if(col < 0 || col >= map[0].length) return TILES.BOX;
      return map [row][col];
 }
 
@@ -87,7 +87,7 @@ export function checkHazard(entity) {
 
     for (let row = topTile; row <= bottomTile; row++) {
         for (let col = leftTile; col <= rightTile; col++){
-            if (getTile(col, row) === TILE_SPIKE) {
+            if (getTile(col, row) === TILES.SPIKE) {
                 resetEntity(entity);
                 return true;
             }

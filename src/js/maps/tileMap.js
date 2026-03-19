@@ -3,6 +3,7 @@ export const Mcols = 200;
 export const tileSize = 32;
 
 // Tiles IDs used throughout the game
+/*
 export const TILE_SKY = 0;
 export const TILE_WATER = 1;
 export const TILE_WATER_DARK = 2; // previously undecided and able to be changed
@@ -10,6 +11,18 @@ export const TILE_GRASS = 3;
 export const TILE_DIRT = 4;
 export const TILE_BOX = 5; // solid tile
 export const TILE_SPIKE = 6; // resets character to start
+*/
+
+export const TILES = {
+  SKY: 0,
+  WATER: 1, 
+  WATER_DARK: 2, //able to be changed
+  GRASS: 3,
+  DIRT: 4,
+  BOX: 5,
+  SPIKE: 6
+}
+Object.freeze(TILES); // makes TILES object immutable
 
 // Top left position in tile set
 export const tileLocation = {
@@ -24,10 +37,10 @@ export const tileLocation = {
 };
 
 export const map = Array.from({ length: Mrows }, () =>
-  Array.from({ length: Mcols }, () => TILE_SKY)
+  Array.from({ length: Mcols }, () => TILES.SKY)
 );
 
-export function createPlatform(row, startX, endX, tileType = TILE_GRASS) {
+export function createPlatform(row, startX, endX, tileType = TILES.GRASS) {
   for (let x = startX; x < endX; x++) {
     map[Mrows - row][x] = tileType;
   }
@@ -35,13 +48,13 @@ export function createPlatform(row, startX, endX, tileType = TILE_GRASS) {
 
 export function createBox(row, startX, endX) {
   for (let x = startX; x < endX; x++) {
-    map[Mrows - row][x] = TILE_BOX;
+    map[Mrows - row][x] = TILES.BOX;
   }
 }
 
 export function createSpikes(row, startX, endX) {
   for (let x = startX; x < endX; x++) {
-    map[Mrows - row][x] = TILE_SPIKE;
+    map[Mrows - row][x] = TILES.SPIKE;
   }
 }
 
@@ -49,14 +62,14 @@ export function createSpikes(row, startX, endX) {
 
 for (let y = Mrows - 3; y < Mrows; y++) {
   for (let x = 0; x < Mcols; x++) {
-    map[y][x] = TILE_DIRT;
+    map[y][x] = TILES.DIRT;
   }
 }
 
 /* ---------- GRASS TOP ---------- */
 
 for (let x = 0; x < Mcols; x++) {
-  map[Mrows - 4][x] = TILE_GRASS;
+  map[Mrows - 4][x] = TILES.GRASS;
 }
 
 /* ---------- PLATFORMS ---------- */

@@ -116,3 +116,6 @@ export class Enemy {
         }
     }
 }
+
+export const enemies = [];
+enemies.push(new Enemy(240, 1200))
