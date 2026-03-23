@@ -85,6 +85,7 @@ function CharacterSelect() {
   function handleConfirm() {
     if (!char) return;
     localStorage.setItem("chosenCharacter", char.name);
+    window.history.back();
   }
   return /*#__PURE__*/React.createElement("div", {
     className: "page"
