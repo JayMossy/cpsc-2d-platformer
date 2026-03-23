@@ -4,7 +4,7 @@ import {
   TILE_SPIKE 
 } from "../tileMap.js";
 import { animator } from "./playerMovement.js";
-import { coins } from "./coins.js";
+import { coins } from "../collectables/coins.js";
 import { player } from "../entities/player.js";
 import { enemies } from "../main.js";
 
