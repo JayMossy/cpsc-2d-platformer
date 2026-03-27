@@ -1,7 +1,7 @@
 import {
-  Mrows, Mcols, tileSize, map, tileLocation, TILE_WATER, 
-  TILE_WATER_DARK, TILE_GRASS, TILE_DIRT, TILE_BOX, 
-  TILE_SPIKE 
+    Mrows, Mcols, tileSize, map, tileLocation, TILE_WATER,
+    TILE_WATER_DARK, TILE_GRASS, TILE_DIRT, TILE_BOX,
+    TILE_SPIKE
 } from "../tileMap.js";
 import { animator } from "./playerMovement.js";
 import { coins } from "../collectables/coins.js";
@@ -132,10 +132,10 @@ export function render() {
     let prevB = b;
     let prevT = t;
     if (slow % 5 == 0) {
-        if (!swtchDown && t !== Mrows-3) {
+        if (!swtchDown && t !== Mrows - 3) {
             b++;
             t++;
-            if (t === Mrows-3) swtchDown = true;
+            if (t === Mrows - 3) swtchDown = true;
         } else if (swtchDown) {
             b--;
             t--;
