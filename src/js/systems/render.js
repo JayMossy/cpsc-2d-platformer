@@ -2,7 +2,7 @@ import {
   Mrows, Mcols, tileSize, map, tileLocation, TILE_WATER, 
   TILE_WATER_DARK, TILE_GRASS, TILE_DIRT, TILE_BOX, 
   TILE_SPIKE 
-} from "../tileMap.js";
+} from "../level1Map.js";
 import { animator } from "./playerMovement.js";
 import { coins } from "./coins.js";
 import { player } from "../entities/player.js";
@@ -110,12 +110,12 @@ function drawMap() {
     }
 }
 
-function moveClouds() {
-    bg_body.style.backgroundPosition = `${dx}% 40%`;
-    if (player.vx === 0) dx += 0;
-    else if (player.vx > 0) dx -= 1;
-    else if (player.vx < 0) dx += 1;
-}
+// function moveClouds() {
+//     bg_body.style.backgroundPosition = `${dx}% 40%`;
+//     if (player.vx === 0) dx += 0;
+//     else if (player.vx > 0) dx -= 1;
+//     else if (player.vx < 0) dx += 1;
+// }
 
 
 let b = 5;
@@ -142,7 +142,7 @@ export function render() {
         }
     }
 
-    moveClouds();
+    // moveClouds();
 
     updateCamera();
     drawMap();
