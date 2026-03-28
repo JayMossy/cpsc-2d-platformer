@@ -3,11 +3,7 @@ import { applyGravity, clampFallSpeed, integrate } from "../systems/physics.js";
 import { Animator } from "../systems/animator.js";
 
 const enemySprite = new Image();
-<<<<<<< HEAD
 enemySprite.src = "src/assets/sprites/enemies/level-one/troll_enemy/Sprite-For-Troll.png";
-=======
-enemySprite.src = "./src/assets/sprites/enemy/enemySheet.png";
->>>>>>> upstream/main
 
 const GRAVITY = 1250;
 
@@ -18,13 +14,8 @@ export class Enemy {
         this.y = y;
 
         // size
-<<<<<<< HEAD
         this.w = 70;
         this.h = 70;
-=======
-        this.w = 32;
-        this.h = 32;
->>>>>>> upstream/main
 
         // horizontal movement
         this.vx = 0;
@@ -37,7 +28,6 @@ export class Enemy {
 
         // animations
         this.animator = new Animator(enemySprite, 48, 48);
-<<<<<<< HEAD
         this.animator.addAnimation("idle right", [0]);
         this.animator.addAnimation("idle left", [15]);
         this.animator.addAnimation("walk right", [1,2,3,4]);
@@ -48,13 +38,6 @@ export class Enemy {
         // state
         this.state = "patrol";
         this.facing = "left";
-=======
-        this.animator.addAnimation("idle", [0]);
-        this.animator.addAnimation("walk", [1,2,3,4]);
-
-        // state
-        this.state = "patrol";
->>>>>>> upstream/main
 
         // patrol variables
         this.patrolDir = -1;
@@ -73,19 +56,11 @@ export class Enemy {
         let distance = Math.abs(dx);
 
         if (this.state === "patrol") {
-<<<<<<< HEAD
             this.patrol(dt, distance); this.animator.setAnimation("walk " + this.facing);
         } else if (this.state === "follow") {
             this.follow(dt, dx, distance); this.animator.setAnimation("walk " + this.facing);
         } else if (this.state === "attack") {
             this.attack(distance);  this.animator.setAnimation("attack " + this.facing)
-=======
-            this.patrol(dt, distance);
-        } else if (this.state === "follow") {
-            this.follow(dt, dx, distance);
-        } else if (this.state === "attack") {
-            this.attack(distance);
->>>>>>> upstream/main
         }
 
         //Gravity
@@ -106,11 +81,8 @@ export class Enemy {
         this.y += this.vy * dt;
         this.grounded = false;
         vertical(this);
-<<<<<<< HEAD
 
         this.animator.update(dt);
-=======
->>>>>>> upstream/main
     }
 
     patrol(dt, distance) {
@@ -119,11 +91,7 @@ export class Enemy {
 
         this.patrolTimer += dt;
 
-<<<<<<< HEAD
         if (this.patrolTimer >= this.patrolDuration) {
-=======
-        if (this.patrolTimer > this.patrolDuration) {
->>>>>>> upstream/main
             this.patrolDir = -this.patrolDir;
             this.patrolTimer = 0;
         }
@@ -131,14 +99,11 @@ export class Enemy {
         if (distance < this.followRange) {
             this.state = "follow";
         }
-<<<<<<< HEAD
 
         this.vx = this.patrolDir * this.moveSpeed;
 
         if (this.vx > 0) this.facing = "right";
         else if (this.vx < 0) this.facing = "left";
-=======
->>>>>>> upstream/main
     }
 
     follow(dt, dx, distance) {
@@ -152,13 +117,10 @@ export class Enemy {
         else if (distance > this.followRange) {
             this.state = "patrol";
         }
-<<<<<<< HEAD
         this.vx = dir * this.moveSpeed;
 
         if (this.vx > 0) this.facing = "right";
         else if (this.vx < 0) this.facing = "left";
-=======
->>>>>>> upstream/main
     
     }
 
