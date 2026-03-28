@@ -8,7 +8,7 @@ import { coins } from "../collectables/coins.js";
 import { hearts } from "../collectables/hearts.js";
 import { player } from "../entities/player.js";
 import { enemies } from "../main.js";
-import { enemies } from "../main.js";
+
 
 export const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
