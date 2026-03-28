@@ -8,7 +8,7 @@ export function createPlayer(x, y) {
         h: 60,
         vx: 0,
         vy: 0,
-        moveSpeed: 600,
+        moveSpeed: 800,
         jump: 700,
         maxFallSpeed: 1400,
         grounded: false,

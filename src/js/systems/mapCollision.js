@@ -45,6 +45,11 @@ export function horizontal(entity) {
         }
         if(entity.vx === 0) break;
     }
+    if(entity.x < 0) entity.x = 0;
+    if(entity.x + entity.w > map[0].length * tileSize){
+        entity.x = map[0].length * tileSize - entity.w;
+        entity.vx = 0;
+    }
 }
 
 export function vertical(entity) {
