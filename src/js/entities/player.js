@@ -9,7 +9,7 @@ export function createPlayer(x, y) {
         vx: 0,
         vy: 0,
         moveSpeed: 800,
-        jump: 700,
+        jump: 800,
         maxFallSpeed: 1400,
         grounded: false,
         lastDir: "right"
