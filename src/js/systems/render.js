@@ -164,6 +164,7 @@ export function render() {
     ctx.font = "20px Arial";
     ctx.fillText(`x: ${player.x.toFixed(1)} y: ${player.y.toFixed(1)}`, 20, 30);
     ctx.fillText(`col: ${playerCol} row: ${playerRow}`, 20, 55);
+    ctx.fillText(`Coins: ${player.collectedCoins}`, 20, 80);
 
 
     animator.draw(
@@ -186,10 +187,7 @@ export function render() {
 
     coins.forEach(coin => {
         coin.draw(ctx, camera);
-        coin.checkCollision(player);
-        /* Could do ->
-        if (coin.checkCollision(player)) player.score++;
-        */
+        if (coin.checkCollision(player)) player.collectedCoins++;
     });
 
     hearts.forEach(heart => {
