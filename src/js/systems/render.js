@@ -9,6 +9,7 @@ import { hearts } from "../collectables/hearts.js";
 import { player } from "../entities/player.js";
 import { enemies } from "../main.js";
 
+
 export const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
@@ -174,9 +175,14 @@ export function render() {
     );
 
     for (const enemy of enemies) {
-        ctx.fillStyle = "red";
-        ctx.fillRect(enemy.x - camera.x, enemy.y - camera.y, enemy.w, enemy.h);
-    }
+    enemy.animator.draw(
+        ctx,
+        enemy.x - camera.x,
+        enemy.y - camera.y +8,
+        enemy.w,
+        enemy.h
+    );
+}
 
     coins.forEach(coin => {
         coin.draw(ctx, camera);

@@ -2,11 +2,11 @@ import { map, tileSize, TILE_BOX, TILE_GRASS, TILE_DIRT, TILE_SPIKE } from "../l
 
 const solidTiles = [TILE_BOX, TILE_GRASS, TILE_DIRT];
 const horizontalBuffer = .3;
-const verticalBuffer = .2;
+const verticalBuffer = .01;
 
 function getTile(col,row) {
-     if(row < 0 || row >= map.length) return -1;
-     if(col < 0 || col >= map[0].length) return -1;
+     if(row < 0 || row >= map.length) return 4;
+     if(col < 0 || col >= map[0].length) return 4;
      return map [row][col];
 }
 
@@ -37,7 +37,7 @@ export function horizontal(entity) {
         }else if(entity.vx < 0){
             for(let col = leftTile; col <= rightTile; col++){
                 if(solidTiles.includes(getTile(col,row))){
-                    entity.x = (col + 1) * tileSize + horizontalBuffer;
+                    entity.x = (col+1) * tileSize + horizontalBuffer;
                     entity.vx = 0;
                     break;
                 }
@@ -45,44 +45,38 @@ export function horizontal(entity) {
         }
         if(entity.vx === 0) break;
     }
-    if(entity.x < 0) entity.x = 0;
-    if(entity.x + entity.w > map[0].length * tileSize){
-        entity.x = map[0].length * tileSize - entity.w;
-        entity.vx = 0;
-    }
 }
 
 export function vertical(entity) {
     // Reset player's ground state
     entity.grounded = false;
-    const leftTile = Math.floor((entity.x + 1) / tileSize);
-    const rightTile = Math.floor((entity.x + entity.w - 1) / tileSize);
-    
-    // player falling
-   if (entity.vy > 0) {
-        const bottom = Math.floor((entity.y + entity.h - 1 + verticalBuffer) / tileSize);
-        for (let col = leftTile; col <= rightTile; col++) {
-            if (solidTiles.includes(getTile(col, bottom))) {
-               
-                entity.y = bottom * tileSize - entity.h;
-                entity.vy = 0;
-                entity.grounded = true;
-                return;
+    //Converts player position into tile coordinates
+    const leftTile = Math.floor(entity.x / tileSize);
+    const rightTile = Math.floor((entity.x + entity.w -1) / tileSize);
+    const topTile = Math.floor(entity.y / tileSize);
+    const bottomTile = Math.floor((entity.y + entity.h - 1) / tileSize);
+    //Loops through tiles touching the player
+    for(let row = topTile; row <= bottomTile; row++){
+        for(let col = leftTile; col <= rightTile; col++){
+            if(solidTiles.includes(getTile(col,row))){
+                if(entity.vy > 0 ){
+                    //falling - land on ground
+                    entity.y = row * tileSize - entity.h - verticalBuffer;
+                    entity.vy = 0;
+                    entity.grounded = true;
+                    break;
+                }
+                //jumping
+                else if ( entity.vy < 0){
+                    entity.y = (row + 1 ) * tileSize + verticalBuffer;
+                    entity.vy = 0;
+                    break;
                 }
             }
+
         }
-       else if (entity.vy < 0) {
-        const top = Math.floor(entity.y / tileSize);
-        for (let col = leftTile; col <= rightTile; col++) {
-            if (solidTiles.includes(getTile(col, top))) {
-                entity.y = (top + 1) * tileSize;
-                entity.vy = 0;
-                return;
-            }
-       }  
     }
 }
-   
 
 export function checkHazard(entity) {
     //Converts player position into tile coordinates
