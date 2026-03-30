@@ -11,6 +11,16 @@ export const TILE_BOX = 5; // solid tile
 export const TILE_WATER_DARK = 2;
 export const TILE_SPIKE = 6; // resets character to start
 
+export const TILES = {
+  SKY: 0,
+  WATER: 1,
+  WATER_DARK: 2,
+  GRASS: 3,
+  DIRT: 4,
+  BOX: 5, // solid tile
+  SPIKE: 6 // resets character to start
+}
+
 // Top left position in tile set
 export const tileLocation = {
   tileSize: 16,
@@ -24,7 +34,7 @@ export const tileLocation = {
 };
 
 export const map = Array.from({ length: Mrows }, () =>
-  Array.from({ length: Mcols }, () => TILE_SKY)
+  Array.from({ length: Mcols }, () => TILES.SKY)
 );
 
 function setTile(row, col, tile){
@@ -54,12 +64,12 @@ export function createRandomPits({
       const col = x + i;
 
       for(let d = 0; d <= depth; d++){
-        setTile(Mrows - 2 - d, col, TILE_SKY);
+        setTile(Mrows - 2 - d, col, TILES.SKY);
       }
       //dirt
-      setTile(Mrows - 1, col, TILE_DIRT);
+      setTile(Mrows - 1, col, TILES.DIRT);
       //spikes
-      setTile(Mrows - 2, col, TILE_SPIKE);
+      setTile(Mrows - 2, col, TILES.SPIKE);
     }
     x += width;
   }
@@ -84,8 +94,8 @@ export function createRandomPits({
       const height = Math.floor(Math.random() * (maxHeight - minHeight)) + minHeight;
 
       for(let i = 0; i < width; i++){
-        setTile(Mrows - 1 - height, x + i, TILE_GRASS);
-        setTile(Mrows - height, x + i, TILE_DIRT);
+        setTile(Mrows - 1 - height, x + i, TILES.GRASS);
+        setTile(Mrows - height, x + i, TILES.DIRT);
       }
       x += width;
     }
@@ -94,14 +104,14 @@ export function createRandomPits({
 /* ---------- FLOOR ---------- */
 for (let y = Mrows - 3; y < Mrows; y++){
   for(let x = 0; x < Mcols; x++){
-    map[y][x] = TILE_DIRT;
+    map[y][x] = TILES.DIRT;
   }
 }
 
 /* ---------- GRASS TOP ---------- */
 
 for (let x = 0; x < Mcols; x++){
-  map[Mrows - 4][x] = TILE_GRASS;
+  map[Mrows - 4][x] = TILES.GRASS;
 }
 
 

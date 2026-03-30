@@ -1,11 +1,8 @@
-import { horizontal, vertical } from "../systems/mapCollision.js";
 import { applyGravity, clampFallSpeed, integrate } from "../systems/physics.js";
 import { Animator } from "../systems/animator.js";
 
 const enemySprite = new Image();
 enemySprite.src = "src/assets/sprites/enemies/level-one/troll_enemy/Sprite-For-Troll.png";
-
-const GRAVITY = 1250;
 
 export class Enemy {
     constructor(x, y) {
@@ -63,24 +60,12 @@ export class Enemy {
             this.attack(distance);  this.animator.setAnimation("attack " + this.facing)
         }
 
-        //Gravity
-        if (this.vy > 0) {
-            this.vy += GRAVITY * 1.5 * dt;
-        } else {
-            this.vy += GRAVITY * dt;
-        }
-
-        // clamp fall speed
-        if (this.vy > this.maxFallSpeed) {
-            this.vy = this.maxFallSpeed;
-        }
-
-        this.x += this.vx * dt;
-        horizontal(this);
-
-        this.y += this.vy * dt;
+        applyGravity(this, dt);
+        clampFallSpeed(this)
+        
         this.grounded = false;
-        vertical(this);
+
+        integrate(this, dt);
 
         this.animator.update(dt);
     }

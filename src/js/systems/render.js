@@ -1,7 +1,5 @@
 import {
-  Mrows, Mcols, tileSize, map, tileLocation, TILE_WATER, 
-  TILE_WATER_DARK, TILE_GRASS, TILE_DIRT, TILE_BOX, 
-  TILE_SPIKE 
+  Mrows, Mcols, tileSize, map, tileLocation, TILES
 } from "../level1Map.js";
 import { animator } from "./playerMovement.js";
 import { coins } from "../collectables/coins.js";
@@ -79,16 +77,16 @@ function drawMap() {
             const tile = map[y][x];
 
             ctx.fillStyle = "rgba(0,0,0,0)";
-            if (tile === TILE_WATER) ctx.fillStyle = "#2b4f81";
-            if (tile === TILE_WATER_DARK) ctx.fillStyle = "#1a2f5a";
+            if (tile === TILES.WATER) ctx.fillStyle = "#2b4f81";
+            if (tile === TILES.WATER_DARK) ctx.fillStyle = "#1a2f5a";
 
             ctx.fillRect(tileX, tileY, tileSize, tileSize);
 
-            if (tile === TILE_GRASS) {
+            if (tile === TILES.GRASS) {
                 ctx.drawImage(tileSet, gsx, gsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
             }
 
-            if (tile === TILE_DIRT) {
+            if (tile === TILES.DIRT) {
                 let i = (
                     Math.ceil(Math.sqrt(x) * y * Math.pow(x, 2) * y + rndNumber) %
                     tileLocation.floors.length
@@ -99,12 +97,12 @@ function drawMap() {
             }
 
             // Temporary Boxes and Spikes
-            if (tile === TILE_BOX) {
+            if (tile === TILES.BOX) {
                 ctx.fillStyle = "#8b5a2b";
                 ctx.fillRect(tileX, tileY, tileSize, tileSize);
             }
 
-            if (tile === TILE_SPIKE) {
+            if (tile === TILES.SPIKE) {
                 ctx.fillStyle = "#c0392b";
                 ctx.fillRect(tileX, tileY, tileSize, tileSize);
             }
@@ -112,39 +110,9 @@ function drawMap() {
     }
 }
 
-// function moveClouds() {
-//     bg_body.style.backgroundPosition = `${dx}% 40%`;
-//     if (player.vx === 0) dx += 0;
-//     else if (player.vx > 0) dx -= 1;
-//     else if (player.vx < 0) dx += 1;
-// }
-
-
-let b = 5;
-let t = 11;
-let slow = 1;
-let swtchDown = false;
-
 export function render() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Cool way we can use makePlatform()
-    let prevB = b;
-    let prevT = t;
-    if (slow % 5 == 0) {
-        if (!swtchDown && t !== Mrows-3) {
-            b++;
-            t++;
-            if (t === Mrows-3) swtchDown = true;
-        } else if (swtchDown) {
-            b--;
-            t--;
-            if (b === 5) swtchDown = false;
-        }
-    }
-
-    // moveClouds();
 
     updateCamera();
     drawMap();

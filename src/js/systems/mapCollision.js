@@ -1,6 +1,6 @@
-import { map, tileSize, TILE_BOX, TILE_GRASS, TILE_DIRT, TILE_SPIKE } from "../level1Map.js";
+import { map, tileSize, TILES } from "../level1Map.js";
 
-const solidTiles = [TILE_BOX, TILE_GRASS, TILE_DIRT];
+const solidTiles = [TILES.BOX, TILES.GRASS, TILES.DIRT];
 const horizontalBuffer = .3;
 const verticalBuffer = .01;
 
@@ -87,7 +87,7 @@ export function checkHazard(entity) {
 
     for (let row = topTile; row <= bottomTile; row++) {
         for (let col = leftTile; col <= rightTile; col++){
-            if (getTile(col, row) === TILE_SPIKE) {
+            if (getTile(col, row) === TILES.SPIKE) {
                 resetEntity(entity);
                 return true;
             }
