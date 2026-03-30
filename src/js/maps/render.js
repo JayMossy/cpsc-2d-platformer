@@ -3,7 +3,7 @@ import {
   TILE_WATER_DARK, TILE_GRASS, TILE_DIRT, TILE_BOX, 
   TILE_SPIKE 
 } from "../level1Map.js";
-import { animator } from "./playerMovement.js";
+import { animator } from "../systems/playerMovement.js";
 import { coins } from "../collectables/coins.js";
 import { hearts } from "../collectables/hearts.js";
 import { player } from "../entities/player.js";
