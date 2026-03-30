@@ -1,4 +1,4 @@
-import { map, tileSize, TILE_BOX, TILE_GRASS, TILE_DIRT, TILE_SPIKE } from "../tileMap.js";
+import { map, tileSize, TILE_BOX, TILE_GRASS, TILE_DIRT, TILE_SPIKE } from "../level1Map.js";
 
 const solidTiles = [TILE_BOX, TILE_GRASS, TILE_DIRT];
 const horizontalBuffer = .3;
