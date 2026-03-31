@@ -33,6 +33,12 @@ export const tileLocation = {
   grass: [0,0]
 };
 
+let seed = 123;
+function seededRandom() {
+  seed = (seed * 12345 + 12345) % 12345;
+  return seed / 12345;
+}
+
 export const map = Array.from({ length: Mrows }, () =>
   Array.from({ length: Mcols }, () => TILES.SKY)
 );
@@ -54,11 +60,11 @@ export function createRandomPits({
   let x = 10;
 
   while (x < Mcols - 10){
-    x += Math.floor(Math.random() * (maxGap - minGap + 1)) + minGap;
+    x += Math.floor(seededRandom() * (maxGap - minGap + 1)) + minGap;
     if(x >= Mcols - 10) break;
 
-    const width = Math.floor(Math.random() * (maxWidth - minWidth + 1)) + minWidth;
-    const depth = Math.floor(Math.random() * (maxDepth - minDepth + 1)) + minDepth;
+    const width = Math.floor(seededRandom() * (maxWidth - minWidth + 1)) + minWidth;
+    const depth = Math.floor(seededRandom() * (maxDepth - minDepth + 1)) + minDepth;
 
     for(let i = 0; i < width; i++){
       const col = x + i;
@@ -87,11 +93,11 @@ export function createRandomPits({
     let x = 10;
 
     while (x < Mcols - 10){
-      x += Math.floor(Math.random() * (maxGap - minGap)) + minGap;
+      x += Math.floor(seededRandom() * (maxGap - minGap)) + minGap;
       if(x >= Mcols - 10) break;
 
-      const width = Math.floor(Math.random() * (maxWidth - minWidth)) + minWidth;
-      const height = Math.floor(Math.random() * (maxHeight - minHeight)) + minHeight;
+      const width = Math.floor(seededRandom() * (maxWidth - minWidth)) + minWidth;
+      const height = Math.floor(seededRandom() * (maxHeight - minHeight)) + minHeight;
 
       for(let i = 0; i < width; i++){
         setTile(Mrows - 1 - height, x + i, TILES.GRASS);
