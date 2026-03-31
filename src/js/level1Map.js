@@ -35,8 +35,8 @@ export const tileLocation = {
 
 let seed = 123;
 function seededRandom() {
-  seed = (seed * 12345 + 12345) % 12345;
-  return seed / 12345;
+  seed = (seed * 1664525 + 1013904223) % 4294967296;
+  return seed / 4294967296;
 }
 
 export const map = Array.from({ length: Mrows }, () =>
