@@ -81,7 +81,7 @@ const styles = {
     letterSpacing: 1,
   },
 };
-const coin;
+
 function DungeonHUD() {
   const swordSpriteSheet = "./src/assets/sprites/collectibles/sword_HUD.png";
   const [swordCollected, setSwordCollected] = React.useState(false);
