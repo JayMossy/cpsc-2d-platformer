@@ -1,11 +1,14 @@
 import {
-  Mrows, Mcols, tileSize, map, tileLocation, TILES
+  Mrows, Mcols, tileSize, map, tileLocation, TILE_WATER, 
+  TILE_WATER_DARK, TILE_GRASS, TILE_DIRT, TILE_BOX, 
+  TILE_SPIKE 
 } from "../level1Map.js";
 import { animator } from "./playerMovement.js";
 import { coins } from "../collectables/coins.js";
 import { hearts } from "../collectables/hearts.js";
 import { player } from "../entities/player.js";
 import { enemies } from "../main.js";
+import { sword } from "../collectables/sword.js";
 
 
 export const canvas = document.getElementById("game");
@@ -114,6 +117,23 @@ export function render() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Cool way we can use makePlatform()
+    let prevB = b;
+    let prevT = t;
+    if (slow % 5 == 0) {
+        if (!swtchDown && t !== Mrows-3) {
+            b++;
+            t++;
+            if (t === Mrows-3) swtchDown = true;
+        } else if (swtchDown) {
+            b--;
+            t--;
+            if (b === 5) swtchDown = false;
+        }
+    }
+
+    // moveClouds();
+
     updateCamera();
     drawMap();
 
@@ -132,6 +152,7 @@ export function render() {
     ctx.font = "20px Arial";
     ctx.fillText(`x: ${player.x.toFixed(1)} y: ${player.y.toFixed(1)}`, 20, 30);
     ctx.fillText(`col: ${playerCol} row: ${playerRow}`, 20, 55);
+    ctx.fillText(`Coins: ${player.collectedCoins}`, 20, 80);
 
 
     animator.draw(
@@ -143,26 +164,28 @@ export function render() {
     );
 
     for (const enemy of enemies) {
-    enemy.animator.draw(
-        ctx,
-        enemy.x - camera.x,
-        enemy.y - camera.y +8,
-        enemy.w,
-        enemy.h
-    );
-}
+        enemy.animator.draw(
+            ctx,
+            enemy.x - camera.x,
+            enemy.y - camera.y + 8,
+            enemy.w,
+            enemy.h
+        );
+    }
 
     coins.forEach(coin => {
         coin.draw(ctx, camera);
-        coin.checkCollision(player);
-        /* Could do ->
-        if (coin.checkCollision(player)) player.score++;
-        */
+        if (coin.checkCollision(player)) player.collectedCoins++;
     });
 
     hearts.forEach(heart => {
         heart.draw(ctx, camera);
         heart.checkCollision(player);
     });
+
+    sword.forEach(sword => {
+        sword.draw(ctx, camera)
+        sword.checkCollision(player)
+    })
 
 }
