@@ -3,14 +3,6 @@ export const Mcols = 350;
 export const tileSize = 32;
 
 // Tiles IDs used throughout the game
-export const TILE_SKY = 0;
-export const TILE_WATER = 1;
-export const TILE_GRASS = 3;
-export const TILE_DIRT = 4;
-export const TILE_BOX = 5; // solid tile
-export const TILE_WATER_DARK = 2;
-export const TILE_SPIKE = 6; // resets character to start
-
 export const TILES = {
   SKY: 0,
   WATER: 1,

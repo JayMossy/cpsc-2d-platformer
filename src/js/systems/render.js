@@ -1,7 +1,5 @@
 import {
-  Mrows, Mcols, tileSize, map, tileLocation, TILE_WATER, 
-  TILE_WATER_DARK, TILE_GRASS, TILE_DIRT, TILE_BOX, 
-  TILE_SPIKE 
+  Mrows, Mcols, tileSize, map, tileLocation, TILES
 } from "../level1Map.js";
 import { animator } from "./playerMovement.js";
 import { coins } from "../collectables/coins.js";
@@ -117,23 +115,6 @@ export function render() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Cool way we can use makePlatform()
-    let prevB = b;
-    let prevT = t;
-    if (slow % 5 == 0) {
-        if (!swtchDown && t !== Mrows-3) {
-            b++;
-            t++;
-            if (t === Mrows-3) swtchDown = true;
-        } else if (swtchDown) {
-            b--;
-            t--;
-            if (b === 5) swtchDown = false;
-        }
-    }
-
-    // moveClouds();
-
     updateCamera();
     drawMap();
 
@@ -152,7 +133,7 @@ export function render() {
     ctx.font = "20px Arial";
     ctx.fillText(`x: ${player.x.toFixed(1)} y: ${player.y.toFixed(1)}`, 20, 30);
     ctx.fillText(`col: ${playerCol} row: ${playerRow}`, 20, 55);
-    ctx.fillText(`Coins: ${player.collectedCoins}`, 20, 80);
+    // ctx.fillText(`Coins: ${player.collectedCoins}`, 20, 80);
 
 
     animator.draw(
@@ -175,17 +156,20 @@ export function render() {
 
     coins.forEach(coin => {
         coin.draw(ctx, camera);
-        if (coin.checkCollision(player)) player.collectedCoins++;
+        if (coin.checkCollision(player)) {
+            // player.collectedCoins++;
+            window.dispatchEvent(new CustomEvent('coinCollected', { detail: { collected: true } }));
+        }
     });
 
     hearts.forEach(heart => {
         heart.draw(ctx, camera);
-        heart.checkCollision(player);
+        if (heart.checkCollision(player)) window.dispatchEvent(new CustomEvent('heartCollected', { detail: { collected: true } }));;
     });
 
     sword.forEach(sword => {
         sword.draw(ctx, camera)
-        sword.checkCollision(player)
+        if (sword.checkCollision(player)) window.dispatchEvent(new CustomEvent('swordCollected', { detail: { collected: true } }));
     })
 
 }

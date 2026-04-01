@@ -1,7 +1,4 @@
 //@ts-nocheck
-import { sword } from "../collectables/sword.js";
-import { coins } from "../collectables/coins.js";
-import { hearts } from "../collectables/hearts.js";
 const styles = {
   hud: {
     fontFamily: "'Press Start 2P', monospace",
@@ -84,7 +81,7 @@ const styles = {
     letterSpacing: 1,
   },
 };
-
+const coin;
 function DungeonHUD() {
   const swordSpriteSheet = "./src/assets/sprites/collectibles/sword_HUD.png";
   const [swordCollected, setSwordCollected] = React.useState(false);

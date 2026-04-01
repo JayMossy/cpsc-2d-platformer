@@ -13,19 +13,6 @@ class Coin extends Collectable {
     constructor(x, y) {
         super(x, y, 50, 50, coinAnimator);
     }
-    checkCollision(player) {
-        if (!this.collected &&
-            player.x + player.w / 2 > this.x &&
-            player.x + player.w / 2 < this.x + this.w &&
-            player.y + player.h / 2 > this.y &&
-            player.y + player.h / 2 < this.y + this.h) {
-            this.collected = true;
-            // Dispatch a custom event to notify DungeonHUD.jsx
-            window.dispatchEvent(new CustomEvent('coinCollected', { detail: { collected: true } }));
-            return true;
-        }
-        return false;
-    }
 }
 
 // Array that holds all the coins
