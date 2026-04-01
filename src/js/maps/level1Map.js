@@ -40,6 +40,7 @@ function setTile(row, col, tile){
     map[row][col] = tile;
   }
 }
+
 /* ------ Random pits with spikes ------*/
 export function createRandomPits({
   minWidth = 4,
@@ -64,9 +65,7 @@ export function createRandomPits({
       for(let d = 0; d <= depth; d++){
         setTile(Mrows - 2 - d, col, TILES.SKY);
       }
-      //dirt
       setTile(Mrows - 1, col, TILES.DIRT);
-      //spikes
       setTile(Mrows - 2, col, TILES.SPIKE);
     }
     x += width;

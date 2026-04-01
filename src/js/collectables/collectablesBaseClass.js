@@ -25,4 +25,8 @@ export class Collectable {
         }
         return false;
     }
+
+    updateReact(collected) {
+        window.dispatchEvent(new CustomEvent(collected, { detail: { collected: true } }));
+    }
 }

@@ -1,7 +1,7 @@
 import {
   Mrows, Mcols, tileSize, map, tileLocation, TILES
-} from "../level1Map.js";
-import { animator } from "./playerMovement.js";
+} from "./level1Map.js";
+import { animator } from "../systems/playerMovement.js";
 import { coins } from "../collectables/coins.js";
 import { hearts } from "../collectables/hearts.js";
 import { player } from "../entities/player.js";
@@ -9,11 +9,8 @@ import { enemies } from "../main.js";
 import { sword } from "../collectables/sword.js";
 
 
-export const canvas = document.getElementById("game");
+const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
-
-const bg_body = document.querySelector("body");
-let dx = 75;
 
 const tileSet = new Image();
 tileSet.src = "../../src/assets/sprites/tiles/world_tileset.png";
@@ -36,7 +33,6 @@ resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
 /* Camera */
-
 const camera = {
     x: 0,
     y: 0
@@ -61,7 +57,6 @@ function updateCamera() {
 }
 
 /* Draw Map */
-
 function drawMap() {
     for (let y = 0; y < Mrows; y++) {
         for (let x = 0; x < Mcols; x++) {
@@ -97,7 +92,7 @@ function drawMap() {
                 ctx.drawImage(tileSet, fsx, fsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
             }
 
-            // Temporary Boxes and Spikes
+            // Temporary Boxes and Spikes 
             if (tile === TILES.BOX) {
                 ctx.fillStyle = "#8b5a2b";
                 ctx.fillRect(tileX, tileY, tileSize, tileSize);
@@ -133,8 +128,6 @@ export function render() {
     ctx.font = "20px Arial";
     ctx.fillText(`x: ${player.x.toFixed(1)} y: ${player.y.toFixed(1)}`, 20, 30);
     ctx.fillText(`col: ${playerCol} row: ${playerRow}`, 20, 55);
-    // ctx.fillText(`Coins: ${player.collectedCoins}`, 20, 80);
-
 
     animator.draw(
         ctx,
@@ -157,19 +150,23 @@ export function render() {
     coins.forEach(coin => {
         coin.draw(ctx, camera);
         if (coin.checkCollision(player)) {
-            // player.collectedCoins++;
-            window.dispatchEvent(new CustomEvent('coinCollected', { detail: { collected: true } }));
+            player.collectedCoins++;
+            coin.updateReact('coinCollected')
         }
     });
 
     hearts.forEach(heart => {
         heart.draw(ctx, camera);
-        if (heart.checkCollision(player)) window.dispatchEvent(new CustomEvent('heartCollected', { detail: { collected: true } }));;
+        if (heart.checkCollision(player)) {
+            heart.updateReact('heartCollected')
+        }
     });
 
     sword.forEach(sword => {
         sword.draw(ctx, camera)
-        if (sword.checkCollision(player)) window.dispatchEvent(new CustomEvent('swordCollected', { detail: { collected: true } }));
+        if (sword.checkCollision(player)) {
+            sword.updateReact('swordCollected')
+        }
     })
 
 }

@@ -30,15 +30,3 @@ window.addEventListener("keyup", (e) => {
     if (key === "arrowup" || key === "w" || key === " ") keys.up = false;
     if (key === "arrowdown" || key === "s") keys.down = false;
 });
-
-/*
-These make a tile map like this 
-const map = [
-    [0,0,0],
-    [0,0,0],
-    [0,0,0]
-]
-Every number 0-4 for now
-corresponds to a color
-we could later make it correspond to image later on?
-*/

@@ -1,4 +1,4 @@
-import { map, tileSize, TILES } from "../level1Map.js";
+import { map, tileSize, TILES } from "../maps/level1Map.js";
 
 const solidTiles = [TILES.BOX, TILES.GRASS, TILES.DIRT];
 const horizontalBuffer = .3;

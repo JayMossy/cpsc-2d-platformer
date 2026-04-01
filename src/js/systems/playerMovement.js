@@ -62,5 +62,4 @@ export function playerMovement(dt) {
         else animator.setAnimation("idle right");
     }
 
-    if (player.x < 0) player.x = 0;
 }
