@@ -13,7 +13,7 @@ export function createPlayer(x, y) {
         maxFallSpeed: 1400,
         grounded: false,
         lastDir: "right",
-        hp: 20
+        collectedCoins: 0
     };
 }
 // Sets player to current start spot
