@@ -1,12 +1,11 @@
 export class Collectable {
-    constructor(x, y, w, h, animator, name) {
+    constructor(x, y, w, h, animator) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
         this.animator = animator;
         this.collected = false;
-        this.name = name
     }
 
     draw(ctx, camera) {

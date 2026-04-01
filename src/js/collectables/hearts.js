@@ -11,7 +11,7 @@ heartAnimator.setAnimation("spin");
 
 class Heart extends Collectable {
     constructor(x, y) {
-        super(x, y, 50, 50, heartAnimator, "heart");
+        super(x, y, 50, 50, heartAnimator);
     }
 
     checkCollision(player) {

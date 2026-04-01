@@ -10,7 +10,7 @@ swordAnimator.setAnimation("spin")
 
 class Sword extends Collectable {
     constructor(x, y) {
-        super(x, y, 80, 80, swordAnimator, "sword")
+        super(x, y, 80, 80, swordAnimator)
     }
     //NOTE If there is a way to make the hud update without having to override checkCollision, I will refactor.
     checkCollision(player) {

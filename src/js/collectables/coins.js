@@ -11,7 +11,7 @@ coinAnimator.setAnimation("spin");
 
 class Coin extends Collectable {
     constructor(x, y) {
-        super(x, y, 50, 50, coinAnimator, "coin");
+        super(x, y, 50, 50, coinAnimator);
     }
     checkCollision(player) {
         if (!this.collected &&
