@@ -17,7 +17,7 @@ export const TILES = {
 // Top left position in tile set
 export const tileLocation = {
   tileSize: 16,
-  floors: [
+  dirt: [
     [0,16],
     [16,0],
     [16,16],
@@ -71,40 +71,61 @@ export function createRandomPits({
     }
     x += width;
   }
-  }
+}
 
-  /* ------ Random Platforms ------ */
-  export function createRandomPlatforms({
-    minWidth = 4,
-    maxWidth = 10,
-    minGap = 8, 
-    maxGap = 18,
-    minHeight = 10, 
-    maxHeight = 12
-  } = {}) {
-    let x = 10;
+/* ------ Random Platforms ------ */
+export function createRandomPlatforms({
+  minWidth = 4,
+  maxWidth = 10,
+  minGap = 8, 
+  maxGap = 18,
+  minHeight = 10, 
+  maxHeight = 12
+} = {}) {
+  let x = 10;
 
-    while (x < Mcols - 10){
-      x += Math.floor(seededRandom() * (maxGap - minGap)) + minGap;
-      if(x >= Mcols - 10) break;
+  while (x < Mcols - 10){
+    x += Math.floor(seededRandom() * (maxGap - minGap)) + minGap;
+    if(x >= Mcols - 10) break;
 
-      const width = Math.floor(seededRandom() * (maxWidth - minWidth)) + minWidth;
-      const height = Math.floor(seededRandom() * (maxHeight - minHeight)) + minHeight;
+    const width = Math.floor(seededRandom() * (maxWidth - minWidth)) + minWidth;
+    const height = Math.floor(seededRandom() * (maxHeight - minHeight)) + minHeight;
 
-      for(let i = 0; i < width; i++){
-        setTile(Mrows - 1 - height, x + i, TILES.GRASS);
-        setTile(Mrows - height, x + i, TILES.DIRT);
-      }
-      x += width;
+    for(let i = 0; i < width; i++){
+      setTile(Mrows - 1 - height, x + i, TILES.GRASS);
+      setTile(Mrows - height, x + i, TILES.DIRT);
     }
+    x += width;
   }
+}
+
+/* optimizing randomization of dirt */
+export const dirtVari = [];
+const now = new Date();
+const rndNumber = 
+      now.getHours() * 439 + 
+      now.getMinutes() * 577 + 
+      now.getSeconds() * 727;
+
+for (let y = 0; y < Mrows; y++){
+  if (!dirtVari[y]) dirtVari[y] = [];
+
+  for(let x = 0; x < Mcols; x++){
+    let i = Math.ceil(Math.sqrt(x) * y * Math.pow(x, 2) * y + rndNumber) % tileLocation.dirt.length;
+
+    dirtVari[y][x] = tileLocation.dirt[i];
+  }
+}
+
 
 /* ---------- FLOOR ---------- */
+
 for (let y = Mrows - 3; y < Mrows; y++){
   for(let x = 0; x < Mcols; x++){
     map[y][x] = TILES.DIRT;
   }
 }
+
 
 /* ---------- GRASS TOP ---------- */
 

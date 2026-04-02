@@ -1,6 +1,7 @@
 import { BaseRender } from "./renderBaseClass.js";
 import { 
-    Mrows, Mcols, tileSize, map, tileLocation, TILES 
+    Mrows, Mcols, tileSize, map,
+    tileLocation, TILES, dirtVari
 } from "./bossArena.js";
 
 export class BossArena extends BaseRender {
@@ -21,8 +22,14 @@ export class BossArena extends BaseRender {
         const ogSize = tileLocation.tileSize;
         const [gsx, gsy] = tileLocation.grass;
 
-        for (let y = 0; y < this.mapRows; y++) {
-            for (let x = 0; x < this.mapCols; x++) {
+        const startCol = Math.max(0, Math.floor(this.camera.x / tileSize));
+        const endCol = Math.min(Mcols, Math.ceil((this.camera.x + this.canvas.width) / tileSize));
+
+        const startRow = Math.max(0, Math.floor(this.camera.y / tileSize));
+        const endRow = Math.min(Mrows, Math.ceil((this.camera.y + this.canvas.height) / tileSize));
+
+        for (let y = startRow; y < endRow; y++) {
+            for (let x = startCol; x < endCol; x++) {
                 const tileX = x * this.tileSize - this.camera.x;
                 const tileY = y * this.tileSize - this.camera.y;
 
@@ -46,13 +53,8 @@ export class BossArena extends BaseRender {
                 }
 
                 if (tile === TILES.DIRT) {
-                    let i = (
-                        Math.ceil(Math.sqrt(x) * y * Math.pow(x, 2) * y + this.rndNumber) %
-                        tileLocation.floors.length
-                    );
-
-                    let [fsx, fsy] = tileLocation.floors[i];
-                    this.ctx.drawImage(this.tileSet, fsx, fsy, ogSize, ogSize, tileX, tileY, this.tileSize, this.tileSize);
+                    let [fsx, fsy] = dirtVari[y][x];
+                    this.ctx.drawImage(this.tileSet, fsx, fsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
                 }
 
                 if (tile === TILES.SPIKE) {

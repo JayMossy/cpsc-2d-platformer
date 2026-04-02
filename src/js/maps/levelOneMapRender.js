@@ -1,6 +1,7 @@
 import { BaseRender } from "./renderBaseClass.js";
 import {
-    Mrows, Mcols, tileSize, map, tileLocation, TILES
+    Mrows, Mcols, tileSize, map,
+    tileLocation, TILES, dirtVari
 } from "./level1Map.js";
 import { coins } from "../collectables/coins.js";
 import { hearts } from "../collectables/hearts.js";
@@ -21,9 +22,6 @@ export class LevelOneMap extends BaseRender {
         this.hearts = hearts;
         this.sword = sword;
         this.enemies = enemies;
-
-        this.now = new Date();
-        this.rndNumber = this.now.getHours() * 439 + this.now.getMinutes() * 577 + this.now.getSeconds() * 727;
     }
 
     // When you override drawMap you'll make your own draw 
@@ -36,8 +34,14 @@ export class LevelOneMap extends BaseRender {
         const ogSize = tileLocation.tileSize;
         const [gsx, gsy] = tileLocation.grass;
 
-        for (let y = 0; y < Mrows; y++) {
-            for (let x = 0; x < Mcols; x++) {
+        const startCol = Math.max(0, Math.floor(this.camera.x / tileSize));
+        const endCol = Math.min(Mcols, Math.ceil((this.camera.x + this.canvas.width) / tileSize));
+
+        const startRow = Math.max(0, Math.floor(this.camera.y / tileSize));
+        const endRow = Math.min(Mrows, Math.ceil((this.camera.y + this.canvas.height) / tileSize));
+
+        for (let y = startRow; y < endRow; y++) {
+            for (let x = startCol; x < endCol; x++) {
                 const tileX = x * tileSize - this.camera.x;
                 const tileY = y * tileSize - this.camera.y;
 
@@ -50,7 +54,7 @@ export class LevelOneMap extends BaseRender {
 
                 const tile = map[y][x];
 
-                this.ctx.fillStyle = "rgba(0,0,0,0)";
+                if (tile === TILES.SKY) this.ctx.fillStyle = "rgba(0,0,0,0)";
                 if (tile === TILES.WATER) this.ctx.fillStyle = "#2b4f81";
                 if (tile === TILES.WATER_DARK) this.ctx.fillStyle = "#1a2f5a";
 
@@ -61,12 +65,7 @@ export class LevelOneMap extends BaseRender {
                 }
 
                 if (tile === TILES.DIRT) {
-                    let i = (
-                        Math.ceil(Math.sqrt(x) * y * Math.pow(x, 2) * y + this.rndNumber) %
-                        tileLocation.floors.length
-                    );
-
-                    let [fsx, fsy] = tileLocation.floors[i];
+                    let [fsx, fsy] = dirtVari[y][x];
                     this.ctx.drawImage(this.tileSet, fsx, fsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
                 }
 

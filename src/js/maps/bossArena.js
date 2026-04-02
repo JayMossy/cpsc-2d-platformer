@@ -16,7 +16,7 @@ Object.freeze(TILES); // makes TILES object immutable
 // Top left position in tile set
 export const tileLocation = {
   tileSize: 16,
-  floors: [
+  dirt: [
     [0,16],
     [16,0],
     [16,16],
@@ -64,6 +64,23 @@ makePlatform(32, 32, Mcols-16, Mcols-14, TILES.DIRT)
 // right inside
 makePlatform(39, 47, Mcols-15, Mcols-2, TILES.SKY)
 
+/* optimizing randomization of dirt */
+export const dirtVari = [];
+const now = new Date();
+const rndNumber = 
+      now.getHours() * 439 + 
+      now.getMinutes() * 577 + 
+      now.getSeconds() * 727;
+
+for (let y = 0; y < Mrows; y++){
+  if (!dirtVari[y]) dirtVari[y] = [];
+
+  for(let x = 0; x < Mcols; x++){
+    let i = Math.ceil(Math.sqrt(x) * y * Math.pow(x, 2) * y + rndNumber) % tileLocation.dirt.length;
+
+    dirtVari[y][x] = tileLocation.dirt[i];
+  }
+}
 
 /**
 * Makes vertical platfrom
