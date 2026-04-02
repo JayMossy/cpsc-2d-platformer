@@ -116,6 +116,8 @@ export class LevelOneMap extends BaseRender {
             this.ctx.fillText("Go to boss arena, click e!", this.canvas.width / 2, 60);
 
             this.canSwitch = true;
+        } else {
+            this.canSwitch = false;
         }
     }
 
