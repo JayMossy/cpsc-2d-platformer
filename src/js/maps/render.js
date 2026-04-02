@@ -1,172 +1,34 @@
-import {
-  Mrows, Mcols, tileSize, map, tileLocation, TILES
-} from "./level1Map.js";
-import { animator } from "../systems/playerMovement.js";
-import { coins } from "../collectables/coins.js";
-import { hearts } from "../collectables/hearts.js";
-import { player } from "../entities/player.js";
-import { enemies } from "../main.js";
-import { sword } from "../collectables/sword.js";
+import { keys } from "../systems/userInput.js";
+import { LevelOneMap } from "./levelOneMapRender.js";
+import { BossArena } from "./bossArenaRender.js";
 
+const levelOne = new LevelOneMap();
+const bossArena = new BossArena();
 
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
+const levels = [levelOne, bossArena]
 
-const tileSet = new Image();
-tileSet.src = "../../src/assets/sprites/tiles/world_tileset.png";
+let canSwitch = true;
+let currentLevel = 0;
 
-const ogSize = tileLocation.tileSize;
-const [gsx, gsy] = tileLocation.grass;
-
-/* Random number for dirt */
-const now = new Date();
-const rndNumber = now.getHours() * 439 + now.getMinutes() * 577 + now.getSeconds() * 727;
-
-/* Canvas resize */
-
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
-
-/* Camera */
-const camera = {
-    x: 0,
-    y: 0
-};
-
-function updateCamera() {
-
-    const targetX = player.x + player.w / 2 - canvas.width / 2;
-    const targetY = player.y + player.h / 2 - canvas.height / 2;
-
-    camera.x += (targetX - camera.x) * 0.1;
-    camera.y += (targetY - camera.y) * 0.1;
-
-    const mapWidth = Mcols * tileSize;
-    const mapHeight = Mrows * tileSize;
-
-    camera.x = Math.max(0, Math.min(camera.x, mapWidth - canvas.width));
-    camera.y = Math.max(0, Math.min(camera.y, mapHeight - canvas.height));
-
-    camera.x = Math.round(camera.x);
-    camera.y = Math.round(camera.y);
-}
-
-/* Draw Map */
-function drawMap() {
-    for (let y = 0; y < Mrows; y++) {
-        for (let x = 0; x < Mcols; x++) {
-            const tileX = x * tileSize - camera.x;
-            const tileY = y * tileSize - camera.y;
-
-            if (
-                tileX < -tileSize ||
-                tileX > canvas.width ||
-                tileY < -tileSize ||
-                tileY > canvas.height
-            ) continue;
-
-            const tile = map[y][x];
-
-            ctx.fillStyle = "rgba(0,0,0,0)";
-            if (tile === TILES.WATER) ctx.fillStyle = "#2b4f81";
-            if (tile === TILES.WATER_DARK) ctx.fillStyle = "#1a2f5a";
-
-            ctx.fillRect(tileX, tileY, tileSize, tileSize);
-
-            if (tile === TILES.GRASS) {
-                ctx.drawImage(tileSet, gsx, gsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
-            }
-
-            if (tile === TILES.DIRT) {
-                let i = (
-                    Math.ceil(Math.sqrt(x) * y * Math.pow(x, 2) * y + rndNumber) %
-                    tileLocation.floors.length
-                );
-
-                let [fsx, fsy] = tileLocation.floors[i];
-                ctx.drawImage(tileSet, fsx, fsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
-            }
-
-            // Temporary Boxes and Spikes 
-            if (tile === TILES.BOX) {
-                ctx.fillStyle = "#8b5a2b";
-                ctx.fillRect(tileX, tileY, tileSize, tileSize);
-            }
-
-            if (tile === TILES.SPIKE) {
-                ctx.fillStyle = "#c0392b";
-                ctx.fillRect(tileX, tileY, tileSize, tileSize);
-            }
-        }
+function moveMaps() {
+    if (keys.e && canSwitch && levels[currentLevel].canSwitch) {
+        canSwitch = false;
+        currentLevel = (currentLevel + 1) % levels.length;
+        if (currentLevel === 0) levelOne.setPlayerPos(2000, 1750);
+        if (currentLevel === 1) bossArena.setPlayerPos(540, 1605);
     }
+
+    if (!keys.e) {
+        canSwitch = true;
+    }
+}
+
+export function getCurrentLevel() {
+    return currentLevel;
 }
 
 export function render() {
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    updateCamera();
-    drawMap();
-
-    // Easier debug we can see out "hit box"
-    ctx.strokeStyle = "red";
-    ctx.strokeRect(
-        player.x - camera.x,
-        player.y - camera.y,
-        player.w,
-        player.h
-    )
-    const playerCol = Math.floor(player.x / tileSize);
-    const playerRow = Mrows - Math.floor((player.y + player.h) / tileSize);
-
-    ctx.fillStyle = "white";
-    ctx.font = "20px Arial";
-    ctx.fillText(`x: ${player.x.toFixed(1)} y: ${player.y.toFixed(1)}`, 20, 30);
-    ctx.fillText(`col: ${playerCol} row: ${playerRow}`, 20, 55);
-
-    animator.draw(
-        ctx,
-        player.x - camera.x,
-        player.y - camera.y,
-        player.w,
-        player.h
-    );
-
-    for (const enemy of enemies) {
-        enemy.animator.draw(
-            ctx,
-            enemy.x - camera.x,
-            enemy.y - camera.y + 8,
-            enemy.w,
-            enemy.h
-        );
-    }
-
-    coins.forEach(coin => {
-        coin.draw(ctx, camera);
-        if (coin.checkCollision(player)) {
-            player.collectedCoins++;
-            coin.updateReact('coinCollected')
-        }
-    });
-
-    hearts.forEach(heart => {
-        heart.draw(ctx, camera);
-        if (heart.checkCollision(player)) {
-            heart.updateReact('heartCollected')
-        }
-    });
-
-    sword.forEach(sword => {
-        sword.draw(ctx, camera)
-        if (sword.checkCollision(player)) {
-            sword.updateReact('swordCollected')
-        }
-    })
-
+    moveMaps();
+    
+    levels[currentLevel].render();
 }

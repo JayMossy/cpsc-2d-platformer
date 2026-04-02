@@ -10,7 +10,8 @@ export const TILES = {
   GRASS: 3,
   DIRT: 4,
   BOX: 5, // solid tile
-  SPIKE: 6 // resets character to start
+  SPIKE: 6, // resets character to start
+  DOOR: 7
 }
 
 // Top left position in tile set
@@ -111,6 +112,10 @@ for (let x = 0; x < Mcols; x++){
   map[Mrows - 4][x] = TILES.GRASS;
 }
 
+/* ------ DOOR ------ */
+
+map[Mrows - 14][80] = TILES.DOOR;
+map[Mrows - 13][80] = TILES.DOOR;
 
 /* ------ Generate Level ------ */
 

@@ -117,3 +117,8 @@ export class Enemy {
         }
     }
 }
+
+export const enemies = [
+    new Enemy(240, 1200),
+    new Enemy(1500, 1200)
+];
