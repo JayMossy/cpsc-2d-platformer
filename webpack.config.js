@@ -6,9 +6,9 @@ let production = process.env.NODE_ENV === "production";
 
 let config = {
     mode: "development",
-    entry: "./src/adventure.tsx",
+    entry: "./src/root.tsx",
     output: {
-        filename: "adventure-bundle.js",
+        filename: "bundle.js",
         path: path.resolve(__dirname, "dist"),
         clean: true
     },
@@ -16,7 +16,7 @@ let config = {
         static: "./dist"
     },
     resolve: {
-        extensions: [".ts", ".tsx", ".js"]
+        extensions: [".ts", ".tsx", ".js", ".jsx"]
     },
     module: {
         rules: [
@@ -35,13 +35,13 @@ let config = {
     plugins: [
         new CopyPlugin({
             patterns: [
-                {from: "./src/images", to: "images"},
-                {from: "./src/bootstrap", to: "bootstrap"},
+                { from: "./src/images", to: "images" },
+                { from: "./src/bootstrap", to: "bootstrap" },
             ]
         }),
         new HtmlWebpackPlugin({
-            template: "./adventure.html",
-            filename: "adventure.html"
+            template: "./index.html",
+            filename: "index.html"
         })
     ]
 }
@@ -51,12 +51,12 @@ if (production) {
     config.plugins = [
         new CopyPlugin({
             patterns: [
-                {from: "./src/images", to: "images"},
+                { from: "./src/images", to: "images" },
             ]
         }),
         new HtmlWebpackPlugin({
-            template: "./adventure_prod.html",
-            filename: "adventure.html"
+            template: "./index.html",
+            filename: "index.html"
         })
     ];
 }
