@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../css/main-menu-style.css"
 import "../../css/styles.css"
 import backgroundImage from '../../assets/backgrounds/temp-menu-clouds-background.jpg';
@@ -6,8 +6,18 @@ import titleImage from '../../assets/sprites/ui/temp-transparent-title.png';
 import SavedScore from "./SavedScore";
 import FirstTimePlaying from "./FirstTimePlaying";
 
+interface MainMenuProps {
+  onSendShownComponent: (data: any) => void;
+}
 
-const MainMenu = () => {
+
+const MainMenu: React.FC<MainMenuProps> = ({onSendShownComponent}) => {
+    const [componentToShow, setComponentToShow] = useState("")
+
+    const handleChange = ((componentName: string) => {
+        // setComponentToShow(componentName)
+        onSendShownComponent(componentName)
+    })
 	return (
         <>
     {/* Main Container For Grid */}
@@ -55,7 +65,7 @@ const MainMenu = () => {
                 <button className=" btn-custom-color btn  rounded-1 mb-3 fs-4 fs-custom-sm"><i className="bi bi-suit-diamond-fill pe-1"></i>Start New Game<i className="bi bi-suit-diamond-fill ps-1"></i></button>
                 {/* TODO add component with tall z-index that shows up when this button is clicked. The button should only be visible on small screens. */}
                 {/* <button className=" btn-custom-color btn  rounded-1 mb-3 fs-4 fs-custom-sm"><i className="bi bi-trophy-fill pe-1"></i>View Scores<i className="bi bi-trophy-fill ps-1"></i></button> */}
-                <button className=" btn-custom-color btn  rounded-1 mb-3 fs-4 fs-custom-sm"><i className="bi bi-person-standing pe-1"></i>Change Character<i className="bi bi-person-standing ps-1"></i></button>
+                <button onClick={() => handleChange("changeCharacter")} className=" btn-custom-color btn  rounded-1 mb-3 fs-4 fs-custom-sm"><i className="bi bi-person-standing pe-1"></i>Change Character<i className="bi bi-person-standing ps-1"></i></button>
                 <button className=" btn-custom-color btn  rounded-1 mb-3 fs-4 fs-custom-sm"><i className="bi bi-suit-diamond-fill pe-1"></i>Settings<i className="bi bi-suit-diamond-fill ps-1"></i></button>
                 <button className=" btn-custom-color btn  rounded-1 mb-3 fs-4 fs-custom-sm"><i className="bi bi-suit-diamond-fill pe-1"></i>Credits<i className="bi bi-suit-diamond-fill ps-1"></i></button>
                 {/* <a
