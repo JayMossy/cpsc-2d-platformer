@@ -16,15 +16,15 @@ if (localStorage.getItem("chosenCharacter") == "RedShirt") {
     spriteSheet.src = "./src/assets/sprites/player/main_character_red_shirt/SpriteSheet/spritesheetmcrwalkrun.png";
 }
 
-export const animator = new Animator(spriteSheet, 48, 43);
+export const playerAnimator = new Animator(spriteSheet, 48, 43);
 
-animator.addAnimation("idle right", [0]);
-animator.addAnimation("idle left", [1]);
-animator.addAnimation("run right", [2, 3, 4, 5]);
-animator.addAnimation("run left", [6, 7, 8, 9]);
+playerAnimator.addAnimation("idle right", [0]);
+playerAnimator.addAnimation("idle left", [1]);
+playerAnimator.addAnimation("run right", [2, 3, 4, 5]);
+playerAnimator.addAnimation("run left", [6, 7, 8, 9]);
 
 export function playerMovement(dt) {
-    animator.update(dt);
+    playerAnimator.update(dt);
 
     player.vx = 0;
 
@@ -54,12 +54,12 @@ export function playerMovement(dt) {
     integrate(player, dt);
 
     if (player.vx !== 0) {
-        if (player.lastDir === "left") animator.setAnimation("run left");
-        else animator.setAnimation("run right");
+        if (player.lastDir === "left") playerAnimator.setAnimation("run left");
+        else playerAnimator.setAnimation("run right");
     }
     else {
-        if (player.lastDir === "left") animator.setAnimation("idle left");
-        else animator.setAnimation("idle right");
+        if (player.lastDir === "left") playerAnimator.setAnimation("idle left");
+        else playerAnimator.setAnimation("idle right");
     }
 
 }

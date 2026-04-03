@@ -3,14 +3,9 @@ import { playerMovement } from "./systems/playerMovement.js";
 import { render } from "./maps/render.js";
 import { updateCollectables } from "./collectables/updateCollectables.js";
 import { player } from "./entities/player.js";
-import { Enemy } from "./entities/enemy.js";
+import { enemies } from "./entities/enemy.js";
 
 let lastTime = 0;
-
-export const enemies = [];
-enemies.push(new Enemy(240, 1200))
-enemies.push(new Enemy(1500, 1200))
-
 
 function loop(timestamp) {
 
