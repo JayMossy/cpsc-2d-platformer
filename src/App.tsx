@@ -1,10 +1,13 @@
 import React from 'react'
+import MainMenu from './js/components/MainMenu';
 
 
 const App = () => {
     return (
         <>
-            <h1>Hello Functional Quick Fix</h1>
+            <div>
+                <MainMenu />
+            </div>
         </>
     )
 }
