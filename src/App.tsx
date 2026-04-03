@@ -5,7 +5,7 @@ import MainMenu from './js/components/MainMenu';
 const App = () => {
     return (
         <>
-            <div>
+            <div >
                 <MainMenu />
             </div>
         </>
