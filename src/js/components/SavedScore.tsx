@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 interface Score {
     name: string,
-          highestLevelAchieved: number,
-          highScore: number,
+    highestLevelAchieved: number,
+    highScore: number,
 }
 
 const SavedScore = () => {
@@ -34,9 +34,8 @@ const SavedScore = () => {
             scores.map((score: Score, index: number) => (
               <div
                 key={score.name}
-                className="score-item row mb-3  p-3 border rounded"
+                className="score-item row mb-3 mx-0 p-3 border rounded"
               >
-                  
                 <div className="col-12 score-name text-warning fw-bold">
                   #{index + 1} {score.name}
                 </div>
@@ -66,9 +65,10 @@ const SavedScore = () => {
               </div>
             </div>
           )}
+
         </div>
       </div>
-        </>
+    </>
     )
 }
 
