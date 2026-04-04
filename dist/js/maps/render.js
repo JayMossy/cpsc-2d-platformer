@@ -5,27 +5,42 @@ import { hearts } from "../collectables/hearts.js";
 import { player } from "../entities/player.js";
 import { enemies } from "../main.js";
 import { sword } from "../collectables/sword.js";
+import { portal } from "../main.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+/* =========================
+   ASSETS
+========================= */
 const tileSet = new Image();
 tileSet.src = "src/assets/sprites/tiles/world_tileset.png";
+/* ===== PORTAL ANIMATION ===== */
+const portalFrames = [];
+for (let i = 0; i < 4; i++) {
+    const img = new Image();
+    img.src = `src/assets/sprites/portals/portal_frame_${i}.png`;
+    portalFrames.push(img);
+}
+/* =========================
+   CONSTANTS
+========================= */
 const ogSize = tileLocation.tileSize;
 const [gsx, gsy] = tileLocation.grass;
 /* Random number for dirt */
 const now = new Date();
 const rndNumber = now.getHours() * 439 + now.getMinutes() * 577 + now.getSeconds() * 727;
-/* Canvas resize */
+/* =========================
+   CANVAS
+========================= */
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
-/* Camera */
-const camera = {
-    x: 0,
-    y: 0
-};
+/* =========================
+   CAMERA
+========================= */
+const camera = { x: 0, y: 0 };
 function updateCamera() {
     const targetX = player.x + player.w / 2 - canvas.width / 2;
     const targetY = player.y + player.h / 2 - canvas.height / 2;
@@ -38,7 +53,9 @@ function updateCamera() {
     camera.x = Math.round(camera.x);
     camera.y = Math.round(camera.y);
 }
-/* Draw Map */
+/* =========================
+   MAP RENDER
+========================= */
 function drawMap() {
     for (let y = 0; y < Mrows; y++) {
         for (let x = 0; x < Mcols; x++) {
@@ -50,12 +67,16 @@ function drawMap() {
                 tileY > canvas.height)
                 continue;
             const tile = map[y][x];
-            ctx.fillStyle = "rgba(0,0,0,0)";
-            if (tile === TILES.WATER)
+            if (tile === TILES.SKY)
+                continue;
+            if (tile === TILES.WATER) {
                 ctx.fillStyle = "#2b4f81";
-            if (tile === TILES.WATER_DARK)
+                ctx.fillRect(tileX, tileY, tileSize, tileSize);
+            }
+            if (tile === TILES.WATER_DARK) {
                 ctx.fillStyle = "#1a2f5a";
-            ctx.fillRect(tileX, tileY, tileSize, tileSize);
+                ctx.fillRect(tileX, tileY, tileSize, tileSize);
+            }
             if (tile === TILES.GRASS) {
                 ctx.drawImage(tileSet, gsx, gsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
             }
@@ -65,7 +86,6 @@ function drawMap() {
                 let [fsx, fsy] = tileLocation.floors[i];
                 ctx.drawImage(tileSet, fsx, fsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
             }
-            // Temporary Boxes and Spikes 
             if (tile === TILES.BOX) {
                 ctx.fillStyle = "#8b5a2b";
                 ctx.fillRect(tileX, tileY, tileSize, tileSize);
@@ -77,11 +97,20 @@ function drawMap() {
         }
     }
 }
+/* =========================
+   RENDER LOOP
+========================= */
 export function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     updateCamera();
     drawMap();
-    // Easier debug we can see out "hit box"
+    /* ===== PORTAL (ANIMATED) ===== */
+    const frameIndex = Math.floor(Date.now() / 120) % portalFrames.length;
+    const currentPortal = portalFrames[frameIndex];
+    if (currentPortal.complete) {
+        ctx.drawImage(currentPortal, portal.x - camera.x, portal.y - camera.y, 64, 64);
+    }
+    /* ===== DEBUG ===== */
     ctx.strokeStyle = "red";
     ctx.strokeRect(player.x - camera.x, player.y - camera.y, player.w, player.h);
     const playerCol = Math.floor(player.x / tileSize);
@@ -90,10 +119,13 @@ export function render() {
     ctx.font = "20px Arial";
     ctx.fillText(`x: ${player.x.toFixed(1)} y: ${player.y.toFixed(1)}`, 20, 30);
     ctx.fillText(`col: ${playerCol} row: ${playerRow}`, 20, 55);
+    /* ===== PLAYER ===== */
     animator.draw(ctx, player.x - camera.x, player.y - camera.y, player.w, player.h);
+    /* ===== ENEMIES ===== */
     for (const enemy of enemies) {
         enemy.animator.draw(ctx, enemy.x - camera.x, enemy.y - camera.y + 8, enemy.w, enemy.h);
     }
+    /* ===== COLLECTABLES ===== */
     coins.forEach(coin => {
         coin.draw(ctx, camera);
         if (coin.checkCollision(player)) {

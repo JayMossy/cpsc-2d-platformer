@@ -19,7 +19,7 @@ enemies.push(new Enemy(240, 1200));
 enemies.push(new Enemy(1500, 1200));
 
 // ===== PORTAL =====
-const portal = new Portal(11000, 1400);
+export const portal = new Portal(11000, 1400);
 
 // ===== MAIN GAME LOOP =====
 function loop(timestamp) {
