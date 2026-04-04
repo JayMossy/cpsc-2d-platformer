@@ -98,3 +98,7 @@ export class Enemy {
         }
     }
 }
+// ===== ENEMIES =====
+export const enemies = [];
+enemies.push(new Enemy(240, 1200));
+enemies.push(new Enemy(1500, 1200));

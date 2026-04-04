@@ -9,12 +9,13 @@ export const TILES = {
     GRASS: 3,
     DIRT: 4,
     BOX: 5, // solid tile
-    SPIKE: 6 // resets character to start
+    SPIKE: 6, // resets character to start
+    DOOR: 7
 };
 // Top left position in tile set
 export const tileLocation = {
     tileSize: 16,
-    floors: [
+    dirt: [
         [0, 16],
         [16, 0],
         [16, 16],
@@ -69,6 +70,20 @@ export function createRandomPlatforms({ minWidth = 4, maxWidth = 10, minGap = 8,
         x += width;
     }
 }
+/* optimizing randomization of dirt */
+export const dirtVari = [];
+const now = new Date();
+const rndNumber = now.getHours() * 439 +
+    now.getMinutes() * 577 +
+    now.getSeconds() * 727;
+for (let y = 0; y < Mrows; y++) {
+    if (!dirtVari[y])
+        dirtVari[y] = [];
+    for (let x = 0; x < Mcols; x++) {
+        let i = Math.ceil(Math.sqrt(x) * y * Math.pow(x, 2) * y + rndNumber) % tileLocation.dirt.length;
+        dirtVari[y][x] = tileLocation.dirt[i];
+    }
+}
 /* ---------- FLOOR ---------- */
 for (let y = Mrows - 3; y < Mrows; y++) {
     for (let x = 0; x < Mcols; x++) {
@@ -79,6 +94,9 @@ for (let y = Mrows - 3; y < Mrows; y++) {
 for (let x = 0; x < Mcols; x++) {
     map[Mrows - 4][x] = TILES.GRASS;
 }
+/* ------ DOOR ------ */
+map[Mrows - 14][80] = TILES.DOOR;
+map[Mrows - 13][80] = TILES.DOOR;
 /* ------ Generate Level ------ */
 createRandomPits();
 createRandomPlatforms();

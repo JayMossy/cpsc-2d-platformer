@@ -4,22 +4,17 @@ import { playerMovement } from "./systems/playerMovement.js";
 import { render } from "./maps/render.js";
 import { updateCollectables } from "./collectables/updateCollectables.js";
 import { player } from "./entities/player.js";
-import { Enemy } from "./entities/enemy.js";
-
-// TypeScript compiled imports
+import { enemies } from "./entities/enemy.js";
 import { Portal } from "./entities/portal.js";
 import { getState, setState } from "./systems/gamestate.js";
+import { bossArena } from "./maps/render.js";
 
 // ===== GAME STATE =====
 let lastTime = 0;
 
-// ===== ENEMIES =====
-export const enemies = [];
-enemies.push(new Enemy(240, 1200));
-enemies.push(new Enemy(1500, 1200));
 
 // ===== PORTAL =====
-export const portal = new Portal(11000, 1400);
+export const portal = new Portal(3300, 1500);
 
 // ===== MAIN GAME LOOP =====
 function loop(timestamp) {
@@ -88,6 +83,7 @@ document.getElementById("startBossBtn").addEventListener("click", () => {
     hideIntermission();
 
     // Move player to boss area
-    player.x = 500;
-    player.y = 1200;
+    const spawn = bossArena.getSpawn();
+    player.x = spawn.x;
+    player.y = spawn.y;
 });
