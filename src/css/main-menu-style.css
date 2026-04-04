@@ -20,12 +20,12 @@
     rgba(47, 47, 56, 1) 41%, 
     rgba(64, 65, 74, 1) 74%); */
 
-  /* background: linear-gradient(
+  background: linear-gradient(
     90deg,
     rgb(47, 48, 53) 0%,
     rgb(35, 35, 40) 50%,
     rgb(42, 44, 48) 100%
-  ); */
+  );
 }
 
 .btn.btn-custom-color {
