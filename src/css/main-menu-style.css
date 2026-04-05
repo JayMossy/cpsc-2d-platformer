@@ -42,6 +42,7 @@
 .btn.btn-hover:hover,
 .btn.btn-custom-color:hover {
   transform: scale(1.05);
+  transition: transform 0.2s;
   color: rgb(255, 255, 255) !important;
   background: rgb(20, 22, 28) !important;
   border: 2px solid rgb(230, 140, 255) !important;

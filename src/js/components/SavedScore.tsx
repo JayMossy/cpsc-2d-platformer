@@ -39,7 +39,6 @@ const SavedScore = () => {
                 <div className="col-12 score-name text-warning fw-bold">
                   #{index + 1} {score.name}
                 </div>
-
                 <div className="row mt-2">
                   <div className="col-12 col-md-6 score-label">
                     Highest Level Reached:
@@ -48,7 +47,6 @@ const SavedScore = () => {
                     {score.highestLevelAchieved}
                   </div>
                 </div>
-
                 <div className="row">
                   <div className="col-md-6 col-12 score-label">High Score:</div>
                   <div className="col-md-6 col-12 score-value text-primary fw-bold">
