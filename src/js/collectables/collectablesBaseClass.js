@@ -16,13 +16,17 @@ export class Collectable {
 
     checkCollision(player) {
         if (!this.collected &&
-            player.x + player.w/2 > this.x &&
-            player.x + player.w/2 < this.x + this.w &&
-            player.y + player.h/2 > this.y &&
-            player.y + player.h/2 < this.y + this.h) {
+            player.x + player.w / 2 > this.x &&
+            player.x + player.w / 2 < this.x + this.w &&
+            player.y + player.h / 2 > this.y &&
+            player.y + player.h / 2 < this.y + this.h) {
             this.collected = true;
             return true;
         }
         return false;
+    }
+
+    updateReact(collected) {
+        window.dispatchEvent(new CustomEvent(collected, { detail: { collected: true } }));
     }
 }

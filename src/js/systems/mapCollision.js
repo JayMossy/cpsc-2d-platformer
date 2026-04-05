@@ -1,13 +1,23 @@
-import { map, tileSize, TILE_BOX, TILE_GRASS, TILE_DIRT, TILE_SPIKE } from "../level1Map.js";
+import { map as levelOne, tileSize, TILES } from "../maps/level1Map.js";
+import { map as bossMap } from "../maps/bossArena.js";
+import { getCurrentLevel } from "../maps/render.js";
 
-const solidTiles = [TILE_BOX, TILE_GRASS, TILE_DIRT];
+const solidTiles = [TILES.BOX, TILES.GRASS, TILES.DIRT];
 const horizontalBuffer = .3;
 const verticalBuffer = .2;
 
 function getTile(col,row) {
+<<<<<<< HEAD
      if(row < 0 || row >= map.length) return -1;
      if(col < 0 || col >= map[0].length) return -1;
      return map [row][col];
+=======
+    const map = getCurrentLevel() % 2 === 0 ? levelOne : bossMap;
+
+    if(row < 0 || row >= map.length) return 4;
+    if(col < 0 || col >= map[0].length) return 4;
+    return map [row][col];
+>>>>>>> b9b4d97490e8102a1108704d51a849dd78bd5174
 }
 
 // function to reset character to start location
@@ -93,7 +103,7 @@ export function checkHazard(entity) {
 
     for (let row = topTile; row <= bottomTile; row++) {
         for (let col = leftTile; col <= rightTile; col++){
-            if (getTile(col, row) === TILE_SPIKE) {
+            if (getTile(col, row) === TILES.SPIKE) {
                 resetEntity(entity);
                 return true;
             }

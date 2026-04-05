@@ -1,16 +1,11 @@
 import { checkHazard } from "./systems/mapCollision.js";
 import { playerMovement } from "./systems/playerMovement.js";
-import { render } from "./systems/render.js";
+import { render, initializeLevels } from "./maps/render.js";
 import { updateCollectables } from "./collectables/updateCollectables.js";
 import { player } from "./entities/player.js";
-import { Enemy } from "./entities/enemy.js";
+import { enemies } from "./entities/enemy.js";
 
 let lastTime = 0;
-
-export const enemies = [];
-enemies.push(new Enemy(240, 1200))
-enemies.push(new Enemy(1500, 1200))
-
 
 function loop(timestamp) {
 
@@ -36,4 +31,16 @@ function loop(timestamp) {
     requestAnimationFrame(loop);
 }
 
-requestAnimationFrame(loop);
+export function startGame(canvas) {
+    if (!canvas || typeof canvas.getContext !== "function") {
+        console.error("startGame requires a valid canvas element");
+        return;
+    }
+
+    window.startGame = startGame;
+    initializeLevels(canvas);
+    requestAnimationFrame(loop);
+}
+
+// Make it available globally for the React component
+window.startGame = startGame;

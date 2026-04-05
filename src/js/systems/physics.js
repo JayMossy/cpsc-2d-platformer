@@ -4,7 +4,6 @@
 import { horizontal, vertical} from "./mapCollision.js";
 const GRAVITY = 1250;
 
-
 export function applyGravity(player, dt) {
     if (player.vy > 0) {
         // falling faster
