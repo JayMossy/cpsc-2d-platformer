@@ -7,19 +7,13 @@ const horizontalBuffer = .3;
 const verticalBuffer = .2;
 
 function getTile(col,row) {
-<<<<<<< HEAD
-     if(row < 0 || row >= map.length) return -1;
-     if(col < 0 || col >= map[0].length) return -1;
-     return map [row][col];
-=======
-    const map = getCurrentLevel() % 2 === 0 ? levelOne : bossMap;
+    
 
     if(row < 0 || row >= map.length) return 4;
     if(col < 0 || col >= map[0].length) return 4;
     return map [row][col];
->>>>>>> b9b4d97490e8102a1108704d51a849dd78bd5174
 }
-
+const map = getCurrentLevel() % 2 === 0 ? levelOne : bossMap;
 // function to reset character to start location
 function resetEntity(entity) {
     entity.x = 200;
