@@ -7,6 +7,7 @@ import { coins } from "../collectables/coins.js";
 import { hearts } from "../collectables/hearts.js";
 import { enemies } from "../entities/enemy.js";
 import { sword } from "../collectables/sword.js";
+import { Portal } from "../entities/portal.js";
 
 export class LevelOneMap extends BaseRender {
     constructor(canvas) {
@@ -18,6 +19,9 @@ export class LevelOneMap extends BaseRender {
             tileSize,
             "/assets/sprites/tiles/world_tileset.png",
         );
+
+        this.portalImage = new Image();
+        this.portalImage.src = "/assets/sprites/portals/portal_frames.png";
 
         this.background = new Image();
         const backgroundSources = [
@@ -33,6 +37,12 @@ export class LevelOneMap extends BaseRender {
             }
         };
         this.background.src = backgroundSources[sourceIndex];
+
+        this.portal = null;
+
+        this.portalImage.onload = () => {
+            this.portal = new Portal(2450, 1450, this.portalImage);
+        };
 
         this.coins = coins;
         this.hearts = hearts;
@@ -101,7 +111,7 @@ export class LevelOneMap extends BaseRender {
                     this.ctx.drawImage(this.tileSet, fsx, fsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
                 }
 
-                // Temporary Boxes, Spikes, and Door
+                // Temporary Boxes and Spikes
                 if (tile === TILES.BOX) {
                     this.ctx.fillStyle = "#8b5a2b";
                     this.ctx.fillRect(tileX, tileY, tileSize, tileSize);
@@ -112,53 +122,39 @@ export class LevelOneMap extends BaseRender {
                     this.ctx.fillRect(tileX, tileY, tileSize, tileSize);
                 }
 
-                if (tile === TILES.DOOR) {
-                    this.ctx.fillStyle = "#000000";
-                    this.ctx.fillRect(tileX, tileY, tileSize, tileSize);
-                }
-
             }
         }
     }
 
-    // Can add more logic to this later
-    door() {
-        const px = this.player.x;
-        const pxw = this.player.x + this.player.w;
-        const py = this.player.y;
-        const pyh = this.player.y + this.player.h;
-
-        const doorLocation = {
-            x: 2450,
-            xw: 2450 + 300,
-            y: 1450,
-            yh: 1450 + 100
-        }
-
-        if (
-            px > doorLocation.x &&
-            pxw < doorLocation.xw &&
-            py > doorLocation.y &&
-            pyh < doorLocation.yh
-        ) {
-            this.ctx.fillStyle = "Black";
-            this.ctx.font = "30px Arial Bold";
-            this.ctx.textAlign = "center";
-
-            this.ctx.fillText("Go to boss arena, click e!", this.canvas.width / 2, 60);
-
-            this.canSwitch = true;
-        } else {
-            this.canSwitch = false;
-        }
-    }
 
     // Some classes you might not have coins/enemies/only want to have some stuff
     // or maybe use a differnt list of coins for different maps
     render() {
         super.render();
 
-        this.door();
+        if (this.portal) {
+            this.portal.update(1 / 60);
+            this.portal.render(this.ctx, this.camera);
+
+            const p = this.player;
+
+            if (
+                p.x < this.portal.x + this.portal.frameWidth &&
+                p.x + p.w > this.portal.x &&
+                p.y < this.portal.y + this.portal.frameHeight &&
+                p.y + p.h > this.portal.y
+            ) {
+                this.ctx.fillStyle = "Black";
+                this.ctx.font = "30px Arial Bold";
+                this.ctx.textAlign = "center";
+
+                this.ctx.fillText("Enter portal (E)", this.canvas.width / 2, 60);
+
+                this.canSwitch = true;
+            } else {
+                this.canSwitch = false;
+            }
+        }
 
         for (const enemy of enemies) {
             enemy.animator.draw(
