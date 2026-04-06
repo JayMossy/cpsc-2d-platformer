@@ -4,7 +4,8 @@ export const keys = {
     right: false,
     up: false,
     down: false,
-    space: false
+    space: false,
+    e: false
 };
 
 window.addEventListener("keydown", (e) => {
@@ -19,6 +20,7 @@ window.addEventListener("keydown", (e) => {
     if (key === "arrowright" || key === "d") keys.right = true;
     if (key === "arrowup" || key === "w" || key === " ") keys.up = true;
     if (key === "arrowdown" || key === "s") keys.down = true;
+    if (key === "e") keys.e = true;
 });
 
 window.addEventListener("keyup", (e) => {
@@ -29,16 +31,5 @@ window.addEventListener("keyup", (e) => {
     if (key === "arrowright" || key === "d") keys.right = false;
     if (key === "arrowup" || key === "w" || key === " ") keys.up = false;
     if (key === "arrowdown" || key === "s") keys.down = false;
+    if (key === "e") keys.e = false;
 });
-
-/*
-These make a tile map like this 
-const map = [
-    [0,0,0],
-    [0,0,0],
-    [0,0,0]
-]
-Every number 0-4 for now
-corresponds to a color
-we could later make it correspond to image later on?
-*/
