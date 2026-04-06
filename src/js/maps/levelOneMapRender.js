@@ -38,6 +38,9 @@ export class LevelOneMap extends BaseRender {
         this.hearts = hearts;
         this.sword = sword;
         this.enemies = enemies;
+
+        this.spikeImg = new Image();
+        this.spikeImg.src = "/assets/sprites/tiles/newSpike.png"
     }
 
     // When you override drawMap you'll make your own draw 
@@ -108,8 +111,8 @@ export class LevelOneMap extends BaseRender {
                 }
 
                 if (tile === TILES.SPIKE) {
-                    this.ctx.fillStyle = "#c0392b";
-                    this.ctx.fillRect(tileX, tileY, tileSize, tileSize);
+                    if (!this.spikeImg.complete || this.spikeImg.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.spikeImg, 0, 0, 96, 96, tileX, tileY, tileSize+5, tileSize+5);
                 }
 
                 if (tile === TILES.DOOR) {
