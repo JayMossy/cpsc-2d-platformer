@@ -50,11 +50,11 @@ export class LevelOneMap extends BaseRender {
             const bgWidth = this.background.naturalWidth;
             const bgHeight = this.background.naturalHeight;
             const bgScale = this.canvas.height / bgHeight;
-            const drawWidth = bgWidth * bgScale;
+            const drawWidth = Math.floor(bgWidth * bgScale);
             const parallaxX = -(this.camera.x * 0.2) % drawWidth;
 
             for (let x = parallaxX - drawWidth; x < this.canvas.width + drawWidth; x += drawWidth) {
-                this.ctx.drawImage(this.background, x, 0, drawWidth, this.canvas.height);
+                this.ctx.drawImage(this.background, Math.floor(x), 0, drawWidth, this.canvas.height);
             }
         } else {
             this.ctx.fillStyle = "#7fc8ff";
