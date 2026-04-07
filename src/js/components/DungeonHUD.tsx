@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { updatePlayerCoins } from "../systems/scoresManager";
 
 const styles = {
   hud: {
@@ -117,6 +118,12 @@ function DungeonHUD() {
       window.removeEventListener("heartCollected", handleHeartCollected);
     };
   }, []);
+
+  useEffect(() => {
+    if(hp == 0) {
+      updatePlayerCoins(coinCount)
+    }
+  }, [hp])
 
   //TODO add event listener for when the end of the level is finished so we can update scores in local storage
   //TODO add damage listeners to decrease hp
