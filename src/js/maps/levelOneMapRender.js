@@ -20,8 +20,12 @@ export class LevelOneMap extends BaseRender {
             "/assets/sprites/tiles/world_tileset.png",
         );
 
-        this.portalImage = new Image();
-        this.portalImage.src = "/assets/sprites/portals/portal_frames.png";
+        const portalFrames = [];
+        for (let i = 0; i < 8; i++) {
+            portalFrames.push(`/assets/sprites/portals/portal_frame_${i}.png`);
+        }
+
+        this.portal = new Portal(3360, 1670, portalFrames);
 
         this.background = new Image();
         const backgroundSources = [
@@ -38,11 +42,7 @@ export class LevelOneMap extends BaseRender {
         };
         this.background.src = backgroundSources[sourceIndex];
 
-        this.portal = null;
 
-        this.portalImage.onload = () => {
-            this.portal = new Portal(2450, 1450, this.portalImage);
-        };
 
         this.coins = coins;
         this.hearts = hearts;
@@ -136,14 +136,17 @@ export class LevelOneMap extends BaseRender {
             this.portal.update(1 / 60);
             this.portal.render(this.ctx, this.camera);
 
+    
             const p = this.player;
 
             if (
-                p.x < this.portal.x + this.portal.frameWidth &&
+                p.x < this.portal.x + this.portal.width &&
                 p.x + p.w > this.portal.x &&
-                p.y < this.portal.y + this.portal.frameHeight &&
+                p.y < this.portal.y + this.portal.height &&
                 p.y + p.h > this.portal.y
             ) {
+                console.log("TOUCHING PORTAL");
+                
                 this.ctx.fillStyle = "Black";
                 this.ctx.font = "30px Arial Bold";
                 this.ctx.textAlign = "center";

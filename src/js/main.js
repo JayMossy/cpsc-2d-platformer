@@ -26,7 +26,7 @@ function loop(timestamp) {
 
     updateCollectables(dt);
 
-    render();
+    render(dt);
 
     requestAnimationFrame(loop);
 }
