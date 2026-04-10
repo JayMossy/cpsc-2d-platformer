@@ -19,11 +19,16 @@ export class BossArena extends BaseRender {
         this.rndNumber = this.now.getHours() * 439 + this.now.getMinutes() * 577 + this.now.getSeconds() * 727;
 
         this.background = new Image();
-        this.background.src = "/assets/backgrounds/level1/mario_lighter.png";
+        this.background.src = "/assets/backgrounds/boss-bg-good-3.png";
     }
 
     drawMap() {
-        this.ctx.drawImage(this.background, 0, 0, this.canvas.width, this.canvas.height);
+        const t = this.canvas.width/3;
+        const tt = this.canvas.width/2;
+
+        this.ctx.drawImage(this.background, -t, -3, this.canvas.width/2, this.canvas.width/2);
+        this.ctx.drawImage(this.background, -t+tt, -3, this.canvas.width/2, this.canvas.width/2);
+        this.ctx.drawImage(this.background, -t+(2*tt), -3, this.canvas.width/2, this.canvas.width/2);
 
         const ogSize = tileLocation.tileSize;
         const [gsx, gsy] = tileLocation.grass;
@@ -48,9 +53,7 @@ export class BossArena extends BaseRender {
 
                 const tile = this.map[y][x];
 
-                if (tile === TILES.SKY) this.ctx.fillStyle = "rgba(255, 0, 0, 0)";
-                if (tile === TILES.WATER) this.ctx.fillStyle = "#2b4f81";
-                if (tile === TILES.WATER_DARK) this.ctx.fillStyle = "#1a2f5a";
+                this.ctx.fillStyle = "rgba(0,0,0,0)";
 
                 this.ctx.fillRect(tileX, tileY, this.tileSize, this.tileSize);
 
@@ -65,10 +68,6 @@ export class BossArena extends BaseRender {
                     this.ctx.drawImage(this.tileSet, fsx, fsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
                 }
 
-                if (tile === TILES.SPIKE) {
-                    this.ctx.fillStyle = "#c0392b";
-                    this.ctx.fillRect(tileX, tileY, this.tileSize, this.tileSize);
-                }
             }
         }
     }
