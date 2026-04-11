@@ -34,6 +34,9 @@ export class LevelOneMap extends BaseRender {
         };
         this.background.src = backgroundSources[sourceIndex];
 
+        this.spikeImg = new Image();
+        this.spikeImg.src = "/assets/sprites/tiles/newSpike.png"
+
         this.coins = coins;
         this.hearts = hearts;
         this.sword = sword;
@@ -50,11 +53,11 @@ export class LevelOneMap extends BaseRender {
             const bgWidth = this.background.naturalWidth;
             const bgHeight = this.background.naturalHeight;
             const bgScale = this.canvas.height / bgHeight;
-            const drawWidth = bgWidth * bgScale;
+            const drawWidth = Math.floor(bgWidth * bgScale);
             const parallaxX = -(this.camera.x * 0.2) % drawWidth;
 
             for (let x = parallaxX - drawWidth; x < this.canvas.width + drawWidth; x += drawWidth) {
-                this.ctx.drawImage(this.background, x, 0, drawWidth, this.canvas.height);
+                this.ctx.drawImage(this.background, Math.floor(x), 0, drawWidth, this.canvas.height);
             }
         } else {
             this.ctx.fillStyle = "#7fc8ff";
@@ -63,6 +66,7 @@ export class LevelOneMap extends BaseRender {
 
         const ogSize = tileLocation.tileSize;
         const [gsx, gsy] = tileLocation.grass;
+        const [ssx, ssy] = tileLocation.spike;
 
         const startCol = Math.max(0, Math.floor(this.camera.x / tileSize));
         const endCol = Math.min(Mcols, Math.ceil((this.camera.x + this.canvas.width) / tileSize));
@@ -70,6 +74,7 @@ export class LevelOneMap extends BaseRender {
         const startRow = Math.max(0, Math.floor(this.camera.y / tileSize));
         const endRow = Math.min(Mrows, Math.ceil((this.camera.y + this.canvas.height) / tileSize));
 
+        let i = 0;
         for (let y = startRow; y < endRow; y++) {
             for (let x = startCol; x < endCol; x++) {
                 const tileX = x * tileSize - this.camera.x;
@@ -100,15 +105,15 @@ export class LevelOneMap extends BaseRender {
                     let [fsx, fsy] = dirtVari[y][x];
                     this.ctx.drawImage(this.tileSet, fsx, fsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
                 }
-
-                // Temporary Boxes, Spikes, and Door
-                if (tile === TILES.BOX) {
-                    this.ctx.fillStyle = "#8b5a2b";
-                    this.ctx.fillRect(tileX, tileY, tileSize, tileSize);
+                
+                if (tile === TILES.SPIKE) {
+                    if (!this.spikeImg.complete || this.spikeImg.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.spikeImg, ssx, ssy, 107, 107, tileX-2, tileY, tileSize+10, tileSize+10);
                 }
 
-                if (tile === TILES.SPIKE) {
-                    this.ctx.fillStyle = "#c0392b";
+                // Temporary Boxes, and Door
+                if (tile === TILES.BOX) {
+                    this.ctx.fillStyle = "#8b5a2b";
                     this.ctx.fillRect(tileX, tileY, tileSize, tileSize);
                 }
 

@@ -8,7 +8,7 @@ const FirstTimePlaying = () => {
   const boilerPlateScore = {
     name: "",
     highestLevelAchieved: 0,
-    highScore: 0,
+    coinsCollected: 0,
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,7 +22,7 @@ const FirstTimePlaying = () => {
           {
             name: playerName.trim(),
             highestLevelAchieved: 0,
-            highScore: 0,
+            coinsCollected: 0,
           },
         ];
         localStorage.setItem("scores", JSON.stringify(scores));
@@ -30,7 +30,7 @@ const FirstTimePlaying = () => {
         const scores = JSON.parse(storedScores) as {
           name: string;
           highestLevelAchieved: number;
-          highScore: number;
+          coinsCollected: number;
         }[];
         boilerPlateScore.name = playerName.trim();
         scores.push(boilerPlateScore);

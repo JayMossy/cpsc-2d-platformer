@@ -23,7 +23,8 @@ export const tileLocation = {
     [16,16],
     [32,16]
   ],
-  grass: [0,0]
+  grass: [0,0],
+  spike: [0,0]
 };
 
 //Sections for the map 

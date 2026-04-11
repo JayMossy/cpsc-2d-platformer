@@ -17,9 +17,14 @@ export class BossArena extends BaseRender {
 
         this.now = new Date();
         this.rndNumber = this.now.getHours() * 439 + this.now.getMinutes() * 577 + this.now.getSeconds() * 727;
+
+        this.background = new Image();
+        this.background.src = "/assets/backgrounds/level1/mario_lighter.png";
     }
 
     drawMap() {
+        this.ctx.drawImage(this.background, 0, 0, this.canvas.width, this.canvas.height);
+
         const ogSize = tileLocation.tileSize;
         const [gsx, gsy] = tileLocation.grass;
 
@@ -43,7 +48,7 @@ export class BossArena extends BaseRender {
 
                 const tile = this.map[y][x];
 
-                this.ctx.fillStyle = "rgba(0,0,0,0)";
+                if (tile === TILES.SKY) this.ctx.fillStyle = "rgba(255, 0, 0, 0)";
                 if (tile === TILES.WATER) this.ctx.fillStyle = "#2b4f81";
                 if (tile === TILES.WATER_DARK) this.ctx.fillStyle = "#1a2f5a";
 
