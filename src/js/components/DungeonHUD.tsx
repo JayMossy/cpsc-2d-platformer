@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { updatePlayerCoins } from "../systems/scoresManager";
 
 const styles = {
   hud: {
@@ -7,7 +8,7 @@ const styles = {
     border: "3px solid #5a3e1b",
     borderTop: "3px solid #8a6030",
     borderLeft: "3px solid #8a6030",
-    width: "100%",
+    width: "fit-content",
     position: "relative",
     overflow: "hidden",
   } as React.CSSProperties,
@@ -118,11 +119,17 @@ function DungeonHUD() {
     };
   }, []);
 
+  useEffect(() => {
+    if(hp == 0) {
+      updatePlayerCoins(coinCount)
+    }
+  }, [hp])
+
   //TODO add event listener for when the end of the level is finished so we can update scores in local storage
   //TODO add damage listeners to decrease hp
 
   return (
-    <div>
+    <>
       <link
         href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
         rel="stylesheet"
@@ -158,7 +165,7 @@ function DungeonHUD() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -20,12 +20,12 @@
     rgba(47, 47, 56, 1) 41%, 
     rgba(64, 65, 74, 1) 74%); */
 
-  /* background: linear-gradient(
+  background: linear-gradient(
     90deg,
     rgb(47, 48, 53) 0%,
     rgb(35, 35, 40) 50%,
     rgb(42, 44, 48) 100%
-  ); */
+  );
 }
 
 .btn.btn-custom-color {
@@ -41,6 +41,8 @@
 
 .btn.btn-hover:hover,
 .btn.btn-custom-color:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s;
   color: rgb(255, 255, 255) !important;
   background: rgb(20, 22, 28) !important;
   border: 2px solid rgb(230, 140, 255) !important;
@@ -104,7 +106,7 @@
 }
 
 .score-item:hover {
-  transform: scale(1.02);
+  transform: scale(1.03);
   background-color: rgba(255, 255, 255, 0.2);
 }
 
