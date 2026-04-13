@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { updatePlayerCoins } from "../systems/scoresManager";
+import { player } from "../entities/player";
 
 const styles = {
   hud: {
@@ -87,7 +88,7 @@ const styles = {
 function DungeonHUD() {
   const swordSpriteSheet = "/assets/sprites/collectibles/sword_HUD.png";
   const [swordCollected, setSwordCollected] = React.useState(false);
-  const [hp, setHp] = React.useState(3);
+  const [hp, setHp] = React.useState(player.health);
   const maxHp = 5;
   const [coinCount, setCoinCount] = React.useState(0);
   const [wpnIdx, setWpnIdx] = React.useState(0);
@@ -112,12 +113,28 @@ function DungeonHUD() {
 
     window.addEventListener("heartCollected", handleHeartCollected);
 
+    const handleGetHit = (event: Event) => {
+      const dmg = (event as CustomEvent).detail.damage;
+      setHp((prev) => prev - dmg);
+    };
+
+    window.addEventListener("gotHit", handleGetHit);
+
+    const handleResetHealth = (event: Event) => {
+      const health = (event as CustomEvent).detail.newHealth;
+      setHp(health);
+    };
+
+    window.addEventListener("resetHealth", handleResetHealth);
+
     return () => {
       window.removeEventListener("swordCollected", handleSwordCollected);
       window.removeEventListener("coinCollected", handleCoinCollected);
       window.removeEventListener("heartCollected", handleHeartCollected);
+      window.removeEventListener("gotHit", handleGetHit);
+      window.removeEventListener("resetHealth", handleResetHealth);
     };
-  }, []);
+  }, );
 
   useEffect(() => {
     if(hp == 0) {

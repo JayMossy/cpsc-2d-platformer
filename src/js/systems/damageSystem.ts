@@ -126,6 +126,7 @@ export function enemyAttack(player: Player, enemies: Enemy[]): void {
         
         if(intersects(player, enemy)) {
             dealDamage(player, enemy.damage);
+            window.dispatchEvent(new CustomEvent("gotHit", { detail: { damage: enemy.damage } }));
             player.invulnTimer = player.invulnTime;
             
             if(player.health <= 0) {
@@ -145,6 +146,7 @@ export function resetPlayer(player: Player): void {
     player.grounded = false;
 
     player.health = player.maxHealth;
+    window.dispatchEvent(new CustomEvent("resetHealth", { detail: { newHealth: player.health } }));
     player.isDead = false;
 
     player.attackTimer = 0;
