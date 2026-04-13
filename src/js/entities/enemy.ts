@@ -230,24 +230,19 @@ export class Enemy implements EnemyState {
 }
 
 export const enemies: Enemy[] = [
-    new Enemy(240, 1200),
-    new Enemy(500, 1200),
-    new Enemy(1600, 1200),
-    new Enemy(1920, 1200),
-    new Enemy(2880, 1200),
-    new Enemy(3200, 1200),
-    new Enemy(3500, 1200),
-    new Enemy(3800, 1200),
-    new Enemy(4100, 1200),
-    new Enemy(4400, 1200),
-    new Enemy(4700, 1200),
-    new Enemy(5000, 1200),
-    new Enemy(5300, 1200),
-    new Enemy(5600, 1200),
-    new Enemy(5900, 1200),
-    new Enemy(6200, 1200),
-    new Enemy(6500, 1200),
-    new Enemy(6800, 1200),
     new Enemy(7100, 1200),
-    new Enemy(3250, 1200)
+    new Enemy(7500, 1200),
+    new Enemy(7900, 1200),
+    new Enemy(8300, 1200),
+    new Enemy(8700, 1200),
+    new Enemy(9100, 1200),
+    new Enemy(9500, 1200),
+    new Enemy(9900, 1200),
+    new Enemy(10300, 1200),
+    new Enemy(10700, 1200),
+    new Enemy(11100, 1200),
+    new Enemy(11500, 1200),
+    new Enemy(11900, 1200),
+    new Enemy(12300, 1200),
+    new Enemy(12700, 1200)
 ];
