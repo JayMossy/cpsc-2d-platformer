@@ -7,7 +7,7 @@ const horizontalBuffer = .3;
 const verticalBuffer = .2;
 
 function getTile(col,row) {
-    
+    const map = getCurrentLevel() % 2 === 0 ? levelOne : bossMap;
 
     if(row < 0 || row >= map.length) return 4;
     if(col < 0 || col >= map[0].length) return 4;
