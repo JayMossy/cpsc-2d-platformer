@@ -7,6 +7,7 @@ import { coins } from "../collectables/coins.js";
 import { hearts } from "../collectables/hearts.js";
 import { enemies } from "../entities/enemy";
 import { sword } from "../collectables/sword.js";
+import { heal } from "../systems/damageSystem";
 
 export class LevelOneMap extends BaseRender {
     constructor(canvas) {
@@ -105,10 +106,10 @@ export class LevelOneMap extends BaseRender {
                     let [fsx, fsy] = dirtVari[y][x];
                     this.ctx.drawImage(this.tileSet, fsx, fsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
                 }
-                
+
                 if (tile === TILES.SPIKE) {
                     if (!this.spikeImg.complete || this.spikeImg.naturalWidth === 0) continue;
-                    this.ctx.drawImage(this.spikeImg, ssx, ssy, 107, 107, tileX-2, tileY, tileSize+10, tileSize+10);
+                    this.ctx.drawImage(this.spikeImg, ssx, ssy, 107, 107, tileX - 2, tileY, tileSize + 10, tileSize + 10);
                 }
 
                 // Temporary Boxes, and Door
@@ -186,6 +187,7 @@ export class LevelOneMap extends BaseRender {
         hearts.forEach(heart => {
             heart.draw(this.ctx, this.camera);
             if (heart.checkCollision(this.player)) {
+                heal(this.player, 1);
                 heart.updateReact('heartCollected')
             }
         });
