@@ -5,7 +5,7 @@ import {
 } from "./level1Map.js";
 import { coins } from "../collectables/coins.js";
 import { hearts } from "../collectables/hearts.js";
-import { enemies } from "../entities/enemy.js";
+import { enemies } from "../entities/enemy";
 import { sword } from "../collectables/sword.js";
 
 export class LevelOneMap extends BaseRender {

@@ -1,6 +1,6 @@
 import { keys } from "./userInput.js";
 import { Animator } from "./animator.js";
-import { player } from "../entities/player.js";
+import { player } from "../entities/player";
 import {
     applyGravity, clampFallSpeed,
     setMovementX, integrate

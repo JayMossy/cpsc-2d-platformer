@@ -48,7 +48,7 @@ function LevelOne({onSendShownComponent}: LevelOneProps) {
             <DungeonHUD />
           </div>
         </div>
-        <button onClick={handleChange}>Back to Menu</button>
+        {/* <button onClick={handleChange}>Back to Menu</button> */}
     </>
   );
 }
