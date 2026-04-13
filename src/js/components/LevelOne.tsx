@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import "../../css/level_one_styles.css"
 import DungeonHUD from "./DungeonHUD";
+import { startGame } from "../main";
 
 interface LevelOneProps {
   onSendShownComponent: (data: any) => void;
@@ -14,22 +15,25 @@ function LevelOne({onSendShownComponent}: LevelOneProps) {
     if (canvas && !gameStartedRef.current) {
       gameStartedRef.current = true;
       
+      startGame(canvas);
+
       // Load the game script dynamically
-      const script = document.createElement('script');
-        script.type = 'module';
-      script.src = '/js/main.js';
-      script.onload = () => {
-        // Now that the script is loaded, start the game
-        if ((window as any).startGame) {
-          (window as any).startGame(canvas);
-        } else {
-          console.error("startGame function not found on window");
-        }
-      };
-      script.onerror = () => {
-        console.error("Failed to load game script");
-      };
-      document.head.appendChild(script);
+      // const script = document.createElement('script');
+      // script.type = 'module';
+      // script.src = '/js/main.js';
+
+      // script.onload = () => {
+      //   // Now that the script is loaded, start the game
+      //   if ((window as any).startGame) {
+      //     (window as any).startGame(canvas);
+      //   } else {
+      //     console.error("startGame function not found on window");
+      //   }
+      // };
+      // script.onerror = () => {
+      //   console.error("Failed to load game script");
+      // };
+      // document.head.appendChild(script);
     }
   }, []);
 
@@ -44,7 +48,7 @@ function LevelOne({onSendShownComponent}: LevelOneProps) {
             <DungeonHUD />
           </div>
         </div>
-        <button onClick={handleChange}>Back to Menu</button>
+        {/* <button onClick={handleChange}>Back to Menu</button> */}
     </>
   );
 }
