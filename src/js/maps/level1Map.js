@@ -1,5 +1,5 @@
 export const Mrows = 60;
-export const Mcols = 350;
+export const Mcols = 650;
 export const tileSize = 32;
 
 // Tiles IDs used throughout the game
@@ -27,6 +27,10 @@ export const tileLocation = {
   spike: [0,0]
 };
 
+//Sections for the map 
+const SECTION_1_END = Math.floor(Mcols / 3);
+const SECTION_2_END = Math.floor ((Mcols / 3) * 2);
+
 let seed = 123;
 function seededRandom() {
   seed = (seed * 1664525 + 1013904223) % 4294967296;
@@ -43,26 +47,60 @@ function setTile(row, col, tile){
   }
 }
 
-/* ------ Random pits with spikes ------*/
-export function createRandomPits({
-  minWidth = 4,
-  maxWidth = 5,
-  minGap = 12,
-  maxGap = 25,
-  minDepth = 2,
-  maxDepth = 4,
-} = {}) {
-  let x = 10;
+// The long pit
+function longPit(startCol, endCol, depth = 4){
+  for(let col = startCol; col < endCol; col++){
 
-  while (x < Mcols - 10){
-    x += Math.floor(seededRandom() * (maxGap - minGap + 1)) + minGap;
-    if(x >= Mcols - 10) break;
+    for(let d = 0; d <= depth; d++){
+      setTile(Mrows - 2 - d, col, TILES.SKY);
+    }
+    setTile(Mrows - 1, col, TILES.DIRT);
+    setTile(Mrows - 2, col, TILES.SPIKE);
+  }
+}
 
-    const width = Math.floor(seededRandom() * (maxWidth - minWidth + 1)) + minWidth;
-    const depth = Math.floor(seededRandom() * (maxDepth - minDepth + 1)) + minDepth;
+// Dense amount of platforms for the long pit section
+
+function densePlatforms(startCol, endCol){
+  let x = startCol;
+
+  while (x < endCol - 5){
+    x += Math.floor(seededRandom() * 6) + 4;
+
+    if (x >= endCol -5) break;
+
+    const width = Math.floor(seededRandom() * 5) + 3;
+    const height = Math.floor(seededRandom() * 6) + 8;
 
     for(let i = 0; i < width; i++){
       const col = x + i;
+      if (col >= endCol) break;
+
+      setTile(Mrows - 1 - height, col, TILES.GRASS);
+      setTile(Mrows - height, col, TILES.DIRT);
+
+    }
+
+    x += width;
+
+  }
+}
+
+// Random pits for third section of map
+export function createRandomPits(startCol,endCol){
+  let x = startCol;
+
+  while (x < endCol - 10){
+    x += Math.floor(seededRandom() * 14) + 12;
+    if(x >= endCol - 10) break;
+    if(x + 5 >=endCol) break;
+
+    const width = Math.floor(seededRandom() * 2) + 4;
+    const depth = Math.floor(seededRandom() * 3) + 2;
+
+    for(let i = 0; i < width && x + i < endCol; i++){
+      const col = x + i;
+      if  (col >= endCol) break;
 
       for(let d = 0; d <= depth; d++){
         setTile(Mrows - 2 - d, col, TILES.SKY);
@@ -74,27 +112,22 @@ export function createRandomPits({
   }
 }
 
-/* ------ Random Platforms ------ */
-export function createRandomPlatforms({
-  minWidth = 4,
-  maxWidth = 10,
-  minGap = 8, 
-  maxGap = 18,
-  minHeight = 10, 
-  maxHeight = 12
-} = {}) {
-  let x = 10;
+// Random platforms for third secion
+export function createRandomPlatforms(startCol, endCol){
+ let x = startCol;
 
-  while (x < Mcols - 10){
-    x += Math.floor(seededRandom() * (maxGap - minGap)) + minGap;
-    if(x >= Mcols - 10) break;
+  while (x < endCol - 10){
+    x += Math.floor(seededRandom() * 10) + 8;
+    if(x >= endCol - 10) break;
 
-    const width = Math.floor(seededRandom() * (maxWidth - minWidth)) + minWidth;
-    const height = Math.floor(seededRandom() * (maxHeight - minHeight)) + minHeight;
+    const width = Math.floor(seededRandom() * 6) + 4;
+    const height = Math.floor(seededRandom() * 3) + 10;
 
-    for(let i = 0; i < width; i++){
-      setTile(Mrows - 1 - height, x + i, TILES.GRASS);
-      setTile(Mrows - height, x + i, TILES.DIRT);
+    for(let i = 0; i < width && x + i < endCol; i++){
+      const col = x +i;
+
+      setTile(Mrows - 1 - height, x + i, col, TILES.GRASS);
+      setTile(Mrows - height, col, TILES.DIRT);
     }
     x += width;
   }
@@ -135,12 +168,22 @@ for (let x = 0; x < Mcols; x++){
 }
 
 /* ------ DOOR ------ */
+const doorCol = Mcols - 5;
 
-map[Mrows - 14][80] = TILES.DOOR;
-map[Mrows - 13][80] = TILES.DOOR;
+map[Mrows - 5][doorCol] = TILES.DOOR;
+map[Mrows - 6][doorCol] = TILES.DOOR;
 
-/* ------ Generate Level ------ */
+// Generate level adjusted for new sections
 
-createRandomPits();
+//Section 1
+longPit(10, SECTION_1_END);
+densePlatforms(10, SECTION_1_END);
 
-createRandomPlatforms();
+/* Section 2
+ Section 2 has nothing as it gives the player a little free time from platforms and pits
+*/
+
+//Section 3
+createRandomPits(SECTION_2_END, Mcols - 10);
+createRandomPlatforms(SECTION_2_END, Mcols - 10);
+
