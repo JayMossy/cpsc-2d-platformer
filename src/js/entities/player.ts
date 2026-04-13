@@ -21,6 +21,8 @@ export interface Player {
         invulnTime: number;
         invulnTimer: number;
         isDead: boolean;
+        knockbackX: number;
+        knockbackY: number;
 }
 
 export type FacingDirection = "left" | "right";
@@ -46,9 +48,11 @@ export function createPlayer(x: number, y: number): Player {
         damage: 1,
         attackCooldown: .25,
         attackTimer: 0,
-        invulnTime: 0.5,
+        invulnTime: 2,
         invulnTimer: 0,
-        isDead: false
+        isDead: false,
+        knockbackX: 0,
+        knockbackY: 0
     };
 }
 

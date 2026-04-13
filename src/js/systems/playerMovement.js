@@ -26,40 +26,45 @@ playerAnimator.addAnimation("run left", [6, 7, 8, 9]);
 export function playerMovement(dt) {
     playerAnimator.update(dt);
 
-    player.vx = 0;
+    let moveDirection = 0;
 
-    // Uses physics.js helper for movement behavior
-    // Adds gravity and max fall speed clamp
-    // before collision check
     applyGravity(player, dt);
     clampFallSpeed(player);
 
     if (keys.left && !keys.right) {
-        setMovementX(player, -1);
+        moveDirection = -1;
         player.lastDir = "left";
     } else if (keys.right && !keys.left) {
-        setMovementX(player, 1);
+        moveDirection = 1;
         player.lastDir = "right";
-    } else {
-        setMovementX(player, 0);
     }
 
-    // Player can only jump when on the ground.
+    // base movement from input
+    const moveVX = moveDirection * player.moveSpeed;
+
+    // combine input movement + knockback
+    player.vx = moveVX + player.knockbackX;
+    player.vy += player.knockbackY;
+
+    // decay knockback over time
+    player.knockbackX *= 0.85;
+    player.knockbackY *= 0.85;
+
+    if (Math.abs(player.knockbackX) < 1) player.knockbackX = 0;
+    if (Math.abs(player.knockbackY) < 1) player.knockbackY = 0;
+
     if (keys.up && player.grounded) {
         player.vy = -player.jump;
         player.grounded = false;
     }
 
-    // Applies current speed to player posiition this frame
     integrate(player, dt);
 
-    if (player.vx !== 0) {
+    if (moveDirection !== 0) {
         if (player.lastDir === "left") playerAnimator.setAnimation("run left");
         else playerAnimator.setAnimation("run right");
-    }
-    else {
+    } else {
         if (player.lastDir === "left") playerAnimator.setAnimation("idle left");
         else playerAnimator.setAnimation("idle right");
     }
-
 }

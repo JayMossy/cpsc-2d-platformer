@@ -12,6 +12,7 @@ import {
   enemyAttack,
   playerAttack,
   removeEnemy,
+  removeEnemyInPit,
   resetPlayer,
 } from "./systems/damageSystem";
 
@@ -71,6 +72,7 @@ function loop(timestamp: number): void {
 
   // map hazards
   checkHazard(player);
+  removeEnemyInPit(enemies);
 
   // collectables
   updateCollectables(dt);

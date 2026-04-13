@@ -12,6 +12,10 @@ type Damageable = {
     health: number;
     maxHealth: number;
     isDead: boolean;
+    vx: number;
+    vy: number;
+    knockbackX: number;
+    knockbackY: number;
 }
 
 export interface AttackHitbox extends Rect {}
@@ -35,10 +39,17 @@ export function clampHealth(target: Damageable): void {
     }
 }
 
-export function dealDamage(target: Damageable, damage: number): number {
+export function dealDamage(
+                    target: Damageable,
+                    damage: number,
+                    knockbackX: number = 0,
+                    knockbackY: number = 0
+                ): number {
     if (target.isDead || damage <= 0) {
         return 0;
     }
+
+    const oldHealth = target.health;
 
     target.health -= damage;
     clampHealth(target);
@@ -47,7 +58,10 @@ export function dealDamage(target: Damageable, damage: number): number {
         target.isDead = true;
     }
 
-    return damage;
+    target.knockbackX += knockbackX;
+    target.knockbackY += knockbackY;
+
+    return oldHealth - target.health;
 }
 
 export function heal(target: Damageable, heal: number): number {
@@ -106,29 +120,34 @@ export function getPlayerAttackBox(player: Player): AttackHitbox {
 }
 
 export function playerAttack(player: Player, enemies: Enemy[]): void {
-    if(!player.isDead && player.attackTimer <= 0) {
+    if (!player.isDead && player.attackTimer <= 0) {
         player.attackTimer = player.attackCooldown;
         const attackBox = getPlayerAttackBox(player);
 
-        for(const enemy of enemies) {
-            if(intersects(attackBox, enemy) && !enemy.isDead) {
-                dealDamage(enemy, player.damage);
+        for (const enemy of enemies) {
+            if (intersects(attackBox, enemy) && !enemy.isDead) {
+                const knockbackX = player.lastDir === "right" ? 300 : -300;
+                const knockbackY = -120;
+                dealDamage(enemy, player.damage, knockbackX, knockbackY);
             }
         }
     }
 }
 
 export function enemyAttack(player: Player, enemies: Enemy[]): void {
-    if(player.isDead || player.invulnTimer > 0) return;
+    if (player.isDead || player.invulnTimer > 0) return;
 
-    for(const enemy of enemies) {
-        if(enemy.isDead || enemy.attackTimer > 0) continue;
-        
-        if(intersects(player, enemy)) {
-            dealDamage(player, enemy.damage);
+    for (const enemy of enemies) {
+        if (enemy.isDead || enemy.attackTimer > 0) continue;
+
+        if (intersects(player, enemy)) {
+            const knockbackX = player.x < enemy.x ? -250 : 250;
+            const knockbackY = -75;
+
+            dealDamage(player, enemy.damage, knockbackX, knockbackY);
             player.invulnTimer = player.invulnTime;
-            
-            if(player.health <= 0) {
+
+            if (player.health <= 0) {
                 player.isDead = true;
             }
 
@@ -149,11 +168,22 @@ export function resetPlayer(player: Player): void {
 
     player.attackTimer = 0;
     player.invulnTimer = 0;
+
+    player.knockbackX = 0;
+    player.knockbackY = 0;
 }
 
 export function removeEnemy(enemies: Enemy[]): void {
     for (let i = enemies.length - 1; i >= 0; i--){
         if (enemies[i].isDead || enemies[i].health <= 0) {
+            enemies.splice(i, 1);
+        }
+    }
+}
+
+export function removeEnemyInPit(enemies: Enemy[]): void {
+    for (let i = enemies.length - 1; i >= 0; i--){
+        if (enemies[i].y > 1750) {
             enemies.splice(i, 1);
         }
     }

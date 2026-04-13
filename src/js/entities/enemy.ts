@@ -25,6 +25,8 @@ export interface EnemyState extends Damageable {
         attackCooldown: number;
         attackTimer: number;
         isDead: boolean;
+        knockbackX: number;
+        knockbackY: number;
 
         // added this just for now to make them move
         // but i don't know how you want to code this stuff
@@ -43,6 +45,10 @@ export interface Damageable {
     health: number;
     maxHealth: number;
     isDead: boolean;
+    vx: number;
+    vy: number;
+    knockbackX: number;
+    knockbackY: number;
 }
 
 export class Enemy implements EnemyState {
@@ -64,6 +70,8 @@ export class Enemy implements EnemyState {
     attackCooldown: number;
     attackTimer: number;
     isDead: boolean;
+    knockbackX: number;
+    knockbackY: number;
 
     animator: Animator;
     state: "patrol" | "follow" | "attack";
@@ -90,9 +98,11 @@ export class Enemy implements EnemyState {
         this.health = 3;
         this.maxHealth = 3;
         this.damage = 1;
-        this.attackCooldown = 1;
+        this.attackCooldown = 1000;
         this.attackTimer = 0;
         this.isDead = false;
+        this.knockbackX = 0;
+        this.knockbackY = 0;
 
         // animations
         this.animator = new Animator(enemySprite, 48, 48);
@@ -111,7 +121,7 @@ export class Enemy implements EnemyState {
         this.patrolDuration = 2;
         // ranges
         this.followRange = 300;
-        this.attackRange = 15;
+        this.attackRange = 30;
 
     }
 
@@ -128,6 +138,14 @@ export class Enemy implements EnemyState {
         } else if (this.state === "attack") {
             this.attack(distance); this.animator.setAnimation("attack " + this.facing)
         }
+
+        this.vx += this.knockbackX;
+        this.vy += this.knockbackY;
+
+        this.knockbackX *= 0.85;
+        this.knockbackY *= 0.6;
+
+        if (Math.abs(this.knockbackX) < 1) this.knockbackX = 0;
 
         applyGravity(this, dt);
         clampFallSpeed(this)
@@ -213,5 +231,23 @@ export class Enemy implements EnemyState {
 
 export const enemies: Enemy[] = [
     new Enemy(240, 1200),
-    new Enemy(1250, 1200)
+    new Enemy(500, 1200),
+    new Enemy(1600, 1200),
+    new Enemy(1920, 1200),
+    new Enemy(2880, 1200),
+    new Enemy(3200, 1200),
+    new Enemy(3500, 1200),
+    new Enemy(3800, 1200),
+    new Enemy(4100, 1200),
+    new Enemy(4400, 1200),
+    new Enemy(4700, 1200),
+    new Enemy(5000, 1200),
+    new Enemy(5300, 1200),
+    new Enemy(5600, 1200),
+    new Enemy(5900, 1200),
+    new Enemy(6200, 1200),
+    new Enemy(6500, 1200),
+    new Enemy(6800, 1200),
+    new Enemy(7100, 1200),
+    new Enemy(3250, 1200)
 ];
