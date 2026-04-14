@@ -2,7 +2,7 @@
   "name": "cpsc-2d-platformer",
   "version": "1.0.0",
   "description": "C-Smooth's Game",
-  "main": "index.js",
+  "main": "main.ts",
   "devDependencies": {
     "@babel/cli": "^7.28.6",
     "@babel/core": "^7.29.0",
