@@ -5,8 +5,10 @@ import {
 } from "./level1Map.js";
 import { coins } from "../collectables/coins.js";
 import { hearts } from "../collectables/hearts.js";
-import { enemies } from "../entities/enemy.js";
+import { enemies } from "../entities/enemy";
 import { sword } from "../collectables/sword.js";
+import { Portal } from "../entities/portal.js";
+import { heal } from "../systems/damageSystem";
 
 export class LevelOneMap extends BaseRender {
     constructor(canvas) {
@@ -18,6 +20,13 @@ export class LevelOneMap extends BaseRender {
             tileSize,
             "/assets/sprites/tiles/world_tileset.png",
         );
+
+        const portalFrames = [];
+        for (let i = 0; i < 8; i++) {
+            portalFrames.push(`/assets/sprites/portals/portal_frame_${i}.png`);
+        }
+
+        this.portal = new Portal(3360, 1670, portalFrames);
 
         this.background = new Image();
         const backgroundSources = [
@@ -33,6 +42,7 @@ export class LevelOneMap extends BaseRender {
             }
         };
         this.background.src = backgroundSources[sourceIndex];
+
 
         this.spikeImg = new Image();
         this.spikeImg.src = "/assets/sprites/tiles/newSpike.png"
@@ -105,10 +115,10 @@ export class LevelOneMap extends BaseRender {
                     let [fsx, fsy] = dirtVari[y][x];
                     this.ctx.drawImage(this.tileSet, fsx, fsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
                 }
-                
+
                 if (tile === TILES.SPIKE) {
                     if (!this.spikeImg.complete || this.spikeImg.naturalWidth === 0) continue;
-                    this.ctx.drawImage(this.spikeImg, ssx, ssy, 107, 107, tileX-2, tileY, tileSize+10, tileSize+10);
+                    this.ctx.drawImage(this.spikeImg, ssx, ssy, 107, 107, tileX - 2, tileY, tileSize + 10, tileSize + 10);
                 }
 
                 // Temporary Boxes, and Door
@@ -117,53 +127,42 @@ export class LevelOneMap extends BaseRender {
                     this.ctx.fillRect(tileX, tileY, tileSize, tileSize);
                 }
 
-                if (tile === TILES.DOOR) {
-                    this.ctx.fillStyle = "#000000";
-                    this.ctx.fillRect(tileX, tileY, tileSize, tileSize);
-                }
-
             }
         }
     }
 
-    // Can add more logic to this later
-    door() {
-        const px = this.player.x;
-        const pxw = this.player.x + this.player.w;
-        const py = this.player.y;
-        const pyh = this.player.y + this.player.h;
-
-        const doorLocation = {
-            x: 2450,
-            xw: 2450 + 300,
-            y: 1450,
-            yh: 1450 + 100
-        }
-
-        if (
-            px > doorLocation.x &&
-            pxw < doorLocation.xw &&
-            py > doorLocation.y &&
-            pyh < doorLocation.yh
-        ) {
-            this.ctx.fillStyle = "Black";
-            this.ctx.font = "30px Arial Bold";
-            this.ctx.textAlign = "center";
-
-            this.ctx.fillText("Go to boss arena, click e!", this.canvas.width / 2, 60);
-
-            this.canSwitch = true;
-        } else {
-            this.canSwitch = false;
-        }
-    }
 
     // Some classes you might not have coins/enemies/only want to have some stuff
     // or maybe use a differnt list of coins for different maps
     render() {
         super.render();
 
-        this.door();
+        if (this.portal) {
+            this.portal.update(1 / 60);
+            this.portal.render(this.ctx, this.camera);
+
+    
+            const p = this.player;
+
+            if (
+                p.x < this.portal.x + this.portal.width &&
+                p.x + p.w > this.portal.x &&
+                p.y < this.portal.y + this.portal.height &&
+                p.y + p.h > this.portal.y
+            ) {
+                console.log("TOUCHING PORTAL");
+                
+                this.ctx.fillStyle = "Black";
+                this.ctx.font = "30px Arial Bold";
+                this.ctx.textAlign = "center";
+
+                this.ctx.fillText("Enter portal (E)", this.canvas.width / 2, 60);
+
+                this.canSwitch = true;
+            } else {
+                this.canSwitch = false;
+            }
+        }
 
         for (const enemy of enemies) {
             enemy.animator.draw(
@@ -186,6 +185,7 @@ export class LevelOneMap extends BaseRender {
         hearts.forEach(heart => {
             heart.draw(this.ctx, this.camera);
             if (heart.checkCollision(this.player)) {
+                heal(this.player, 1);
                 heart.updateReact('heartCollected')
             }
         });

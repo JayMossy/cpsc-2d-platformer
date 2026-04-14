@@ -1,4 +1,4 @@
-import { player } from "../entities/player.js";
+import { player } from "../entities/player";
 import { playerAnimator } from "../systems/playerMovement.js";
 
 export class BaseRender {

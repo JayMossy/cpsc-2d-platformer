@@ -26,30 +26,30 @@ function dispatchGameEnded(reason) {
     window.dispatchEvent(event);
 }
 
-function loop(timestamp) {
+// function loop(timestamp) {
 
-    if (lastTime === 0) lastTime = timestamp;
+//     if (lastTime === 0) lastTime = timestamp;
 
-    let dt = (timestamp - lastTime) / 1000;
-    lastTime = timestamp;
+//     let dt = (timestamp - lastTime) / 1000;
+//     lastTime = timestamp;
 
-    if (dt > 0.1) dt = 0.1;
+//     if (dt > 0.1) dt = 0.1;
 
 
-    if (!gamePaused) {
-        playerMovement(dt);
-        for (const enemy of enemies) {
-            enemy.update(dt, player);
-        }
-
-        checkHazard(player);
-        updateCollectables(dt);
+if (!gamePaused) {
+    playerMovement(dt);
+    for (const enemy of enemies) {
+        enemy.update(dt, player);
     }
 
-    render();
-
-    requestAnimationFrame(loop);
+    checkHazard(player);
+    updateCollectables(dt);
 }
+
+render();
+
+//     requestAnimationFrame(loop);
+// }
 
 export function setGamePaused(paused) {
     gamePaused = Boolean(paused);

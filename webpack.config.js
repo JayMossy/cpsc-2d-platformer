@@ -64,7 +64,7 @@ let config = {
             patterns: [
                 { from: "./src/images", to: "images" },
                 { from: "./src/bootstrap", to: "bootstrap" },
-                { from: "./src/js/main.js", to: "js/main.js" },
+                // { from: "./src/js/main.js", to: "js/main.js" },
                 { from: "./src/js/maps", to: "js/maps" },
                 { from: "./src/js/entities", to: "js/entities" },
                 { from: "./src/js/systems", to: "js/systems" },
