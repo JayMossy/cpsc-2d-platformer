@@ -57,7 +57,7 @@ const MainMenu: React.FC<MainMenuProps> = ({onSendShownComponent}) => {
               {/* Where all the buttons go */}
               <div className="row justify-content-center w-100 pb-5 px-5 px-md-4 px-lg-5">
                 <div className="d-flex flex-column align-items-center">
-                  <button onClick={() => handleChange("levelOne")} className=" btn-custom-color btn  rounded-1 mb-3 fs-4 fs-custom-sm">
+                  <button onClick={() => handleChange("levelSelect")} className=" btn-custom-color btn  rounded-1 mb-3 fs-4 fs-custom-sm">
                     <i className="bi bi-suit-diamond-fill pe-1"></i>
                     Start New Game
                     <i className="bi bi-suit-diamond-fill ps-1"></i>

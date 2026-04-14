@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import MainMenu from './js/components/MainMenu';
 import CharacterSelect from './js/components/CharacterSelect';
 import LevelOne from './js/components/LevelOne';
+import LevelSelect from './js/components/LevelSelect';
 
 
 const App = () => {
@@ -17,6 +18,9 @@ const App = () => {
             <div>
                 {shownComponent == "mainMenu" &&
                 <MainMenu onSendShownComponent = {handleComponentToShow}/>
+                }
+                {shownComponent == "levelSelect" && 
+                <LevelSelect onSendShownComponent={handleComponentToShow} />
                 }
                 {shownComponent == "changeCharacter" &&
                 <CharacterSelect onSendShownComponent = {handleComponentToShow} />

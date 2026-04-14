@@ -121,7 +121,7 @@ export class LevelOneMap extends BaseRender {
                     this.ctx.drawImage(this.spikeImg, ssx, ssy, 107, 107, tileX - 2, tileY, tileSize + 10, tileSize + 10);
                 }
 
-                // Temporary Boxes, and Door
+                // Temporary Boxes
                 if (tile === TILES.BOX) {
                     this.ctx.fillStyle = "#8b5a2b";
                     this.ctx.fillRect(tileX, tileY, tileSize, tileSize);
@@ -150,7 +150,6 @@ export class LevelOneMap extends BaseRender {
                 p.y < this.portal.y + this.portal.height &&
                 p.y + p.h > this.portal.y
             ) {
-                console.log("TOUCHING PORTAL");
                 
                 this.ctx.fillStyle = "Black";
                 this.ctx.font = "30px Arial Bold";
