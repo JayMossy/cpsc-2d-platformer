@@ -9,9 +9,9 @@ const App = () => {
     const [shownComponent, setShownComponent] = useState("mainMenu")
 
     const handleComponentToShow = (data: string) => {
-    setShownComponent(data);
-    console.log(data)
-  };
+        setShownComponent(data);
+        console.log(data)
+    };
     return (
         <>
             <div>
