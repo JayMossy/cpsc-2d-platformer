@@ -16,8 +16,8 @@ export class Portal {
             this.frames.push(img);
         });
 
-        this.width = 128;
-        this.height = 128;
+        this.width = 192;
+        this.height = 192;
     }
 
     update(deltaTime) {

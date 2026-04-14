@@ -26,7 +26,7 @@ export class LevelOneMap extends BaseRender {
             portalFrames.push(`/assets/sprites/portals/portal_frame_${i}.png`);
         }
 
-        this.portal = new Portal(3360, 1670, portalFrames);
+        this.portal = new Portal(20600, 1615, portalFrames);
 
         this.background = new Image();
         const backgroundSources = [
@@ -155,11 +155,22 @@ export class LevelOneMap extends BaseRender {
                 this.ctx.font = "30px Arial Bold";
                 this.ctx.textAlign = "center";
 
-                this.ctx.fillText("Enter portal (E)", this.canvas.width / 2, 60);
+                this.ctx.fillText("Entering portal...", this.canvas.width / 2, 60);
+                if (!this.hasTriggeredPortal) {
+                    this.hasTriggeredPortal = true;
+                    console.log("SYNC EVENT FIRED", this.player);
 
-                this.canSwitch = true;
+                    window.gameState = {
+                        health: this.player.health,
+                        maxHealth: this.player.maxHealth,
+                        coins: this.player.collectedCoins,
+                        hasSword: this.player.hasSword || false
+                    };
+
+                    window.dispatchEvent(new Event("openInBetweenScreen"));
+                }
             } else {
-                this.canSwitch = false;
+                this.hasTriggeredPortal = false;
             }
         }
 
@@ -192,6 +203,7 @@ export class LevelOneMap extends BaseRender {
         sword.forEach(sword => {
             sword.draw(this.ctx, this.camera)
             if (sword.checkCollision(this.player)) {
+                 this.player.hasSword = true;
                 sword.updateReact('swordCollected')
             }
         })
