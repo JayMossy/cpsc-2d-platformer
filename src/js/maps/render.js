@@ -44,7 +44,7 @@ function moveMaps(dt) {
 
     // If portal collision triggered switch
     // if (level.canSwitch) {
-    //     console.log("SWITCHING LEVEL"); // DEBUG (you can remove later)
+    //     console.log("SWITCHING LEVEL"); 
 
     //     currentLevel = (currentLevel + 1) % levels.length;
 
