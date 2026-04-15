@@ -11,7 +11,6 @@ const App = () => {
 
     const handleComponentToShow = (data: string) => {
         console.log(data);
-        // setShownComponent(data);
         // If it's the inBetween screen, show as overlay instead
         if (data === "inBetween") {
             setOverlay("inBetween");
