@@ -30,6 +30,7 @@ export function setMovementX(player, direction) {
 }
 
 export function integrate(player, dt) {
+    player.Grounded = false;
     player.x += player.vx * dt;
     horizontal(player);
     player.y += player.vy * dt;

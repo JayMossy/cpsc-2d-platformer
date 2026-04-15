@@ -23,6 +23,7 @@ export interface Player {
         isDead: boolean;
         knockbackX: number;
         knockbackY: number;
+        mode: "unarmed" | "sword";
 }
 
 export type FacingDirection = "left" | "right";
@@ -52,7 +53,8 @@ export function createPlayer(x: number, y: number): Player {
         invulnTimer: 0,
         isDead: false,
         knockbackX: 0,
-        knockbackY: 0
+        knockbackY: 0,
+        mode: "unarmed"
     };
 }
 

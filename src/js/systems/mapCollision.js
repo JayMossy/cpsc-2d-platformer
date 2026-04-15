@@ -57,8 +57,6 @@ export function horizontal(entity) {
 }
 
 export function vertical(entity) {
-    // Reset player's ground state
-    entity.grounded = false;
     const leftTile = Math.floor((entity.x + 1) / tileSize);
     const rightTile = Math.floor((entity.x + entity.w - 1) / tileSize);
     

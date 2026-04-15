@@ -1,5 +1,5 @@
 import { player } from "../entities/player";
-import { playerAnimator } from "../systems/playerMovement.js";
+import { animators } from "../systems/playerSetup.ts";
 
 export class BaseRender {
     constructor(canvas, map, mapRows, mapCols, tileSize, spriteSheetSrc) {
@@ -17,12 +17,12 @@ export class BaseRender {
         this.camera = { x: 0, y: 0 };
 
         this.player = player;
-        this.playerAnimator = playerAnimator;
 
         this.canSwitch = false;
 
         this.resizeCanvas();
         window.addEventListener("resize", () => this.resizeCanvas());
+        this.lastMode = "unarmed";
     }
 
     resizeCanvas() {
@@ -81,12 +81,37 @@ export class BaseRender {
         this.ctx.fillText(`x: ${this.player.x.toFixed(1)} y: ${this.player.y.toFixed(1)}`, 20, 30);
         this.ctx.fillText(`col: ${playerCol} row: ${playerRow}`, 20, 55);
 
-        this.playerAnimator.draw(
-            this.ctx,
-            this.player.x - this.camera.x,
-            this.player.y - this.camera.y,
-            this.player.w,
-            this.player.h
-        );
+        const mode = this.player.mode || "unarmed";
+
+
+        this.lastMode = mode;
+
+        const current = animators[mode];
+        if (!current) return;
+
+        let activeAnimator;
+
+        if (
+            this.player.mode === "sword" &&
+            this.player.attackTimer > 0 &&
+            current.attack
+        ) {
+            activeAnimator = current.attack;
+        } else if (!this.player.grounded) {
+            activeAnimator = current.jump;
+        } else {
+            activeAnimator = current.idleRun;
+        }
+
+        if (activeAnimator) {
+            activeAnimator.draw(
+                this.ctx,
+                this.player.x - this.camera.x,
+                this.player.y - this.camera.y,
+                this.player.w,
+                this.player.h
+            );
+        }
+
     }
 }
