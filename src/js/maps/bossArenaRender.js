@@ -1,7 +1,7 @@
 import { BaseRender } from "./renderBaseClass.js";
 import {
     Mrows, Mcols, tileSize, map,
-    tileLocation, TILES, dirtVari
+    tileLocation, TILES
 } from "./bossArena.js";
 
 export class BossArena extends BaseRender {
@@ -12,7 +12,7 @@ export class BossArena extends BaseRender {
             Mrows,
             Mcols,
             tileSize,
-            "/assets/sprites/tiles/world_tileset.png",
+            "/assets/sprites/tiles/boss-tiles-2.png",
         );
 
         this.now = new Date();
@@ -34,7 +34,23 @@ export class BossArena extends BaseRender {
         }
 
         const ogSize = tileLocation.tileSize;
-        const [gsx, gsy] = tileLocation.grass;
+        // SourceX   ,   SourceY
+        const [darkSourceX, darkSourceY] = tileLocation.dark;
+        const [dirtSourceX, dirtSourceY] = tileLocation.dirt;
+        const [pFloorSourceX, pFloorSourceY] = tileLocation.pavedFloor;
+        const [brick1SourceX, brick1SourceY] = tileLocation.brick1;
+        const [brick2SourceX, brick2SourceY] = tileLocation.brick2;
+        const [bBrick1SourceX, bBrick1SourceY] = tileLocation.brownBrick1;
+        const [bBrick2SourceX, bBrick2SourceY] = tileLocation.brownBrick2;
+        const [colBtnLSourseX, colBtnLSourseY] = tileLocation.colBtnL;
+        const [colBtnRSourseX, colBtnRSourseY] = tileLocation.colBtnR;
+        const [colMidLSourseX, colMidLSourseY] = tileLocation.colMidL;
+        const [colMidRSourseX, colMidRSourseY]  = tileLocation.colMidR;
+        const [bgSourseX, bgSourseY] = tileLocation.background;
+        const [floorLSourseX, floorLSourseY] = tileLocation.floorLeft;
+        const [floorCrnSourseX, floorCrnSourseY] = tileLocation.floorCorner;
+        const [tree1SourceX, tree1SourceY] = tileLocation.tree1;
+        const [tree2SourceX, tree2SourceY] = tileLocation.tree2;
 
         const startCol = Math.max(0, Math.floor(this.camera.x / tileSize));
         const endCol = Math.min(Mcols, Math.ceil((this.camera.x + this.canvas.width) / tileSize));
@@ -57,18 +73,87 @@ export class BossArena extends BaseRender {
                 const tile = this.map[y][x];
 
                 this.ctx.fillStyle = "rgba(0,0,0,0)";
-
                 this.ctx.fillRect(tileX, tileY, this.tileSize, this.tileSize);
 
-                if (tile === TILES.GRASS) {
+                if (tile === TILES.DARK) {
                     if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
-                    this.ctx.drawImage(this.tileSet, gsx, gsy, ogSize, ogSize, tileX, tileY, this.tileSize, this.tileSize);
+                    this.ctx.drawImage(this.tileSet, darkSourceX, darkSourceY, ogSize, ogSize, tileX, tileY, this.tileSize, this.tileSize);
                 }
 
                 if (tile === TILES.DIRT) {
                     if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
-                    let [fsx, fsy] = dirtVari[y][x];
-                    this.ctx.drawImage(this.tileSet, fsx, fsy, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                    this.ctx.drawImage(this.tileSet, dirtSourceX, dirtSourceY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+                
+                if (tile === TILES.PAVED_FLOOR) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, pFloorSourceX, pFloorSourceY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+                if (tile === TILES.BRICK1) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, brick1SourceX, brick1SourceY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+                if (tile === TILES.BRICK2) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, brick2SourceX, brick2SourceY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+                
+                if (tile === TILES.BROWN_BRICK1) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, bBrick1SourceX, bBrick1SourceY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+                if (tile === TILES.BROWN_BRICK2) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, bBrick2SourceX, bBrick2SourceY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+                if (tile === TILES.COLUMN_BOTTOM_LEFT) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, colBtnLSourseX, colBtnLSourseY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+                if (tile === TILES.COLUMN_BOTTOM_RIGHT) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, colBtnRSourseX, colBtnRSourseY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+                if (tile === TILES.COLUMN_MIDDLE_LEFT) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, colMidLSourseX, colMidLSourseY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+                if (tile === TILES.COLUMN_MIDDLE_RIGHT) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, colMidRSourseX, colMidRSourseY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+                if (tile === TILES.BACKGROUND) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, bgSourseX, bgSourseY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+                if (tile === TILES.FLOOR_CORNER) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, floorCrnSourseX, floorCrnSourseY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+                if (tile === TILES.FLOOR_LEFT) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, floorLSourseX, floorLSourseY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+
+                if (tile === TILES.TREE1) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, tree1SourceX, tree1SourceY, 16*4, 16*4.5, tileX, tileY, 16*10, 16*10);
+                }
+
+                if (tile === TILES.TREE2) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, tree2SourceX, tree2SourceY, 16*4, 16*4, tileX, tileY, 16*10, 16*10);
                 }
 
             }

@@ -1,13 +1,18 @@
 import { map as levelOne, tileSize, TILES } from "../maps/level1Map.js";
-import { map as bossMap } from "../maps/bossArena.js";
+import { map as bossMap, TILES as arenaTILES } from "../maps/bossArena.js";
 import { getCurrentLevel } from "../maps/render.js";
 
-const solidTiles = [TILES.BOX, TILES.GRASS, TILES.DIRT];
+let solidTiles = [TILES.BOX, TILES.GRASS, TILES.DIRT];
 const horizontalBuffer = .3;
 const verticalBuffer = .2;
 
 function getTile(col,row) {
     const map = getCurrentLevel() % 2 === 0 ? levelOne : bossMap;
+    solidTiles = map === levelOne ? [TILES.BOX, TILES.GRASS, TILES.DIRT] : 
+                                    [arenaTILES.DARK, arenaTILES.DIRT, arenaTILES.PAVED_FLOOR,
+                                     arenaTILES.BRICK1, arenaTILES.BRICK2,
+                                     arenaTILES.BROWN_BRICK1, arenaTILES.BROWN_BRICK2,
+                                    ];
 
     if(row < 0 || row >= map.length) return 4;
     if(col < 0 || col >= map[0].length) return 4;

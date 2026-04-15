@@ -39,7 +39,7 @@ function moveMaps(dt) {
         }
 
         if (currentLevel === 1) {
-            bossArena.setPlayerPos(540, 1605);
+            bossArena.setPlayerPos(540, 100);
         }
 
         // Reset so it doesn't instantly retrigger
