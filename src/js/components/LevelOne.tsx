@@ -23,29 +23,21 @@ function LevelOne({onSendShownComponent}: LevelOneProps) {
 
   useEffect(() => {
     const canvas = document.getElementById("game") as HTMLCanvasElement;
+
+    const handler = () => {
+      onSendShownComponent("inBetween");
+    };
+
+    window.addEventListener("openInBetweenScreen", handler);
+
     if (canvas && !gameStartedRef.current) {
       gameStartedRef.current = true;
-      
       startGame(canvas);
-
-      // Load the game script dynamically
-      // const script = document.createElement('script');
-      // script.type = 'module';
-      // script.src = '/js/main.js';
-
-      // script.onload = () => {
-      //   // Now that the script is loaded, start the game
-      //   if ((window as any).startGame) {
-      //     (window as any).startGame(canvas);
-      //   } else {
-      //     console.error("startGame function not found on window");
-      //   }
-      // };
-      // script.onerror = () => {
-      //   console.error("Failed to load game script");
-      // };
-      // document.head.appendChild(script);
     }
+
+    return () => {
+      window.removeEventListener("openInBetweenScreen", handler);
+    };
   }, []);
 
   useEffect(() => {
