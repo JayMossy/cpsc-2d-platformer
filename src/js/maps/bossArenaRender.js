@@ -22,7 +22,7 @@ export class BossArena extends BaseRender {
         this.background.src = "/assets/backgrounds/bg-boss-4.png";
 
         this.throne = new Image();
-        this.throne.src = "/assets/backgrounds/throan.png";
+        this.throne.src = "/assets/sprites/tiles/throan.png";
     }
 
     drawMap() {
@@ -189,10 +189,10 @@ export class BossArena extends BaseRender {
                     this.ctx.drawImage(this.tileSet, tree2SourceX, tree2SourceY, 16*4, 16*4, tileX, tileY, 16*10, 16*10);
                 }
 
-                // if (tile === TILES.CHAIR) {
-                //     if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
-                //     this.ctx.drawImage(this.throne, chiarSourceX, chiarSourceY, 500, 500, tileX, tileY, 16*20, 16*20);
-                // }
+                if (tile === TILES.CHAIR) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.throne, chiarSourceX, chiarSourceY, 550,750, tileX, tileY, 16*40, 16*40);
+                }
 
             }
         }

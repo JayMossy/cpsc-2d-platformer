@@ -54,7 +54,7 @@ export const tileLocation = {
   ceilL: [16*4, 16*5],
   tree1: [16*13, 16*5.5],
   tree2: [16*10.5, 16*48],
-  chair: [700, 300]
+  chair: [500, 200]
 };
 
 const now = new Date();
@@ -86,7 +86,8 @@ makeSquare(Mrows-20, Mrows-20, 30, 30, TILES.TREE1);
 makeSquare(Mrows-20, Mrows-20, 35, 35, TILES.TREE1);
 makeSquare(Mrows-20, Mrows-20, 40, 41, TILES.TREE2);
 makeSquare(Mrows-20, Mrows-20, 50, 50, TILES.TREE2);
-makeSquare(Mrows-20, Mrows-20, 55, 55, TILES.CHAIR);
+
+// makeSquare(Mrows-14, Mrows-14, 55, 55, TILES.CHAIR);
 
 // Mixing in tiles with dirt - to paved floor
 mixTiles(25, [TILES.DIRT, TILES.BROWN_BRICK1], 50, 65);
@@ -135,17 +136,18 @@ makeSquare(Mrows-25, Mrows-25, 280, 280, TILES.FLOOR_CORNER_RIGHT);
 makeSquare(5, 30, 50, 214, TILES.BACKGROUND, TILES.CEILING);
 makeSquare(5, 60, 4, 50, TILES.BACKGROUND, TILES.CEILING);
 // Columns
-makeColumn(190, Mrows-5, 24)
-makeColumn(185, Mrows-5, 24)
-makeColumn(180, Mrows-5, 24)
-makeColumn(175, Mrows-5, 24)
-makeColumn(170, Mrows-5, 24)
-makeColumn(165, Mrows-5, 24)
+makeColumn(190, Mrows-6, 24)
+makeColumn(180, Mrows-6, 24)
+makeColumn(170, Mrows-6, 24)
+makeColumn(160, Mrows-6, 24)
+makeColumn(150, Mrows-6, 24)
+makeColumn(140, Mrows-6, 24)
 // Top floor
 makeSquare(5, 5, 0, 279, TILES.PAVED_FLOOR)
 
 // Chair
-makeSquare(10, 10, 15, 15, TILES.CHAIR);
+makeSquare(10, 10, 15, 15, TILES.DIRT);
+makeSquare(Mrows-14, Mrows-14, 55, 55, TILES.DIRT);
 
 
 
