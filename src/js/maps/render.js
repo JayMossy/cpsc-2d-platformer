@@ -18,6 +18,21 @@ export function initializeLevels(gameCanvas) {
 let currentLevel = 0;
 let switchCooldown = 0;
 
+window.addEventListener("movePlayerBack", () => {
+    if (levelOne && levelOne.player && levelOne.portal) {
+        const portal = levelOne.portal;
+
+        // Move player slightly LEFT of portal
+        levelOne.player.x = portal.x - 80;
+        levelOne.player.y = portal.y;
+    }
+});
+
+window.addEventListener("enterBoss", () => {
+        currentLevel = 1;
+        bossArena.setPlayerPos(540, 1605);
+});
+
 function moveMaps(dt) {
     const level = levels[currentLevel];
 
@@ -28,26 +43,26 @@ function moveMaps(dt) {
     }
 
     // If portal collision triggered switch
-    if (level.canSwitch) {
-        console.log("SWITCHING LEVEL"); // DEBUG (you can remove later)
+    // if (level.canSwitch) {
+    //     console.log("SWITCHING LEVEL"); 
 
-        currentLevel = (currentLevel + 1) % levels.length;
+    //     currentLevel = (currentLevel + 1) % levels.length;
 
-        // Set spawn positions
-        if (currentLevel === 0) {
-            levelOne.setPlayerPos(2000, 1750);
-        }
+    //     // Set spawn positions
+    //     if (currentLevel === 0) {
+    //         levelOne.setPlayerPos(2000, 1750);
+    //     }
 
-        if (currentLevel === 1) {
-            bossArena.setPlayerPos(540, 1605);
-        }
+    //     if (currentLevel === 1) {
+    //         bossArena.setPlayerPos(540, 1605);
+    //     }
 
-        // Reset so it doesn't instantly retrigger
-        level.canSwitch = false;
+    //     // Reset so it doesn't instantly retrigger
+    //     level.canSwitch = false;
 
-        // Add delay so player doesn't bounce back
-        switchCooldown = 1; // seconds
-    }
+    //     // Add delay so player doesn't bounce back
+    //     switchCooldown = 1; // seconds
+    // }
 }
 
 export function getCurrentLevel() {
