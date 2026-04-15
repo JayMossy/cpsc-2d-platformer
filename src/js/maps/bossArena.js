@@ -33,36 +33,36 @@ export const map = Array.from({ length: Mrows }, () =>
 makePlatform(1, Mrows, 0, Mcols, TILES.DIRT)
 
 // Inside empty square
-makePlatform(8, Mrows-8, 3, Mcols-16, TILES.SKY)
+makePlatform(4, Mrows-4, 3, Mcols-16, TILES.SKY)
 
 // Boss chamber
-makePlatform(9, 14, Mcols-15, Mcols-2, TILES.SKY)
-makePlatform(9, 15, Mcols-14, Mcols-3, TILES.SKY)
-makePlatform(9, 16, Mcols-13, Mcols-4, TILES.SKY)
+makePlatform(5, 10, Mcols-15, Mcols-2, TILES.SKY)
+makePlatform(5, 11, Mcols-14, Mcols-3, TILES.SKY)
+makePlatform(5, 12, Mcols-13, Mcols-4, TILES.SKY)
 
 // Grass floor
-makePlatform(8, 8, 3, Mcols-2, TILES.GRASS)
+makePlatform(4, 4, 3, Mcols-2, TILES.GRASS)
 
 // left platform
-makePlatform(26, 26, 10, 21, TILES.DIRT)
+makePlatform(22, 22, 10, 21, TILES.DIRT)
 
 // mid-left platform
-makePlatform(14, 14, 25, 30, TILES.DIRT)
+makePlatform(10, 10, 25, 30, TILES.DIRT)
 
 // middle platform
-makePlatform(20, 20, 36, 51, TILES.GRASS)
+makePlatform(16, 16, 36, 51, TILES.GRASS)
 
 // right platform
-makePlatform(26, 26, 70, 80, TILES.DIRT)
+makePlatform(22, 22, 70, 80, TILES.DIRT)
 
 // right ledge
-makePlatform(26, 26, Mcols-17, Mcols-16, TILES.DIRT)
+makePlatform(22, 22, Mcols-17, Mcols-16, TILES.DIRT)
 
 // right ledge top
-makePlatform(32, 32, Mcols-16, Mcols-14, TILES.DIRT)
+makePlatform(28, 28, Mcols-16, Mcols-14, TILES.DIRT)
 
 // right inside
-makePlatform(39, 47, Mcols-15, Mcols-2, TILES.SKY)
+makePlatform(35, 43, Mcols-15, Mcols-2, TILES.SKY)
 
 /* optimizing randomization of dirt */
 export const dirtVari = [];

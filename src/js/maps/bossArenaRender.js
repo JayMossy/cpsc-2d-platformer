@@ -19,16 +19,19 @@ export class BossArena extends BaseRender {
         this.rndNumber = this.now.getHours() * 439 + this.now.getMinutes() * 577 + this.now.getSeconds() * 727;
 
         this.background = new Image();
-        this.background.src = "/assets/backgrounds/boss-bg-good-3.png";
+        this.background.src = "/assets/backgrounds/bg-boss-4.png";
     }
 
     drawMap() {
-        const t = this.canvas.width/3;
-        const tt = this.canvas.width/2;
+        const bgWidth = this.background.naturalWidth;
+        const bgHeight = this.background.naturalHeight;
+        const bgScale = this.canvas.height / bgHeight;
+        const drawWidth = Math.floor(bgWidth * bgScale);
+        const parallaxX = -(this.camera.x * 0.2) % drawWidth;
 
-        this.ctx.drawImage(this.background, -t, -3, this.canvas.width/2, this.canvas.width/2);
-        this.ctx.drawImage(this.background, -t+tt, -3, this.canvas.width/2, this.canvas.width/2);
-        this.ctx.drawImage(this.background, -t+(2*tt), -3, this.canvas.width/2, this.canvas.width/2);
+        for (let x = parallaxX - drawWidth; x < this.canvas.width + drawWidth; x += drawWidth) {
+            this.ctx.drawImage(this.background, Math.floor(x), 0, drawWidth, this.canvas.height);
+        }
 
         const ogSize = tileLocation.tileSize;
         const [gsx, gsy] = tileLocation.grass;
