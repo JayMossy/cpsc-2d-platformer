@@ -118,12 +118,21 @@ interface CharacterSelectProps {
   onSendShownComponent: (data: any) => void;
 }
 function CharacterSelect({onSendShownComponent}: CharacterSelectProps) {
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<number | null>(() => {
+    const chosenCharacter = localStorage.getItem("chosenCharacter");
+    const activeCharacter = characters.find((character) => character.name === chosenCharacter);
+    return activeCharacter?.id ?? null;
+  });
   const char = characters.find((c) => c.id === selected);
 
   function handleConfirm() {
     if (!char) return;
     localStorage.setItem("chosenCharacter", char.name);
+    window.dispatchEvent(
+      new CustomEvent("characterChanged", {
+        detail: { chosenCharacter: char.name },
+      }),
+    );
     onSendShownComponent("mainMenu")
 }
 
