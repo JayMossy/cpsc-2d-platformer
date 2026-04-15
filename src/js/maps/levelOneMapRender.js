@@ -203,8 +203,6 @@ export class LevelOneMap extends BaseRender {
         sword.forEach(sword => {
             sword.draw(this.ctx, this.camera)
             if (sword.checkCollision(this.player)) {
-                 this.player.hasSword = true;
-                sword.updateReact('swordCollected')
             }
         })
     }

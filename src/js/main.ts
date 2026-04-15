@@ -1,4 +1,5 @@
 import { checkHazard } from "./systems/mapCollision";
+import { applySelectedCharacter } from "./systems/playerSetup";
 import { playerMovement } from "./systems/playerMovement";
 import { render, initializeLevels } from "./maps/render";
 import { updateCollectables } from "./collectables/updateCollectables";
@@ -119,6 +120,7 @@ export function startGame(canvas: HTMLCanvasElement): void {
   }
 
   // window.startGame = startGame;
+  applySelectedCharacter();
   initializeLevels(canvas);
   syncPlayerHealthHud(true);
   requestAnimationFrame(loop);

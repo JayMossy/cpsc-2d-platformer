@@ -43,23 +43,34 @@ export class Animator {
         }
     }
     //method to draw each image
-    draw(ctx, x, y, width, height) {
-        if (!this.currentAnimation) return;
-        if (!this.spriteSheet || !this.spriteSheet.complete || this.spriteSheet.naturalWidth === 0) return;
+    draw(ctx, x, y, width, height, dt = 0) {
+    if (!this.currentAnimation) return;
+    if (!this.spriteSheet || !this.spriteSheet.complete) return;
 
-        const frameNumber = this.currentAnimation[this.frameIndex];
+    this.frameTimer += dt;
 
-        ctx.drawImage(
-            this.spriteSheet,
-            frameNumber * this.frameWidth,
-            0,
-            this.frameWidth,
-            this.frameHeight,
-            x,
-            y,
-            width,
-            height
-        );
+    if (this.frameTimer >= this.frameInterval) {
+        this.frameTimer = 0;
+        this.frameIndex++;
+
+        if (this.frameIndex >= this.currentAnimation.length) {
+            this.frameIndex = 0;
+        }
     }
+
+    const frameNumber = this.currentAnimation[this.frameIndex];
+
+    ctx.drawImage(
+        this.spriteSheet,
+        frameNumber * this.frameWidth,
+        0,
+        this.frameWidth,
+        this.frameHeight,
+        x,
+        y,
+        width,
+        height
+    );
+}
 
 }

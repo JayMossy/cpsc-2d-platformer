@@ -1,30 +1,14 @@
 import { keys } from "./userInput.js";
-import { Animator } from "./animator.js";
 import { player } from "../entities/player";
 import {
-    applyGravity, clampFallSpeed,
-    setMovementX, integrate
+    applyGravity,
+    clampFallSpeed,
+    setMovementX,
+    integrate
 } from "./physics.js";
-
-const spriteSheet = new Image();
-if (localStorage.getItem("chosenCharacter") == "whiteShirt" || !localStorage.getItem("chosenCharacter")) {
-
-    spriteSheet.src =
-        "/assets/sprites/player/main_character/SpriteSheet/spritesheetmcwalkrun.png";
-}
-if (localStorage.getItem("chosenCharacter") == "RedShirt") {
-    spriteSheet.src = "/assets/sprites/player/main_character_red_shirt/SpriteSheet/spritesheetmcrwalkrun.png";
-}
-
-export const playerAnimator = new Animator(spriteSheet, 48, 43);
-
-playerAnimator.addAnimation("idle right", [0]);
-playerAnimator.addAnimation("idle left", [1]);
-playerAnimator.addAnimation("run right", [2, 3, 4, 5]);
-playerAnimator.addAnimation("run left", [6, 7, 8, 9]);
+import { animators } from "./playerSetup";
 
 export function playerMovement(dt) {
-    playerAnimator.update(dt);
 
     let moveDirection = 0;
 
@@ -39,14 +23,11 @@ export function playerMovement(dt) {
         player.lastDir = "right";
     }
 
-    // base movement from input
     const moveVX = moveDirection * player.moveSpeed;
 
-    // combine input movement + knockback
     player.vx = moveVX + player.knockbackX;
     player.vy += player.knockbackY;
 
-    // decay knockback over time
     player.knockbackX *= 0.85;
     player.knockbackY *= 0.85;
 
@@ -60,11 +41,40 @@ export function playerMovement(dt) {
 
     integrate(player, dt);
 
-    if (moveDirection !== 0) {
-        if (player.lastDir === "left") playerAnimator.setAnimation("run left");
-        else playerAnimator.setAnimation("run right");
+    const current = animators[player.mode];
+
+    if (!current) return;
+
+    if (player.mode === "sword" && player.attackTimer > 0) {
+        const current = animators[player.mode];
+
+        const animName =
+            player.lastDir === "left"
+                ? "attack left"
+                : "attack right";
+
+        current.attack.setAnimation(animName);
+        current.attack.update(dt);
+    }
+
+    if (!player.grounded) {
+
+        const animName =
+            player.vy < 0
+                ? (player.lastDir === "left" ? "jump up left" : "jump up right")
+                : (player.lastDir === "left" ? "fall left" : "fall right");
+
+        current.jump.setAnimation(animName);
+        current.jump.update(dt);
+
     } else {
-        if (player.lastDir === "left") playerAnimator.setAnimation("idle left");
-        else playerAnimator.setAnimation("idle right");
+
+        const animName =
+            moveDirection !== 0
+                ? (player.lastDir === "left" ? "run left" : "run right")
+                : (player.lastDir === "left" ? "idle left" : "idle right");
+
+        current.idleRun.setAnimation(animName);
+        current.idleRun.update(dt);
     }
 }
