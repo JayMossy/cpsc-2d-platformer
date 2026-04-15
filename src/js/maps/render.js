@@ -30,7 +30,7 @@ window.addEventListener("movePlayerBack", () => {
 
 window.addEventListener("enterBoss", () => {
         currentLevel = 1;
-        bossArena.setPlayerPos(540, 1605);
+        bossArena.setPlayerPos(540, 150);
 });
 
 function moveMaps(dt) {

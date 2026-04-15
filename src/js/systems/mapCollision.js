@@ -10,8 +10,11 @@ function getTile(col,row) {
     const map = getCurrentLevel() % 2 === 0 ? levelOne : bossMap;
     solidTiles = map === levelOne ? [TILES.BOX, TILES.GRASS, TILES.DIRT] : 
                                     [arenaTILES.DARK, arenaTILES.DIRT, arenaTILES.PAVED_FLOOR,
+                                     arenaTILES.FLOOR_CORNER_LEFT, arenaTILES.FLOOR_LEFT,
+                                     arenaTILES.FLOOR_CORNER_RIGHT, arenaTILES.FLOOR_RIGHT,
                                      arenaTILES.BRICK1, arenaTILES.BRICK2,
                                      arenaTILES.BROWN_BRICK1, arenaTILES.BROWN_BRICK2,
+                                     arenaTILES.CEILING, arenaTILES.CEILING_RIGHT
                                     ];
 
     if(row < 0 || row >= map.length) return 4;
@@ -36,6 +39,7 @@ export function horizontal(entity) {
     const bottomTile = Math.floor((entity.y + entity.h - 1) / tileSize);
     for (let row = topTile; row <= bottomTile; row++){
         if(entity.vx > 0){
+            console.log("RIGHT")
             for(let col = rightTile; col >= leftTile;col--){
                 if(solidTiles.includes(getTile(col,row))){
                     entity.x = col * tileSize - entity.w - horizontalBuffer;
@@ -44,6 +48,7 @@ export function horizontal(entity) {
                 }
             }
         }else if(entity.vx < 0){
+            console.log("LEFT")
             for(let col = leftTile; col <= rightTile; col++){
                 if(solidTiles.includes(getTile(col,row))){
                     entity.x = (col + 1) * tileSize + horizontalBuffer;

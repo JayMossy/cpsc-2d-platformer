@@ -20,6 +20,9 @@ export class BossArena extends BaseRender {
 
         this.background = new Image();
         this.background.src = "/assets/backgrounds/bg-boss-4.png";
+
+        this.throne = new Image();
+        this.throne.src = "/assets/backgrounds/throan.png";
     }
 
     drawMap() {
@@ -48,9 +51,15 @@ export class BossArena extends BaseRender {
         const [colMidRSourseX, colMidRSourseY]  = tileLocation.colMidR;
         const [bgSourseX, bgSourseY] = tileLocation.background;
         const [floorLSourseX, floorLSourseY] = tileLocation.floorLeft;
-        const [floorCrnSourseX, floorCrnSourseY] = tileLocation.floorCorner;
+        const [floorCrnLSourseX, floorCrnLSourseY] = tileLocation.floorCornerL;
+        const [ceilSourceX, ceilSourceY] = tileLocation.ceil
+        const [floorRSourseX, floorRSourseY] = tileLocation.floorRight;
+        const [floorCrnRSourseX, floorCrnRSourseY] = tileLocation.floorCornerR;
+        const [ceilRSourceX, ceilRSourceY] = tileLocation.ceilR;
+        const [ceilLSourceX, ceilLSourceY] = tileLocation.ceilL;
         const [tree1SourceX, tree1SourceY] = tileLocation.tree1;
         const [tree2SourceX, tree2SourceY] = tileLocation.tree2;
+        const [chiarSourceX, chiarSourceY] = tileLocation.chair;
 
         const startCol = Math.max(0, Math.floor(this.camera.x / tileSize));
         const endCol = Math.min(Mcols, Math.ceil((this.camera.x + this.canvas.width) / tileSize));
@@ -135,9 +144,9 @@ export class BossArena extends BaseRender {
                     this.ctx.drawImage(this.tileSet, bgSourseX, bgSourseY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
                 }
 
-                if (tile === TILES.FLOOR_CORNER) {
+                if (tile === TILES.FLOOR_CORNER_LEFT) {
                     if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
-                    this.ctx.drawImage(this.tileSet, floorCrnSourseX, floorCrnSourseY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                    this.ctx.drawImage(this.tileSet, floorCrnLSourseX, floorCrnLSourseY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
                 }
 
                 if (tile === TILES.FLOOR_LEFT) {
@@ -145,6 +154,30 @@ export class BossArena extends BaseRender {
                     this.ctx.drawImage(this.tileSet, floorLSourseX, floorLSourseY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
                 }
 
+                if (tile === TILES.FLOOR_CORNER_RIGHT) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, floorCrnRSourseX, floorCrnRSourseY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+                if (tile === TILES.FLOOR_RIGHT) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, floorRSourseX, floorRSourseY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+                if (tile === TILES.CEILING) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, ceilSourceX, ceilSourceY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+                if (tile === TILES.CEILING_RIGHT) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, ceilRSourceX, ceilRSourceY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
+
+                if (tile === TILES.CEILING_LEFT) {
+                    if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                    this.ctx.drawImage(this.tileSet, ceilLSourceX, ceilLSourceY, ogSize, ogSize, tileX, tileY, tileSize, tileSize);
+                }
 
                 if (tile === TILES.TREE1) {
                     if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
@@ -155,6 +188,11 @@ export class BossArena extends BaseRender {
                     if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
                     this.ctx.drawImage(this.tileSet, tree2SourceX, tree2SourceY, 16*4, 16*4, tileX, tileY, 16*10, 16*10);
                 }
+
+                // if (tile === TILES.CHAIR) {
+                //     if (!this.tileSet.complete || this.tileSet.naturalWidth === 0) continue;
+                //     this.ctx.drawImage(this.throne, chiarSourceX, chiarSourceY, 500, 500, tileX, tileY, 16*20, 16*20);
+                // }
 
             }
         }

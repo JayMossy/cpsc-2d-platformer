@@ -16,8 +16,14 @@ export const TILES = {
   COLUMN_MIDDLE_LEFT: 9,
   COLUMN_MIDDLE_RIGHT: 10,
   BACKGROUND: 11,
-  FLOOR_CORNER: 12,
+  FLOOR_CORNER_LEFT: 12,
   FLOOR_LEFT: 13,
+  FLOOR_CORNER_RIGHT: 14,
+  FLOOR_RIGHT : 15,
+  CEILING: 16,
+  CEILING_RIGHT: 17,
+  CEILING_LEFT: 18,
+  CHAIR: 19, 
   TREE1: 24,
   TREE2: 25,
   SPIKE: -1
@@ -39,10 +45,16 @@ export const tileLocation = {
   colMidL: [16*5, 16*10],
   colMidR: [16*6, 16*10],
   background: [16*6, 16*15],
-  floorCorner: [16*4, 16*2],
+  floorCornerL: [16*4, 16*2],
   floorLeft: [16*4, 16*3],
+  floorCornerR: [16*0, 16*2],
+  floorRight: [16*0, 16*3],
+  ceil: [16*1, 16*5],
+  ceilR: [16*0, 16*5],
+  ceilL: [16*4, 16*5],
   tree1: [16*13, 16*5.5],
-  tree2: [16*10.5, 16*48]
+  tree2: [16*10.5, 16*48],
+  chair: [700, 300]
 };
 
 const now = new Date();
@@ -60,15 +72,21 @@ export const map = Array.from({ length: Mrows }, () =>
 
 /* --- Beginning --- */
 
-// Top floor
+// Top dirt
 makeSquare(1, Mrows-25, 0, Mcols, TILES.DARK, TILES.DIRT)
 
 // Top trees
-makeSquare(Mrows-20, Mrows-20, 10, 10, TILES.TREE1);
+makeSquare(Mrows-20, Mrows-20, 3, 3, TILES.TREE1);
+makeSquare(Mrows-20, Mrows-20, 5, 5, TILES.TREE2);
+makeSquare(Mrows-20, Mrows-20, 12, 12, TILES.TREE1);
+makeSquare(Mrows-20, Mrows-20, 13, 13, TILES.TREE1);
+makeSquare(Mrows-20, Mrows-20, 20, 20, TILES.TREE2);
 makeSquare(Mrows-20, Mrows-20, 25, 25, TILES.TREE2);
+makeSquare(Mrows-20, Mrows-20, 30, 30, TILES.TREE1);
 makeSquare(Mrows-20, Mrows-20, 35, 35, TILES.TREE1);
+makeSquare(Mrows-20, Mrows-20, 40, 41, TILES.TREE2);
 makeSquare(Mrows-20, Mrows-20, 50, 50, TILES.TREE2);
-makeSquare(Mrows-20, Mrows-20, 53, 53, TILES.TREE1);
+makeSquare(Mrows-20, Mrows-20, 55, 55, TILES.CHAIR);
 
 // Mixing in tiles with dirt - to paved floor
 mixTiles(25, [TILES.DIRT, TILES.BROWN_BRICK1], 50, 65);
@@ -80,27 +98,55 @@ mixTiles(25, [TILES.BRICK2, TILES.PAVED_FLOOR], 95, 115);
 // Top paved floor
 makeSquare(1, Mrows-25, 115, Mcols, TILES.DARK, TILES.PAVED_FLOOR)
 mixTiles(25, [TILES.BRICK1, TILES.PAVED_FLOOR], 115, 125);
+
+// Room
+makeSquare(Mrows-24, Mrows, 150, Mcols, TILES.BACKGROUND);
 // Columns
+makeColumn(160, 24, 20);
 makeColumn(170, 24, 20);
 makeColumn(180, 24, 20);
 makeColumn(190, 24, 20);
 makeColumn(200, 24, 20);
+makeColumn(210, 24, 20);
+
+// Ceil
+makeSquare(Mrows-15, Mrows, 150, Mcols, TILES.DARK);
+makeSquare(Mrows-15, Mrows-15, 150, Mcols, TILES.CEILING)
+makeSquare(Mrows-15, Mrows, 150, 150, TILES.FLOOR_RIGHT)
+makeSquare(Mrows-15, Mrows-15, 150, 150, TILES.CEILING_RIGHT)
+makeSquare(Mrows-15, Mrows, 214, 214, TILES.FLOOR_LEFT)
+makeSquare(Mrows-15, Mrows-15, 214, 214, TILES.CEILING_LEFT)
+
+makeSquare(Mrows-15, Mrows, 281, 281, TILES.FLOOR_RIGHT)
+makeSquare(Mrows-15, Mrows-15, 281, 281, TILES.CEILING_RIGHT)
+
 
 // Hole
-makeSquare(5, Mrows, 215, 280, TILES.SKY);
-makeSquare(5, Mrows-35, 215, 280, TILES.BACKGROUND);
+makeSquare(5, Mrows, 215, 280, TILES.BACKGROUND);
 makeSquare(15, Mrows-26, 214, 214, TILES.FLOOR_LEFT);
-makeSquare(Mrows-25, Mrows-25, 214, 214, TILES.FLOOR_CORNER);
+makeSquare(Mrows-25, Mrows-25, 214, 214, TILES.FLOOR_CORNER_LEFT);
+makeSquare(6, Mrows-26, 280, 280, TILES.FLOOR_RIGHT);
+makeSquare(5, 5, 280, 280, TILES.DARK)
+makeSquare(Mrows-25, Mrows-25, 280, 280, TILES.FLOOR_CORNER_RIGHT);
+
 
 /* --- Inside --- */
 // carving out inside square
-makeSquare(5, 30, 50, 214, TILES.BACKGROUND);
+makeSquare(5, 30, 50, 214, TILES.BACKGROUND, TILES.CEILING);
+makeSquare(5, 60, 4, 50, TILES.BACKGROUND, TILES.CEILING);
 // Columns
-makeColumn(190, Mrows-5, 40)
-makeColumn(185, Mrows-5, 40)
-makeColumn(180, Mrows-5, 40)
+makeColumn(190, Mrows-5, 24)
+makeColumn(185, Mrows-5, 24)
+makeColumn(180, Mrows-5, 24)
+makeColumn(175, Mrows-5, 24)
+makeColumn(170, Mrows-5, 24)
+makeColumn(165, Mrows-5, 24)
 // Top floor
-makeSquare(5, 5, 0, 280, TILES.PAVED_FLOOR)
+makeSquare(5, 5, 0, 279, TILES.PAVED_FLOOR)
+
+// Chair
+makeSquare(10, 10, 15, 15, TILES.CHAIR);
+
 
 
 
