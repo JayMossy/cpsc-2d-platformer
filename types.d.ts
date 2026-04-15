@@ -39,6 +39,7 @@ interface Window {
 }
 
 interface WindowEventMap {
+  characterChanged: CustomEvent<{ chosenCharacter: string }>;
   levelEnded: CustomEvent<LevelEndedDetail>;
   bossDefeated: CustomEvent;
   playerDamaged: CustomEvent;

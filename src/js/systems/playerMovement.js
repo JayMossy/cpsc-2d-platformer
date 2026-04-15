@@ -7,13 +7,26 @@ import {
 } from "./physics.js";
 
 const spriteSheet = new Image();
-if (localStorage.getItem("chosenCharacter") == "whiteShirt" || !localStorage.getItem("chosenCharacter")) {
+const characterSpriteSheets = {
+    whiteShirt: "/assets/sprites/player/main_character/SpriteSheet/spritesheetmcwalkrun.png",
+    RedShirt: "/assets/sprites/player/main_character_red_shirt/SpriteSheet/spritesheetmcrwalkrun.png"
+};
 
-    spriteSheet.src =
-        "/assets/sprites/player/main_character/SpriteSheet/spritesheetmcwalkrun.png";
+function getSelectedCharacterSpriteSrc() {
+    const chosenCharacter = localStorage.getItem("chosenCharacter");
+    return characterSpriteSheets[chosenCharacter] || characterSpriteSheets.whiteShirt;
 }
-if (localStorage.getItem("chosenCharacter") == "RedShirt") {
-    spriteSheet.src = "/assets/sprites/player/main_character_red_shirt/SpriteSheet/spritesheetmcrwalkrun.png";
+
+export function applySelectedCharacterSprite() {
+    const nextSpriteSrc = getSelectedCharacterSpriteSrc();
+
+    if (spriteSheet.src.endsWith(nextSpriteSrc)) {
+        return;
+    }
+
+    spriteSheet.src = nextSpriteSrc;
+    playerAnimator.frameIndex = 0;
+    playerAnimator.frameTimer = 0;
 }
 
 export const playerAnimator = new Animator(spriteSheet, 48, 43);
@@ -22,6 +35,10 @@ playerAnimator.addAnimation("idle right", [0]);
 playerAnimator.addAnimation("idle left", [1]);
 playerAnimator.addAnimation("run right", [2, 3, 4, 5]);
 playerAnimator.addAnimation("run left", [6, 7, 8, 9]);
+
+applySelectedCharacterSprite();
+
+window.addEventListener("characterChanged", applySelectedCharacterSprite);
 
 export function playerMovement(dt) {
     playerAnimator.update(dt);
