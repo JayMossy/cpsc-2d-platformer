@@ -162,6 +162,7 @@ function makeColumn(x, y, height) {
 
 /**
 * Makes squares, you can set the top tile as a different one
+* Makes squares, you can set the top tile as a different one
 * @param {*} bottom - Bottom start position
 * @param {*} top - Top end position
 * @param {*} left - Left start position

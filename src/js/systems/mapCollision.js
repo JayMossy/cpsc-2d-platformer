@@ -39,6 +39,7 @@ export function horizontal(entity) {
     const bottomTile = Math.floor((entity.y + entity.h - 1) / tileSize);
     for (let row = topTile; row <= bottomTile; row++){
         if(entity.vx > 0){
+            console.log("RIGHT")
             for(let col = rightTile; col >= leftTile;col--){
                 if(solidTiles.includes(getTile(col,row))){
                     entity.x = col * tileSize - entity.w - horizontalBuffer;
@@ -47,6 +48,7 @@ export function horizontal(entity) {
                 }
             }
         }else if(entity.vx < 0){
+            console.log("LEFT")
             for(let col = leftTile; col <= rightTile; col++){
                 if(solidTiles.includes(getTile(col,row))){
                     entity.x = (col + 1) * tileSize + horizontalBuffer;
