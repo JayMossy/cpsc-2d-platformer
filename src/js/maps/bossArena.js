@@ -81,7 +81,7 @@ makeSquare(Mrows-20, Mrows-20, 30, 30, TILES.TREE1);
 makeSquare(Mrows-20, Mrows-20, 35, 35, TILES.TREE1);
 makeSquare(Mrows-20, Mrows-20, 40, 41, TILES.TREE2);
 makeSquare(Mrows-20, Mrows-20, 50, 50, TILES.TREE2);
-makeSquare(Mrows-14, Mrows-14, 55, 55, TILES.TREE1);
+makeSquare(Mrows-20, Mrows-20, 55, 55, TILES.TREE1);
 
 // Mixing in tiles with dirt - to paved floor
 mixTiles(25, [TILES.DIRT, TILES.BROWN_BRICK1], 50, 65);
