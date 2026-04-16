@@ -121,7 +121,7 @@ makeSquare(5, Mrows, 215, 280, TILES.BACKGROUND);
 makeSquare(15, Mrows-26, 214, 214, TILES.WALL_LEFT);
 makeSquare(Mrows-25, Mrows-25, 214, 214, TILES.FLOOR_CORNER_LEFT);
 makeSquare(6, Mrows-26, 280, 280, TILES.WALL_RIGHT);
-makeSquare(5, 5, 280, 280, TILES.CEILING_LEFT)
+makeSquare(5, 5, 280, 280, TILES.DARK)
 makeSquare(Mrows-25, Mrows-25, 280, 280, TILES.FLOOR_CORNER_RIGHT);
 
 
@@ -130,6 +130,8 @@ makeSquare(Mrows-25, Mrows-25, 280, 280, TILES.FLOOR_CORNER_RIGHT);
 makeSquare(5, 30, 50, 214, TILES.BACKGROUND, TILES.CEILING);
 makeSquare(30, 30, 214, 214, TILES.CEILING_LEFT)
 makeSquare(5, 60, 4, 50, TILES.BACKGROUND, TILES.CEILING);
+makeSquare(5, 60, 4, 4, TILES.WALL_LEFT)
+makeSquare(5, 5, 4, 4, TILES.DARK)
 // Columns
 makeColumn(190, Mrows-6, 23)
 makeColumn(180, Mrows-6, 23)
@@ -138,7 +140,7 @@ makeColumn(160, Mrows-6, 23)
 makeColumn(150, Mrows-6, 23)
 makeColumn(140, Mrows-6, 23)
 // Top floor
-makeSquare(5, 5, 0, 279, TILES.PAVED_FLOOR)
+makeSquare(5, 5, 5, 279, TILES.PAVED_FLOOR)
 
 function mixTiles(y, tilesArr, start, stop) {
   for(let x = start; x < stop; x++){
