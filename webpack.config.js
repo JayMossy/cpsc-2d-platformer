@@ -15,6 +15,10 @@ let config = {
     },
     devServer: {
         port: 8084,
+        historyApiFallback: {
+            index: "/index.html",
+            disableDotRule: true
+        },
         static: [
             { directory: "./dist" },
             { directory: "./src", publicPath: "/" }
