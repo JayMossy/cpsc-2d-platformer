@@ -9,6 +9,7 @@ export const keys = {
 };
 
 window.addEventListener("keydown", (e) => {
+    if (!e.key) return;
 
     const key = e.key.toLowerCase();
 
@@ -24,7 +25,8 @@ window.addEventListener("keydown", (e) => {
 });
 
 window.addEventListener("keyup", (e) => {
-
+    if (!e.key) return;
+    
     const key = e.key.toLowerCase();
 
     if (key === "arrowleft" || key === "a") keys.left = false;
