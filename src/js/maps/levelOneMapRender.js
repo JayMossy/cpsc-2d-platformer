@@ -7,7 +7,7 @@ import { coins } from "../collectables/coins.js";
 import { hearts } from "../collectables/hearts.js";
 import { enemies } from "../entities/enemy";
 import { sword } from "../collectables/sword.js";
-import { speedPowerUps, jumpPowerUps, strengthPowerUps } from "../collectables/powerUps";
+import { powerUps } from "../collectables/powerUps";
 import { Portal } from "../entities/portal.js";
 import { heal } from "../systems/damageSystem";
 
@@ -207,41 +207,15 @@ export class LevelOneMap extends BaseRender {
             }
         });
 
-        speedPowerUps.forEach(speed => {
-            // speed.draw(this.ctx, this.camera);
-            // for now until I make a sprite sheet
-            this.ctx.fillStyle = "#ff8b06";
-            this.ctx.fillRect(300-this.camera.x, 1600-this.camera.y, 50, 50);
-
-            if (speed.checkCollision(this.player)) {
-                speed.speedUp(this.player);
-                setTimeout( () => speed.speedRevert(this.player), 5000);
+        powerUps.forEach(powerUp => {
+            powerUp.draw(this.ctx, this.camera, true);
+            if (powerUp.checkCollision(this.player)) {
+                powerUp.powerUp(this.player);
+                setTimeout( () => powerUp.powerRevert(this.player), 7500);
             }
         });
 
-        jumpPowerUps.forEach(jump => {
-            // jump.draw(this.ctx, this.camera);
-            // for now until I make a sprite sheet
-            this.ctx.fillStyle = "#06ff23";
-            this.ctx.fillRect(600-this.camera.x, 1600-this.camera.y, 50, 50);
-
-            if (jump.checkCollision(this.player)) {
-                jump.jumpUp(this.player);
-                setTimeout( () => jump.jumpRevert(this.player), 5000);
-            }
-        });
-
-        strengthPowerUps.forEach(strength => {
-            // strength.draw(this.ctx, this.camera);
-            // for now until I make a sprite sheet
-            this.ctx.fillStyle = "#ff0606";
-            this.ctx.fillRect(900-this.camera.x, 1400-this.camera.y, 50, 50);
-
-            if (strength.checkCollision(this.player)) {
-                strength.strengthUp(this.player);
-                setTimeout( () => jump.strengthRevert(this.player), 5000);
-            }
-        });
+        // console.log(this.player.x, this.player.y);
     }
 
 }

@@ -3,71 +3,83 @@ import { Collectable } from "./collectablesBaseClass.js";
 import { Player } from "../entities/player.js";
 
 const speedUpSpriteSheet: HTMLImageElement = new Image();
-speedUpSpriteSheet.src = "";
-
-export const speedUpAnimator: Animator = new Animator(speedUpSpriteSheet, 16, 16);
+speedUpSpriteSheet.src = "/assets/sprites/collectibles/speedUp_sprite_sheet.png";
 
 const jumpUpSpriteSheet: HTMLImageElement = new Image();
 jumpUpSpriteSheet.src = "";
 
-export const jumpUpAnimator: Animator = new Animator(jumpUpSpriteSheet, 16, 16);
-
 const strengthUpSpriteSheet: HTMLImageElement = new Image();
 jumpUpSpriteSheet.src = "";
 
+export const speedUpAnimator: Animator = new Animator(speedUpSpriteSheet, 189, 176);
+speedUpAnimator.addAnimation("spin", [1, 2, 3, 2])
+speedUpAnimator.setAnimation("spin")
+
+export const jumpUpAnimator: Animator = new Animator(jumpUpSpriteSheet, 16, 16);
+
 export const strengthUpAnimator: Animator = new Animator(strengthUpSpriteSheet, 16, 16);
 
-class SpeedUp extends Collectable {
-    constructor(x: number, y: number) {
-        super(x, y, 50, 50, speedUpAnimator);
+abstract class PowerUp extends Collectable {
+    constructor(x: number, y: number, animator: Animator) {
+        super(x, y, 50, 50, animator);
     }
 
-    speedUp(player: Player): void {
+    abstract powerUp(player: Player): void;
+
+    abstract powerRevert(player: Player): void
+}
+
+class SpeedUp extends PowerUp {
+    constructor(x: number, y: number) {
+        super(x, y, speedUpAnimator);
+    }
+
+    powerUp(player: Player): void {
         player.moveSpeed = 900;
+        console.log("Speed Up");
     }
 
-    speedRevert(player: Player): void {
+    powerRevert(player: Player): void {
         player.moveSpeed = 450;
+        console.log("Speed Reverted");
     }
 }
 
-class JumpUp extends Collectable {
+class JumpUp extends PowerUp {
     constructor(x: number, y: number) {
-        super(x, y, 50, 50, jumpUpAnimator);
+        super(x, y, jumpUpAnimator);
     }
 
-    jumpUp(player: Player): void {
+    powerUp(player: Player): void {
         player.jump = player.jump * 2;
+        console.log("Jump Up");
     }
 
-    jumpRevert(player: Player): void {
+    powerRevert(player: Player): void {
         player.jump = player.jump/2;
+        console.log("Jump Reverted");
     }
 }
 
-class StrengthUp extends Collectable {
+class StrengthUp extends PowerUp {
     constructor(x: number, y: number) {
-        super(x, y, 50, 50, jumpUpAnimator);
+        super(x, y, jumpUpAnimator);
     }
 
-    strengthUp(player: Player): void {
-        player.damage = player.jump * 3;
+    powerUp(player: Player): void {
+        player.damage = 2;
+        console.log("Strength Up");
     }
 
-    strengthRevert(player: Player): void {
-        player.damage = player.jump/3;
+    powerRevert(player: Player): void {
+        player.damage = 1;
+        console.log("Strength Reverted");
     }
 }
 
-export const speedPowerUps = [
-    new SpeedUp(300, 1600)
-];
 
-export const jumpPowerUps = [
-    new JumpUp(600, 1600)
+export const powerUps: PowerUp[] = [
+    new SpeedUp(300, 1600),
+    new JumpUp(600, 1600),
+    new StrengthUp(7000, 1700)
 ];
-
-export const strengthPowerUps = [
-    new StrengthUp(900, 1400)
-];
-// Thinking of combing all these power ups into one list and also making a base power up class
