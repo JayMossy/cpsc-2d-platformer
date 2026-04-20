@@ -7,6 +7,7 @@ import { coins } from "../collectables/coins.js";
 import { hearts } from "../collectables/hearts.js";
 import { enemies } from "../entities/enemy";
 import { sword } from "../collectables/sword.js";
+import { powerUps } from "../collectables/powerUps";
 import { Portal } from "../entities/portal.js";
 import { heal } from "../systems/damageSystem";
 
@@ -204,7 +205,17 @@ export class LevelOneMap extends BaseRender {
             sword.draw(this.ctx, this.camera)
             if (sword.checkCollision(this.player)) {
             }
-        })
+        });
+
+        powerUps.forEach(powerUp => {
+            powerUp.draw(this.ctx, this.camera, true);
+            if (powerUp.checkCollision(this.player)) {
+                powerUp.powerUp(this.player);
+                setTimeout( () => powerUp.powerRevert(this.player), 7500);
+            }
+        });
+
+        // console.log(this.player.x, this.player.y);
     }
 
 }

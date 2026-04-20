@@ -8,9 +8,13 @@ export class Collectable {
         this.collected = false;
     }
 
-    draw(ctx, camera) {
+    draw(ctx, camera, noAni = false) {
         if (!this.collected) {
             this.animator.draw(ctx, this.x - camera.x, this.y - camera.y, this.w, this.h);
+        }
+        if (noAni && !this.collected) { // for now until I make a sprite sheet, then i can remove this if block
+            ctx.strokeStyle = "#000000";
+            ctx.strokeRect(this.x - camera.x, this.y - camera.y, this.w, this.h);
         }
     }
 
