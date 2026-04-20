@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import "../../css/CharacterSelect.css"
 import whiteShirtCharacter from "../../assets/sprites/player/main_character/rotations/AIdleeast.png";
 import redShirtCharacter from "../../assets/sprites/player/main_character_red_shirt/rotations/east.png";
+import greenShirtCharacter from "../../assets/sprites/player/main_character_green_shirt/rotations/east.png";
 import spriteSheet from "../../assets/sprites/player/main_character/SpriteSheet/spritesheetmcwalkrun.png";
 import { useNavigate } from "react-router";
 
@@ -43,6 +44,17 @@ const characters: Character[] = [
     frameCount: 4,
     fps: 8,
     sheetRow: 1,
+  },
+  {
+    id: 3,
+    source: greenShirtCharacter,
+    name: "greenShirt",
+    shirtColor: "#33C26B",
+    frameWidth: 64,
+    frameHeight: 64,
+    frameCount: 4,
+    fps: 8,
+    sheetRow: 2,
   },
 ];
 

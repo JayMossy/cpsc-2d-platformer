@@ -1,133 +1,190 @@
-export type SkinName = "whiteShirt" | "RedShirt";
+export type SkinName = "whiteShirt" | "RedShirt" | "greenShirt";
 export type Mode = "unarmed" | "sword";
 
 export interface ModeData {
-    sprites: {
-        idleRun: string;
-        jump: string;
-        attack?: string;
-    };
+  sprites: {
+    idleRun: string;
+    jump: string;
+    attack?: string;
+  };
 
-    animations: {
-        idleRun: Record<string, number[]>;
-        jump: Record<string, number[]>;
-        attack?: Record<string, number[]>;
-    };
+  animations: {
+    idleRun: Record<string, number[]>;
+    jump: Record<string, number[]>;
+    attack?: Record<string, number[]>;
+  };
 }
 
 export interface Skin {
-    unarmed: ModeData;
-    sword: ModeData;
+  unarmed: ModeData;
+  sword: ModeData;
 }
 
 export const SKINS: Record<SkinName, Skin> = {
-    whiteShirt: {
-        unarmed: {
-            sprites: {
-                idleRun:
-                    "/assets/sprites/player/main_character/SpriteSheet/spritesheetmcwalkrun.png",
-                jump: "/assets/sprites/player/Jump/WhiteJumpNoSword.png"
-            },
+  whiteShirt: {
+    unarmed: {
+      sprites: {
+        idleRun:
+          "/assets/sprites/player/main_character/SpriteSheet/spritesheetmcwalkrun.png",
+        jump: "/assets/sprites/player/Jump/WhiteJumpNoSword.png",
+      },
 
-            animations: {
-                idleRun: {
-                    "idle right": [0],
-                    "idle left": [1],
-                    "run right": [2, 3, 4, 5],
-                    "run left": [6, 7, 8, 9]
-                },
-
-                jump: {
-                    "jump up right": [0, 1, 2, 3],
-                    "jump up left": [4, 5, 6, 7],
-                    "fall right": [3, 2, 1, 0],
-                    "fall left": [7, 6, 5, 4]
-                }
-            }
+      animations: {
+        idleRun: {
+          "idle right": [0],
+          "idle left": [1],
+          "run right": [2, 3, 4, 5],
+          "run left": [6, 7, 8, 9],
         },
 
-        sword: {
-            sprites: {
-                idleRun: "/assets/sprites/player/Sword_White_Shirt/SpriteSwordRunIdle.png",
-                jump: "/assets/sprites/player/Jump/WhiteJumpWithSword.png",
-                attack: "/assets/sprites/player/Swings/WhiteSwings.png"
-            },
-
-            animations: {
-                idleRun: {
-                    "idle right": [0],
-                    "idle left": [1],
-                    "run right": [2, 3, 4, 5],
-                    "run left": [6, 7, 8, 9]
-                },
-
-                jump: {
-                    "jump up right": [0, 1, 2, 3],
-                    "jump up left": [4, 5, 6, 7],
-                    "fall right": [3, 2, 1, 0],
-                    "fall left": [7, 6, 5, 4]
-                },
-
-                attack: {
-                    "attack right": [0, 1, 2, 3, 4, 5],
-                    "attack left": [6, 7, 8, 9, 10, 11]
-                }
-            }
-        }
+        jump: {
+          "jump up right": [0, 1, 2, 3],
+          "jump up left": [4, 5, 6, 7],
+          "fall right": [3, 2, 1, 0],
+          "fall left": [7, 6, 5, 4],
+        },
+      },
     },
 
-    RedShirt: {
-        unarmed: {
-            sprites: {
-                idleRun:
-                    "/assets/sprites/player/main_character_red_shirt/SpriteSheet/spritesheetmcrwalkrun.png",
-                jump: "/assets/sprites/player/Jump/RedJumpNoSword.png"
-            },
+    sword: {
+      sprites: {
+        idleRun:
+          "/assets/sprites/player/Sword_White_Shirt/SpriteSwordRunIdle.png",
+        jump: "/assets/sprites/player/Jump/WhiteJumpWithSword.png",
+        attack: "/assets/sprites/player/Swings/WhiteSwings.png",
+      },
 
-            animations: {
-                idleRun: {
-                    "idle right": [0],
-                    "idle left": [1],
-                    "run right": [2, 3, 4, 5],
-                    "run left": [6, 7, 8, 9]
-                },
-
-                jump: {
-                    "jump up right": [0, 1, 2, 3],
-                    "jump up left": [4, 5, 6, 7],
-                    "fall right": [3, 2, 1, 0],
-                    "fall left": [7, 6, 5, 4]
-                }
-            }
+      animations: {
+        idleRun: {
+          "idle right": [0],
+          "idle left": [1],
+          "run right": [2, 3, 4, 5],
+          "run left": [6, 7, 8, 9],
         },
 
-        sword: {
-            sprites: {
-                idleRun: "/assets/sprites/player/Sword_Red_Shirt/SpriteSwordRedRunIdle.png",
-                jump: "/assets/sprites/player/jump/RedJumpWithSword.png",
-                attack:"/assets/sprites/player/Swings/RedSwings.png"
-            },
+        jump: {
+          "jump up right": [0, 1, 2, 3],
+          "jump up left": [4, 5, 6, 7],
+          "fall right": [3, 2, 1, 0],
+          "fall left": [7, 6, 5, 4],
+        },
 
-            animations: {
-                idleRun: {
-                    "idle right": [0],
-                    "idle left": [1],
-                    "run right": [2, 3, 4, 5],
-                    "run left": [6, 7, 8, 9]
-                },
+        attack: {
+          "attack right": [0, 1, 2, 3, 4, 5],
+          "attack left": [6, 7, 8, 9, 10, 11],
+        },
+      },
+    },
+  },
 
-                jump: {
-                    "jump up right": [0, 1, 2, 3],
-                    "jump up left": [4, 5, 6, 7],
-                    "fall right": [3, 2, 1, 0],
-                    "fall left": [7, 6, 5, 4]
-                },
+  RedShirt: {
+    unarmed: {
+      sprites: {
+        idleRun:
+          "/assets/sprites/player/main_character_red_shirt/SpriteSheet/spritesheetmcrwalkrun.png",
+        jump: "/assets/sprites/player/Jump/RedJumpNoSword.png",
+      },
 
-                attack: {
-                    "attack right": [0, 1, 2, 3, 4, 5],
-                    "attack left": [6, 7, 8, 9, 10, 11]
-                }
-            }
-        }
-    }
+      animations: {
+        idleRun: {
+          "idle right": [0],
+          "idle left": [1],
+          "run right": [2, 3, 4, 5],
+          "run left": [6, 7, 8, 9],
+        },
+
+        jump: {
+          "jump up right": [0, 1, 2, 3],
+          "jump up left": [4, 5, 6, 7],
+          "fall right": [3, 2, 1, 0],
+          "fall left": [7, 6, 5, 4],
+        },
+      },
+    },
+
+    sword: {
+      sprites: {
+        idleRun:
+          "/assets/sprites/player/Sword_Red_Shirt/SpriteSwordRedRunIdle.png",
+        jump: "/assets/sprites/player/Jump/RedJumpWithSword.png",
+        attack: "/assets/sprites/player/Swings/RedSwings.png",
+      },
+
+      animations: {
+        idleRun: {
+          "idle right": [0],
+          "idle left": [1],
+          "run right": [2, 3, 4, 5],
+          "run left": [6, 7, 8, 9],
+        },
+
+        jump: {
+          "jump up right": [0, 1, 2, 3],
+          "jump up left": [4, 5, 6, 7],
+          "fall right": [3, 2, 1, 0],
+          "fall left": [7, 6, 5, 4],
+        },
+
+        attack: {
+          "attack right": [0, 1, 2, 3, 4, 5],
+          "attack left": [6, 7, 8, 9, 10, 11],
+        },
+      },
+    },
+  },
+  greenShirt: {
+    unarmed: {
+      sprites: {
+        idleRun:
+          "/assets/sprites/player/main_character_green_shirt/SpriteSheet/spritesheetmcrwalkrun.png",
+        jump: "/assets/sprites/player/Jump/GreenJumpNoSword.png",
+      },
+
+      animations: {
+        idleRun: {
+          "idle right": [0],
+          "idle left": [1],
+          "run right": [2, 3, 4, 5],
+          "run left": [6, 7, 8, 9],
+        },
+
+        jump: {
+          "jump up right": [0, 1, 2, 3],
+          "jump up left": [4, 5, 6, 7],
+          "fall right": [3, 2, 1, 0],
+          "fall left": [7, 6, 5, 4],
+        },
+      },
+    },
+
+    sword: {
+      sprites: {
+        idleRun:
+          "/assets/sprites/player/Sword_Green_Shirt/SpriteSwordGreenRunIdle.png",
+        jump: "/assets/sprites/player/Jump/GreenJumpWithSword.png",
+        attack: "/assets/sprites/player/Swings/GreenSwings.png",
+      },
+
+      animations: {
+        idleRun: {
+          "idle right": [0],
+          "idle left": [1],
+          "run right": [2, 3, 4, 5],
+          "run left": [6, 7, 8, 9],
+        },
+
+        jump: {
+          "jump up right": [0, 1, 2, 3],
+          "jump up left": [4, 5, 6, 7],
+          "fall right": [3, 2, 1, 0],
+          "fall left": [7, 6, 5, 4],
+        },
+
+        attack: {
+          "attack right": [0, 1, 2, 3, 4, 5],
+          "attack left": [6, 7, 8, 9, 10, 11],
+        },
+      },
+    },
+  },
 };
