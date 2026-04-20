@@ -21,6 +21,8 @@ let lastTime = 0;
 let lastKnownHealth = player.health;
 let lastKnownMaxHealth = player.maxHealth;
 let lastSavedCoinCount = 0;
+let gamePaused = false;
+let gameLoopStarted = false;
 
 // temporary input flag for attacks
 let attackPressed = false;
@@ -62,6 +64,11 @@ function loop(timestamp: number): void {
   lastTime = timestamp;
 
   if (dt > 0.1) dt = 0.1;
+
+  if (gamePaused) {
+    requestAnimationFrame(loop);
+    return;
+  }
 
   // movement
   playerMovement(dt);
@@ -113,6 +120,10 @@ function loop(timestamp: number): void {
   requestAnimationFrame(loop);
 }
 
+export function setGamePaused(paused: boolean): void {
+  gamePaused = Boolean(paused);
+}
+
 export function startGame(canvas: HTMLCanvasElement): void {
   if (!canvas || typeof canvas.getContext !== "function") {
     console.error("startGame requires a valid canvas element");
@@ -122,8 +133,13 @@ export function startGame(canvas: HTMLCanvasElement): void {
   // window.startGame = startGame;
   applySelectedCharacter();
   initializeLevels(canvas);
+  window.setGamePaused = setGamePaused;
   syncPlayerHealthHud(true);
-  requestAnimationFrame(loop);
+
+  if (!gameLoopStarted) {
+    gameLoopStarted = true;
+    requestAnimationFrame(loop);
+  }
 }
 
 // Make it available globally for the React component

@@ -4,6 +4,8 @@ import CharacterSelect from './js/components/CharacterSelect';
 import LevelOne from './js/components/LevelOne';
 import LevelSelect from './js/components/LevelSelect';
 import InBetweenScreen from './js/components/InBetweenScreen';
+import { BrowserRouter } from 'react-router';
+import PageController from './js/PageController';
 
 const App = () => {
     const [shownComponent, setShownComponent] = useState("mainMenu");
@@ -22,7 +24,7 @@ const App = () => {
     return (
         <div>
             {/* MAIN SCREENS */}
-            {shownComponent === "mainMenu" && (
+            {/* {shownComponent === "mainMenu" && (
                 <MainMenu onSendShownComponent={handleComponentToShow} />
             )}
 
@@ -36,10 +38,10 @@ const App = () => {
 
             {shownComponent === "levelOne" && (
                 <>
-                    <LevelOne onSendShownComponent={handleComponentToShow} />
+                    <LevelOne onSendShownComponent={handleComponentToShow} /> */}
 
                     {/* OVERLAY ON TOP OF GAME */}
-                    {overlay === "inBetween" && (
+                    {/* {overlay === "inBetween" && (
                         <InBetweenScreen
                             onEnterBoss={() => {
                                 window.dispatchEvent(new Event("enterBoss"));
@@ -50,9 +52,12 @@ const App = () => {
                                 setOverlay(null);
                             }}
                         />
-                    )}
-                </>
-            )}
+                    )} */}
+                {/* </> */}
+            {/* )} */}
+            <BrowserRouter>
+                <PageController />
+            </BrowserRouter>
         </div>
     );
 };

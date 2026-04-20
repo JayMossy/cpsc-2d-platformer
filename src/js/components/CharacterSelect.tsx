@@ -5,6 +5,7 @@ import "../../css/CharacterSelect.css"
 import whiteShirtCharacter from "../../assets/sprites/player/main_character/rotations/AIdleeast.png";
 import redShirtCharacter from "../../assets/sprites/player/main_character_red_shirt/rotations/east.png";
 import spriteSheet from "../../assets/sprites/player/main_character/SpriteSheet/spritesheetmcwalkrun.png";
+import { useNavigate } from "react-router";
 
 const SHEET = spriteSheet;
 
@@ -101,6 +102,7 @@ interface CharCardProps {
 }
 
 function CharCard({ char, selected, onClick, source }: CharCardProps) {
+
   return (
     <div
       className={`char-card ${selected ? "selected" : ""}`}
@@ -114,16 +116,18 @@ function CharCard({ char, selected, onClick, source }: CharCardProps) {
     </div>
   );
 }
-interface CharacterSelectProps {
-  onSendShownComponent: (data: any) => void;
-}
-function CharacterSelect({onSendShownComponent}: CharacterSelectProps) {
+
+function CharacterSelect() {
+  const navigate = useNavigate();
+
   const [selected, setSelected] = useState<number | null>(() => {
     const chosenCharacter = localStorage.getItem("chosenCharacter");
     const activeCharacter = characters.find((character) => character.name === chosenCharacter);
     return activeCharacter?.id ?? null;
   });
   const char = characters.find((c) => c.id === selected);
+
+  
 
   function handleConfirm() {
     if (!char) return;
@@ -133,7 +137,9 @@ function CharacterSelect({onSendShownComponent}: CharacterSelectProps) {
         detail: { chosenCharacter: char.name },
       }),
     );
-    onSendShownComponent("mainMenu")
+    navigate("/")
+    // onSendShownComponent("mainMenu")
+    
 }
 
   return (

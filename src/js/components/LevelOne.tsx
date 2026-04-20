@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../../css/level_one_styles.css"
 import DungeonHUD from "./DungeonHUD";
+import InBetweenScreen from "./InBetweenScreen";
 import LevelEndScreen from "./LevelEndScreen";
 import { saveLevelResult } from "../systems/scoresManager";
 import { startGame } from "../main";
+import { useNavigate } from "react-router";
 
-interface LevelOneProps {
-  onSendShownComponent: (data: any) => void;
-}
 
 interface LevelEndedDetail {
   reason: "death" | "victory";
@@ -16,16 +15,22 @@ interface LevelEndedDetail {
   timeAlive: number;
 }
 
-function LevelOne({onSendShownComponent}: LevelOneProps) {
+function LevelOne() {
+  const navigate = useNavigate()
   const gameStartedRef = useRef(false);
   const hasHandledEndRef = useRef(false);
+  const [showInBetweenScreen, setShowInBetweenScreen] = useState(false);
   const [levelResult, setLevelResult] = useState<LevelEndedDetail | null>(null);
 
   useEffect(() => {
     const canvas = document.getElementById("game") as HTMLCanvasElement;
 
     const handler = () => {
-      onSendShownComponent("inBetween");
+      if ((window as any).setGamePaused) {
+        (window as any).setGamePaused(true);
+      }
+
+      setShowInBetweenScreen(true);
     };
 
     window.addEventListener("openInBetweenScreen", handler);
@@ -71,8 +76,26 @@ function LevelOne({onSendShownComponent}: LevelOneProps) {
     if ((window as any).setGamePaused) {
       (window as any).setGamePaused(false);
     }
-    onSendShownComponent("mainMenu")
+    navigate("/")
   })
+
+  const handleEnterBoss = () => {
+    window.dispatchEvent(new Event("enterBoss"));
+    setShowInBetweenScreen(false);
+
+    if ((window as any).setGamePaused) {
+      (window as any).setGamePaused(false);
+    }
+  };
+
+  const handleBackToPortal = () => {
+    window.dispatchEvent(new Event("movePlayerBack"));
+    setShowInBetweenScreen(false);
+
+    if ((window as any).setGamePaused) {
+      (window as any).setGamePaused(false);
+    }
+  };
 
   const handleRetry = () => {
     window.location.reload();
@@ -85,6 +108,12 @@ function LevelOne({onSendShownComponent}: LevelOneProps) {
           <div className="hud-overlay">
             <DungeonHUD />
           </div>
+          {showInBetweenScreen && (
+            <InBetweenScreen
+              onEnterBoss={handleEnterBoss}
+              onBackToPortal={handleBackToPortal}
+            />
+          )}
           {levelResult && (
             <LevelEndScreen
               reason={levelResult.reason}

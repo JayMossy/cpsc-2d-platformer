@@ -5,19 +5,19 @@ import backgroundImage from '../../assets/backgrounds/temp-menu-clouds-backgroun
 import titleImage from '../../assets/sprites/ui/title_card.png';
 import SavedScore from "./SavedScore";
 import FirstTimePlaying from "./FirstTimePlaying";
-
-interface MainMenuProps {
-  onSendShownComponent: (data: any) => void;
-}
+import { useNavigate } from "react-router";
 
 
-const MainMenu: React.FC<MainMenuProps> = ({onSendShownComponent}) => {
+
+
+const MainMenu = () => {
     const [componentToShow, setComponentToShow] = useState("")
 
-    const handleChange = ((componentName: string) => {
-        // setComponentToShow(componentName)
-        onSendShownComponent(componentName)
-    })
+    // const handleChange = ((componentName: string) => {
+    //     // setComponentToShow(componentName)
+    //     onSendShownComponent(componentName)
+    // })
+    const navigate = useNavigate()
 	return (
   <>
     <div style={{ 
@@ -57,13 +57,13 @@ const MainMenu: React.FC<MainMenuProps> = ({onSendShownComponent}) => {
               {/* Where all the buttons go */}
               <div className="row justify-content-center w-100 pb-5 px-5 px-md-4 px-lg-5">
                 <div className="d-flex flex-column align-items-center">
-                  <button onClick={() => handleChange("levelSelect")} className=" btn-custom-color btn  rounded-1 mb-3 fs-4 fs-custom-sm">
+                  <button onClick={() => {navigate("/level-one")}} className=" btn-custom-color btn  rounded-1 mb-3 fs-4 fs-custom-sm">
                     <i className="bi bi-suit-diamond-fill pe-1"></i>
                     Start New Game
                     <i className="bi bi-suit-diamond-fill ps-1"></i>
                   </button>
                   {/* TODO add component with tall z-index that shows up when this button is clicked. The button should only be visible on small screens. */}
-                  <button onClick={() => handleChange("changeCharacter")} className=" btn-custom-color btn  rounded-1 mb-3 fs-4 fs-custom-sm">
+                  <button onClick={() => {navigate("/character-select")}} className=" btn-custom-color btn  rounded-1 mb-3 fs-4 fs-custom-sm">
                     <i className="bi bi-person-standing pe-1"></i>
                     Change Character
                     <i className="bi bi-person-standing ps-1"></i>
