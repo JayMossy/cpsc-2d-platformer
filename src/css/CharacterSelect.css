@@ -48,57 +48,6 @@
   margin-bottom: 20px;
 }
 
-.char-card {
-  background: #0f0f2a;
-  border: 2px solid #333;
-  border-radius: 2px;
-  padding: 18px 10px 14px;
-  cursor: pointer;
-  text-align: center;
-  transition: border-color 0.1s, background 0.1s;
-  position: relative;
-}
-
-.char-card:hover {
-  border-color: #ffdd00;
-  background: #1a1a3a;
-}
-
-.char-card.selected {
-  border-color: #ffdd00;
-  background: #1a1a3a;
-}
-
-.char-card.selected::before {
-  content: "";
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  border: 2px solid #ffdd00;
-  border-radius: 2px;
-  opacity: 0.3;
-}
-
-.sprite-canvas {
-  display: block;
-  margin: 0 auto;
-  image-rendering: pixelated;
-}
-
-.char-name {
-  font-size: 7px;
-  color: #fff;
-  margin-top: 12px;
-  letter-spacing: 1px;
-}
-
-.char-color {
-  font-size: 6px;
-  margin-top: 5px;
-}
-
 .selected-bar {
   border: 1px solid #333;
   padding: 10px;
@@ -110,6 +59,13 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.selected-preview {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  image-rendering: pixelated;
 }
 
 .no-selection {
@@ -128,8 +84,13 @@
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 .confirm-btn {
@@ -155,4 +116,24 @@
   background: #333;
   color: #555;
   cursor: not-allowed;
+}
+
+.shop-link-btn {
+  display: block;
+  width: 100%;
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  background: transparent;
+  color: #d7dfff;
+  border: 2px solid #34406a;
+  padding: 11px;
+  border-radius: 2px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+
+.shop-link-btn:hover {
+  border-color: #ffdd00;
+  color: #ffdd00;
 }

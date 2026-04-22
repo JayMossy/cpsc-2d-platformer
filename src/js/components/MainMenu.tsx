@@ -68,6 +68,11 @@ const MainMenu = () => {
                     Change Character
                     <i className="bi bi-person-standing ps-1"></i>
                   </button>
+                  <button onClick={() => {navigate("/shop")}} className=" btn-custom-color btn  rounded-1 mb-3 fs-4 fs-custom-sm">
+                    <i className="bi bi-cart2 pe-1"></i>
+                    Shop
+                    <i className="bi bi-cart2 ps-1"></i>
+                  </button>
                   <button className=" btn-custom-color btn  rounded-1 mb-3 fs-4 fs-custom-sm">
                     <i className="bi bi-suit-diamond-fill pe-1"></i>
                     Settings
