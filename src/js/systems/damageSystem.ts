@@ -3,6 +3,23 @@ import type { Enemy } from "../entities/enemy";
 import type { Damageable } from "../../types/damageable";
 import { Coin, coins } from "../collectables/coins.js";
 
+type HitIndicatorLoc = {
+    tarX: number;
+    tarY: number;
+    type: "player" | "enemy";
+    lifeTime: number;
+};
+export const hitLocations: HitIndicatorLoc[] = [];
+
+function addHitLoc(target: Enemy | Player, playerOrEnemy: "player" | "enemy") {
+    hitLocations.push({
+        tarX: target.x,
+        tarY: target.y - target.w,
+        type: playerOrEnemy,
+        lifeTime: 2 //seconds
+    })
+}
+
 type Rect = {
     x: number;
     y: number;
@@ -121,6 +138,7 @@ export function playerAttack(player: Player, enemies: Enemy[]): void {
                 const knockbackX = player.lastDir === "right" ? 300 : -300;
                 const knockbackY = -120;
                 dealDamage(enemy, player.damage, knockbackX, knockbackY);
+                addHitLoc(enemy, "enemy")
                 enemy.attackTimer = enemy.attackCooldown;
             }
         }
@@ -137,7 +155,8 @@ export function enemyAttack(player: Player, enemies: Enemy[]): void {
             const knockbackX = player.x < enemy.x ? -250 : 250;
             const knockbackY = -25;
 
-            dealDamage(player, enemy.damage, knockbackX, knockbackY);
+            dealDamage(player, enemy.damage-enemy.damage, knockbackX, knockbackY);
+            addHitLoc(player, "player")
             enemy.attackTimer = enemy.attackCooldown;
             player.invulnTimer = player.invulnTime;
 

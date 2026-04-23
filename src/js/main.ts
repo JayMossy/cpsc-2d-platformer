@@ -57,6 +57,10 @@ window.addEventListener("keydown", (event: KeyboardEvent) => {
   }
 });
 
+window.addEventListener("click", (event: MouseEvent) => {
+  attackPressed = true;
+});
+
 function loop(timestamp: number): void {
   if (lastTime === 0) lastTime = timestamp;
 
