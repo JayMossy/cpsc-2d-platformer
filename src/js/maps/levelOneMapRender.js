@@ -165,6 +165,7 @@ export class LevelOneMap extends BaseRender {
             }
 
             hit.lifeTime -= 1/60;
+            hit.tarY -= hit.vy
         }
 
         for (let i = hitLocations.length - 1; i >= 0; i--) {
@@ -179,7 +180,6 @@ export class LevelOneMap extends BaseRender {
     // or maybe use a differnt list of coins for different maps
     render() {
         super.render();
-        this.drawHitIndicator()
 
         if (this.portal) {
             this.portal.update(1 / 60);
@@ -258,7 +258,7 @@ export class LevelOneMap extends BaseRender {
             }
         });
 
-        // console.log(this.player.x, this.player.y);
+        this.drawHitIndicator();
     }
 
 }

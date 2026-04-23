@@ -8,6 +8,7 @@ type HitIndicatorLoc = {
     tarY: number;
     type: "player" | "enemy";
     lifeTime: number;
+    vy: number;
 };
 export const hitLocations: HitIndicatorLoc[] = [];
 
@@ -16,7 +17,8 @@ function addHitLoc(target: Enemy | Player, playerOrEnemy: "player" | "enemy") {
         tarX: target.x,
         tarY: target.y - target.w,
         type: playerOrEnemy,
-        lifeTime: 2 //seconds
+        lifeTime: 0.65,
+        vy: 0.6
     })
 }
 
@@ -155,7 +157,7 @@ export function enemyAttack(player: Player, enemies: Enemy[]): void {
             const knockbackX = player.x < enemy.x ? -250 : 250;
             const knockbackY = -25;
 
-            dealDamage(player, enemy.damage-enemy.damage, knockbackX, knockbackY);
+            dealDamage(player, enemy.damage, knockbackX, knockbackY);
             addHitLoc(player, "player")
             enemy.attackTimer = enemy.attackCooldown;
             player.invulnTimer = player.invulnTime;
