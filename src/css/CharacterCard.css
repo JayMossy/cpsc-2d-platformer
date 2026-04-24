@@ -4,7 +4,7 @@
   background: linear-gradient(180deg, #121226 0%, #0c0c1b 100%);
   border: 2px solid #2d3558;
   border-radius: 6px;
-  padding: 16px 12px 14px;
+  padding: 22px 18px 20px;
   text-align: center;
   position: relative;
   transition:
@@ -42,49 +42,49 @@
 .character-card__status-row {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 .character-card__status {
-  font-size: 6px;
+  font-size: clamp(8px, 0.7vw, 11px);
   color: #ffdd00;
   background: rgba(255, 221, 0, 0.08);
   border: 1px solid rgba(255, 221, 0, 0.25);
-  padding: 4px 6px;
+  padding: 6px 9px;
   border-radius: 999px;
 }
 
 .character-card__portrait {
-  width: 88px;
-  height: 88px;
+  width: 128px;
+  height: 128px;
   object-fit: contain;
   image-rendering: pixelated;
-  margin: 0 auto 12px;
+  margin: 0 auto 18px;
   display: block;
 }
 
 .character-card__name {
-  font-size: 8px;
+  font-size: clamp(11px, 0.95vw, 15px);
   color: #ffffff;
-  margin-bottom: 8px;
-  line-height: 1.5;
+  margin-bottom: 12px;
+  line-height: 1.7;
 }
 
 .character-card__color {
-  font-size: 6px;
-  margin-bottom: 10px;
+  font-size: clamp(8px, 0.7vw, 11px);
+  margin-bottom: 14px;
 }
 
 .character-card__helper {
-  font-size: 6px;
+  font-size: clamp(8px, 0.7vw, 11px);
   color: #99a3c5;
-  line-height: 1.6;
-  min-height: 28px;
+  line-height: 1.9;
+  min-height: 48px;
 }
 
 @media (max-width: 640px) {
   .character-card__portrait {
-    width: 72px;
-    height: 72px;
+    width: 96px;
+    height: 96px;
   }
 }
