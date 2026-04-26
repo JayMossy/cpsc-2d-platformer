@@ -6,6 +6,7 @@ import LevelEndScreen from "./LevelEndScreen";
 import { saveLevelResult } from "../systems/scoresManager";
 import { startGame } from "../main";
 import { useNavigate } from "react-router";
+import { startBGMusic } from "../systems/soundsManager";
 
 
 interface LevelEndedDetail {
@@ -40,8 +41,14 @@ function LevelOne() {
       startGame(canvas);
     }
 
+    window.addEventListener("click", startBGMusic);
+    window.addEventListener("keydown", startBGMusic);
+
     return () => {
       window.removeEventListener("openInBetweenScreen", handler);
+      
+      window.removeEventListener("click", startBGMusic);
+      window.removeEventListener("keydown", startBGMusic);
     };
   }, []);
 
@@ -103,29 +110,29 @@ function LevelOne() {
 
   return (
     <>
-        <div className="game-stage">
-          <canvas id="game"></canvas>
-          <div className="hud-overlay">
-            <DungeonHUD />
-          </div>
-          {showInBetweenScreen && (
-            <InBetweenScreen
-              onEnterBoss={handleEnterBoss}
-              onBackToPortal={handleBackToPortal}
-            />
-          )}
-          {levelResult && (
-            <LevelEndScreen
-              reason={levelResult.reason}
-              coinsCollected={levelResult.coinsCollected}
-              highestLevelAchieved={levelResult.highestLevelAchieved}
-              timeAlive={levelResult.timeAlive}
-              onRetry={handleRetry}
-              onBackToMenu={handleChange}
-            />
-          )}
+      <div className="game-stage">
+        <canvas id="game"></canvas>
+        <div className="hud-overlay">
+          <DungeonHUD />
         </div>
-        {/* <button onClick={handleChange}>Back to Menu</button> */}
+        {showInBetweenScreen && (
+          <InBetweenScreen
+            onEnterBoss={handleEnterBoss}
+            onBackToPortal={handleBackToPortal}
+          />
+        )}
+        {levelResult && (
+          <LevelEndScreen
+            reason={levelResult.reason}
+            coinsCollected={levelResult.coinsCollected}
+            highestLevelAchieved={levelResult.highestLevelAchieved}
+            timeAlive={levelResult.timeAlive}
+            onRetry={handleRetry}
+            onBackToMenu={handleChange}
+          />
+        )}
+      </div>
+      {/* <button onClick={handleChange}>Back to Menu</button> */}
     </>
   );
 }

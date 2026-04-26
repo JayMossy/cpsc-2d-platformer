@@ -17,14 +17,7 @@ bgMusic.volume = 0.5;
 
 export function startBGMusic(): void {
   bgMusic.play().catch(() => { });
-  window.removeEventListener("click", startBGMusic);
-  window.removeEventListener("keydown", startBGMusic);
 }
-
-window.addEventListener("load", () => {
-  window.addEventListener("click", startBGMusic);
-  window.addEventListener("keydown", startBGMusic);
-});
 
 export function stopBGMusic(): void {
   bgMusic.pause();
