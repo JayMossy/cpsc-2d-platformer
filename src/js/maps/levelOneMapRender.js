@@ -11,6 +11,7 @@ import { powerUps } from "../collectables/powerUps";
 import { Portal } from "../entities/portal.js";
 import { heal } from "../systems/damageSystem";
 import { hitLocations } from "../systems/damageSystem";
+import { startBGMusic } from "../systems/soundsManager";
 
 export class LevelOneMap extends BaseRender {
     constructor(canvas) {
@@ -58,6 +59,8 @@ export class LevelOneMap extends BaseRender {
 
         this.enemyHitIndicator = new Image();
         this.enemyHitIndicator.src = "../../assets/sprites/enemies/enemy_got_hit.png"
+
+        startBGMusic();
     }
 
     // When you override drawMap you'll make your own draw 
