@@ -115,8 +115,11 @@ export class Enemy implements EnemyState {
     update(dt: number, player: Player): void {
 
         // states
-        const dx = player.x - this.x;
-        const distance = Math.abs(dx);
+        const dx =
+        (player.x + player.w / 2) -
+        (this.x + this.w / 2);
+
+const distance = Math.abs(dx);
 
         if (this.state === "patrol") {
             this.patrol(dt, distance);
@@ -126,6 +129,7 @@ export class Enemy implements EnemyState {
             this.attack(distance);
         }
 
+        this.updateFacing();
         this.updateAnimation();
 
         this.vx += this.knockbackX;
@@ -146,12 +150,12 @@ export class Enemy implements EnemyState {
         this.animator.update(dt);
     }
 
-    private updateFacing(): void {
+    protected updateFacing(): void {
         if (this.vx > 0) this.facing = "right";
         else if (this.vx < 0) this.facing = "left";
     }
 
-    private updateAnimation(): void {
+    protected updateAnimation(): void {
     if (this.state === "attack") {
         this.animator.setAnimation("attack " + this.facing);
     } else if (this.vx !== 0) {

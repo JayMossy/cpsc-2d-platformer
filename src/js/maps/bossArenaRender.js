@@ -1,8 +1,15 @@
+import { Boss } from "../entities/boss";
+import { enemies } from "../systems/damageSystem";
 import { BaseRender } from "./renderBaseClass.js";
 import {
     Mrows, Mcols, tileSize, map,
     tileLocation, TILES
 } from "./bossArena.js";
+
+export const boss = new Boss(40 * tileSize, 3000);
+;
+
+
 
 export class BossArena extends BaseRender {
     constructor(canvas) {
@@ -22,6 +29,8 @@ export class BossArena extends BaseRender {
         this.throne.src = "/assets/sprites/tiles/throne.png";
 
         this.tileData = this.createTiles();
+        
+        enemies.push(boss);
     }
 
     drawMap() {
@@ -95,7 +104,16 @@ export class BossArena extends BaseRender {
 
     render() {
         super.render();
-        //TODO: Add boss
+
+        boss.update(1 / 60, this.player);
+
+        boss.animator.draw(
+            this.ctx,
+            boss.x - this.camera.x,
+            boss.y - this.camera.y,
+            boss.w,
+            boss.h
+        );
     }
 
     createTiles(){
