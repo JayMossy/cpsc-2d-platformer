@@ -3,6 +3,8 @@ import type { Enemy } from "../entities/enemy";
 import type { Damageable } from "../../types/damageable";
 import { Coin, coins } from "../collectables/coins.js";
 
+export const enemies: Enemy[] = [];
+
 type HitIndicatorLoc = {
     tarX: number;
     tarY: number;

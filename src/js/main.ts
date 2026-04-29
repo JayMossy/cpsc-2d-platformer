@@ -1,12 +1,14 @@
 import { checkHazard } from "./systems/mapCollision";
 import { applySelectedCharacter } from "./systems/playerSetup";
 import { playerMovement } from "./systems/playerMovement";
-import { render, initializeLevels } from "./maps/render";
+import { render, initializeLevels, getCurrentLevel } from "./maps/render";
 import { updateCollectables } from "./collectables/updateCollectables";
 
 import { player } from "./entities/player";
 import { enemies } from "./entities/enemy";
+import { boss } from "./maps/bossArenaRender";
 import { updatePlayerCoins } from "./systems/scoresManager";
+
 
 import {
   combatTimers,
@@ -15,6 +17,10 @@ import {
   removeEnemy,
   removeEnemyInPit,
   resetPlayer,
+  
+  intersects,          
+  dealDamage,          
+  getPlayerAttackBox  
 } from "./systems/damageSystem";
 
 let lastTime = 0;
