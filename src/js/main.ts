@@ -8,7 +8,7 @@ import { player } from "./entities/player";
 import { enemies } from "./entities/enemy";
 import { boss } from "./maps/bossArenaRender";
 import { updatePlayerCoins } from "./systems/scoresManager";
-
+import { toggleGodMode } from "./systems/godMode";
 
 import {
   combatTimers,
@@ -17,10 +17,9 @@ import {
   removeEnemy,
   removeEnemyInPit,
   resetPlayer,
-  
-  intersects,          
-  dealDamage,          
-  getPlayerAttackBox  
+  intersects,
+  dealDamage,
+  getPlayerAttackBox,
 } from "./systems/damageSystem";
 
 let lastTime = 0;
@@ -58,6 +57,17 @@ function syncPlayerHealthHud(force = false): void {
 }
 
 window.addEventListener("keydown", (event: KeyboardEvent) => {
+  if (event.code === "Backquote" && !event.repeat) {
+    const enabled = toggleGodMode();
+    console.log(`God mode ${enabled ? "enabled" : "disabled"}`);
+    return;
+  }
+
+  if (event.code === "Backslash" && !event.repeat) {
+    window.dispatchEvent(new Event("teleportToBossPortal"));
+    return;
+  }
+
   if (event.code === "KeyF" && !event.repeat) {
     attackPressed = true;
   }

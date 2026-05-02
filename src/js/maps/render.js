@@ -28,9 +28,20 @@ window.addEventListener("movePlayerBack", () => {
     }
 });
 
+window.addEventListener("teleportToBossPortal", () => {
+    if (levelOne && levelOne.player && levelOne.portal) {
+        const portal = levelOne.portal;
+
+        levelOne.player.x = portal.x - 80;
+        levelOne.player.y = portal.y;
+        levelOne.player.vx = 0;
+        levelOne.player.vy = 0;
+    }
+});
+
 window.addEventListener("enterBoss", () => {
-        currentLevel = 1;
-        bossArena.setPlayerPos(540, 150);
+    currentLevel = 1;
+    bossArena.setPlayerPos(540, 150);
 });
 
 function moveMaps(dt) {

@@ -3,6 +3,7 @@ import { Animator } from "../systems/animator";
 import { ENEMY_DEFAULTS } from "../config/enemyConfig";
 import type { Player } from "./player";
 import { dealDamage } from "../systems/damageSystem";
+import { isGodModeEnabled } from "../systems/godMode";
 import { applyGravity, clampFallSpeed, integrate } from "../systems/physics";
 
 const bossSprite = new Image();
@@ -125,6 +126,7 @@ export class Boss extends Enemy {
 
   handleAttack(player: Player, dx: number, dy: number): void {
     if (!this.isAttacking) return;
+    if (isGodModeEnabled()) return;
 
     const bossCenter = this.x + this.w / 2;
     const playerCenter = player.x + player.w / 2;

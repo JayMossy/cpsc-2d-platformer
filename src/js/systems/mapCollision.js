@@ -1,6 +1,7 @@
 import { map as levelOne, tileSize, TILES } from "../maps/level1Map.js";
 import { map as bossMap, TILES as arenaTILES } from "../maps/bossArena.js";
 import { getCurrentLevel } from "../maps/render.js";
+import { isGodModeEnabled } from "./godMode.ts";
 
 let solidTiles = [TILES.BOX, TILES.GRASS, TILES.DIRT];
 const horizontalBuffer = .3;
@@ -93,7 +94,7 @@ export function vertical(entity) {
             }
         }
     }
-    
+
     // standing check
     const below = Math.floor((entity.y + entity.h + verticalBuffer) / tileSize);
     for (let col = leftTile; col <= rightTile; col++) {
@@ -106,6 +107,10 @@ export function vertical(entity) {
 
 
 export function checkHazard(entity) {
+    if (isGodModeEnabled()) {
+        return false;
+    }
+
     //Converts player position into tile coordinates
     const leftTile = Math.floor(entity.x / tileSize);
     const rightTile = Math.floor((entity.x + entity.w - 1) / tileSize);

@@ -2,211 +2,213 @@ import type { Player } from "../entities/player";
 import type { Enemy } from "../entities/enemy";
 import type { Damageable } from "../../types/damageable";
 import { Coin, coins } from "../collectables/coins.js";
+import { isGodModeEnabled } from "./godMode";
 
 export const enemies: Enemy[] = [];
 
 type HitIndicatorLoc = {
-    tarX: number;
-    tarY: number;
-    type: "player" | "enemy";
-    lifeTime: number;
-    vy: number;
+  tarX: number;
+  tarY: number;
+  type: "player" | "enemy";
+  lifeTime: number;
+  vy: number;
 };
 export const hitLocations: HitIndicatorLoc[] = [];
 
 function addHitLoc(target: Enemy | Player, playerOrEnemy: "player" | "enemy") {
-    hitLocations.push({
-        tarX: target.x,
-        tarY: target.y - target.w,
-        type: playerOrEnemy,
-        lifeTime: 0.65,
-        vy: 0.6
-    })
+  hitLocations.push({
+    tarX: target.x,
+    tarY: target.y - target.w,
+    type: playerOrEnemy,
+    lifeTime: 0.65,
+    vy: 0.6,
+  });
 }
 
 type Rect = {
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-}
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+};
 
 export interface AttackHitbox extends Rect {}
 
 export function intersects(a: Rect, b: Rect): boolean {
-    return (
-        a.x < b.x + b.w &&
-        a.x + a.w > b.x &&
-        a.y < b.y + b.h &&
-        a.y + a.h > b.y
-    );
+  return (
+    a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y
+  );
 }
 
 export function clampHealth(target: Damageable): void {
-    if (target.health > target.maxHealth) {
-        target.health = target.maxHealth;
-    }
-    
-    if (target.health < 0) {
-        target.health = 0;
-    }
+  if (target.health > target.maxHealth) {
+    target.health = target.maxHealth;
+  }
+
+  if (target.health < 0) {
+    target.health = 0;
+  }
 }
 
 export function dealDamage(
-                    target: Damageable,
-                    damage: number,
-                    knockbackX: number = 0,
-                    knockbackY: number = 0
-                ): number {
-    if (target.isDead || damage <= 0) {
-        return 0;
-    }
+  target: Damageable,
+  damage: number,
+  knockbackX: number = 0,
+  knockbackY: number = 0,
+): number {
+  if (target.isDead || damage <= 0) {
+    return 0;
+  }
 
-    const oldHealth = target.health;
+  const oldHealth = target.health;
 
-    target.health -= damage;
-    clampHealth(target);
+  target.health -= damage;
+  clampHealth(target);
 
-    if (target.health === 0) {
-        target.isDead = true;
-    }
+  if (target.health === 0) {
+    target.isDead = true;
+  }
 
-    target.knockbackX += knockbackX;
-    target.knockbackY += knockbackY;
+  target.knockbackX += knockbackX;
+  target.knockbackY += knockbackY;
 
-    return oldHealth - target.health;
+  return oldHealth - target.health;
 }
 
 export function heal(target: Damageable, heal: number): number {
-    if (target.isDead || heal <= 0) {
-        return 0;
-    }
+  if (target.isDead || heal <= 0) {
+    return 0;
+  }
 
-    target.health += heal;
-    clampHealth(target);
+  target.health += heal;
+  clampHealth(target);
 
-    return heal;
+  return heal;
 }
 
-export function combatTimers(player: Player, enemies: Enemy[], dt: number): void {
-    if(player.attackTimer > 0) {
-        player.attackTimer -= dt;
-        if(player.attackTimer < 0) {
-            player.attackTimer = 0;
-        }
+export function combatTimers(
+  player: Player,
+  enemies: Enemy[],
+  dt: number,
+): void {
+  if (player.attackTimer > 0) {
+    player.attackTimer -= dt;
+    if (player.attackTimer < 0) {
+      player.attackTimer = 0;
     }
+  }
 
-    if(player.invulnTimer > 0) {
-        player.invulnTimer -= dt;
-        if(player.invulnTimer < 0) {
-            player.invulnTimer = 0;
-        }
+  if (player.invulnTimer > 0) {
+    player.invulnTimer -= dt;
+    if (player.invulnTimer < 0) {
+      player.invulnTimer = 0;
     }
+  }
 
-    for(const enemy of enemies) {
-        if(enemy.attackTimer > 0) {
-            enemy.attackTimer -= dt;
-            if(enemy.attackTimer < 0) {
-                enemy.attackTimer = 0;
-            }
-        }
+  for (const enemy of enemies) {
+    if (enemy.attackTimer > 0) {
+      enemy.attackTimer -= dt;
+      if (enemy.attackTimer < 0) {
+        enemy.attackTimer = 0;
+      }
     }
+  }
 }
 
 export function getPlayerAttackBox(player: Player): AttackHitbox {
-    const range = 40;
-    if(player.lastDir === "right") {
-        return {
-            x: player.x + player.w,
-            y: player.y + 10,
-            w: range,
-            h: player.h - 20
-        };
-    }
-
+  const range = 40;
+  if (player.lastDir === "right") {
     return {
-        x: player.x - range,
-        y: player.y + 10,
-        w: range,
-        h: player.h - 20
+      x: player.x + player.w,
+      y: player.y + 10,
+      w: range,
+      h: player.h - 20,
     };
+  }
+
+  return {
+    x: player.x - range,
+    y: player.y + 10,
+    w: range,
+    h: player.h - 20,
+  };
 }
 
 export function playerAttack(player: Player, enemies: Enemy[]): void {
-    if (!player.isDead && player.mode === "sword" && player.attackTimer <= 0) {
-        player.attackTimer = player.attackCooldown;
-        const attackBox = getPlayerAttackBox(player);
+  if (!player.isDead && player.mode === "sword" && player.attackTimer <= 0) {
+    player.attackTimer = player.attackCooldown;
+    const attackBox = getPlayerAttackBox(player);
 
-        for (const enemy of enemies) {
-            if (intersects(attackBox, enemy) && !enemy.isDead) {
-                const knockbackX = player.lastDir === "right" ? 300 : -300;
-                const knockbackY = -120;
-                dealDamage(enemy, player.damage, knockbackX, knockbackY);
-                addHitLoc(enemy, "enemy")
-                enemy.attackTimer = enemy.attackCooldown;
-            }
-        }
+    for (const enemy of enemies) {
+      if (intersects(attackBox, enemy) && !enemy.isDead) {
+        const knockbackX = player.lastDir === "right" ? 300 : -300;
+        const knockbackY = -120;
+        dealDamage(enemy, player.damage, knockbackX, knockbackY);
+        addHitLoc(enemy, "enemy");
+        enemy.attackTimer = enemy.attackCooldown;
+      }
     }
+  }
 }
 
 export function enemyAttack(player: Player, enemies: Enemy[]): void {
-    if (player.isDead || player.invulnTimer > 0) return;
+  if (player.isDead || player.invulnTimer > 0 || isGodModeEnabled()) return;
 
-    for (const enemy of enemies) {
-        if (enemy.isDead || enemy.attackTimer > 0) continue;
+  for (const enemy of enemies) {
+    if (enemy.isDead || enemy.attackTimer > 0) continue;
 
-        if (intersects(player, enemy)) {
-            const knockbackX = player.x < enemy.x ? -250 : 250;
-            const knockbackY = -25;
+    if (intersects(player, enemy)) {
+      const knockbackX = player.x < enemy.x ? -250 : 250;
+      const knockbackY = -25;
 
-            dealDamage(player, enemy.damage, knockbackX, knockbackY);
-            addHitLoc(player, "player")
-            enemy.attackTimer = enemy.attackCooldown;
-            player.invulnTimer = player.invulnTime;
+      dealDamage(player, enemy.damage, knockbackX, knockbackY);
+      addHitLoc(player, "player");
+      enemy.attackTimer = enemy.attackCooldown;
+      player.invulnTimer = player.invulnTime;
 
-            break;
-        }
+      break;
     }
+  }
 }
 
 export function resetPlayer(player: Player): void {
-    player.x = player.spawnX;
-    player.y = player.spawnY;
-    player.vx = 0;
-    player.vy = 0;
-    player.grounded = false;
+  player.x = player.spawnX;
+  player.y = player.spawnY;
+  player.vx = 0;
+  player.vy = 0;
+  player.grounded = false;
 
-    player.health = player.maxHealth;
-    player.isDead = false;
+  player.health = player.maxHealth;
+  player.isDead = false;
 
-    player.attackTimer = 0;
-    player.invulnTimer = 0;
+  player.attackTimer = 0;
+  player.invulnTimer = 0;
 
-    player.knockbackX = 0;
-    player.knockbackY = 0;
+  player.knockbackX = 0;
+  player.knockbackY = 0;
 }
 
 export function removeEnemy(enemies: Enemy[]): void {
-    for (let i = enemies.length - 1; i >= 0; i--){
-        if (enemies[i].isDead || enemies[i].health <= 0) {
-            dropCoinOnDeath(enemies[i]);
-            enemies.splice(i, 1);
-        }
+  for (let i = enemies.length - 1; i >= 0; i--) {
+    if (enemies[i].isDead || enemies[i].health <= 0) {
+      dropCoinOnDeath(enemies[i]);
+      enemies.splice(i, 1);
     }
+  }
 }
 
 export function removeEnemyInPit(enemies: Enemy[]): void {
-    for (let i = enemies.length - 1; i >= 0; i--){
-        if (enemies[i].y > 1750) {
-            dropCoinOnDeath(enemies[i]);
-            enemies.splice(i, 1);
-        }
+  for (let i = enemies.length - 1; i >= 0; i--) {
+    if (enemies[i].y > 1750) {
+      dropCoinOnDeath(enemies[i]);
+      enemies.splice(i, 1);
     }
+  }
 }
 
 function dropCoinOnDeath(enemy: Enemy): void {
-    const enemyX = enemy.x
-    const enemyY = enemy.y
+  const enemyX = enemy.x;
+  const enemyY = enemy.y;
 
-    coins.push(new Coin(enemyX, enemyY));
+  coins.push(new Coin(enemyX, enemyY));
 }
