@@ -55,10 +55,10 @@ export class LevelOneMap extends BaseRender {
         this.enemies = enemies;
 
         this.playerHitIndicator = new Image();
-        this.playerHitIndicator.src = "../../assets/sprites/player/player_got_hit.png"
+        this.playerHitIndicator.src = "/assets/sprites/player/player_got_hit.png"
 
         this.enemyHitIndicator = new Image();
-        this.enemyHitIndicator.src = "../../assets/sprites/enemies/enemy_got_hit.png"
+        this.enemyHitIndicator.src = "/assets/sprites/enemies/enemy_got_hit.png"
 
         startBGMusic();
     }
