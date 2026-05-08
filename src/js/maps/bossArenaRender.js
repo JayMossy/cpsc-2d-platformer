@@ -1,10 +1,19 @@
 import { Boss } from "../entities/boss";
+<<<<<<< HEAD
 import { enemies } from "../systems/state";
+=======
+import { enemies } from "../systems/damageSystem";
+>>>>>>> 73c50f273790bea29894d18d41056e2ba2ab9574
 import { BaseRender } from "./renderBaseClass.js";
 import {
     Mrows, Mcols, tileSize, map,
     tileLocation, TILES
 } from "./bossArena.js";
+
+export const boss = new Boss(40 * tileSize, 3000);
+;
+
+
 
 export class BossArena extends BaseRender {
     constructor(canvas) {
@@ -25,6 +34,7 @@ export class BossArena extends BaseRender {
 
         this.tileData = this.createTiles();
         
+<<<<<<< HEAD
         console.log("ARENA START - Global Enemy Count:", enemies.length);
 
     }
@@ -34,6 +44,9 @@ export class BossArena extends BaseRender {
         const skeletonKing = new Boss(1860, 1777); 
         enemies.push(skeletonKing);
         console.log("Skeleton King has entered the arena.");
+=======
+        enemies.push(boss);
+>>>>>>> 73c50f273790bea29894d18d41056e2ba2ab9574
     }
 
     drawMap() {
@@ -106,6 +119,7 @@ export class BossArena extends BaseRender {
     }
 
     render() {
+<<<<<<< HEAD
     super.render(); 
 
     enemies.forEach(entity => {
@@ -142,6 +156,20 @@ export class BossArena extends BaseRender {
         }
     });
 }
+=======
+        super.render();
+
+        boss.update(1 / 60, this.player);
+
+        boss.animator.draw(
+            this.ctx,
+            boss.x - this.camera.x,
+            boss.y - this.camera.y,
+            boss.w,
+            boss.h
+        );
+    }
+>>>>>>> 73c50f273790bea29894d18d41056e2ba2ab9574
 
     createTiles(){
         const og = tileLocation.tileSize;

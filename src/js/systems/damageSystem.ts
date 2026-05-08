@@ -5,6 +5,8 @@ import { Coin, coins } from "../collectables/coins.js";
 import { isGodModeEnabled } from "./godMode";
 import { enemies } from "../systems/state";
 
+export const enemies: Enemy[] = [];
+
 type HitIndicatorLoc = {
   tarX: number;
   tarY: number;
