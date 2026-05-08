@@ -5,7 +5,7 @@ import {
 } from "./level1Map.js";
 import { coins } from "../collectables/coins.js";
 import { hearts } from "../collectables/hearts.js";
-import { enemies } from "../entities/enemy";
+import { enemies } from "../systems/state";
 import { sword } from "../collectables/sword.js";
 import { powerUps } from "../collectables/powerUps";
 import { Portal } from "../entities/portal.js";

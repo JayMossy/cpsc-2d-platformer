@@ -5,6 +5,7 @@ import type { Player } from "./player";
 import type { Damageable } from "../../types/damageable";
 
 
+
 export type EnemyMode = "patrol" | "follow" | "attack";
 export type EnemyFacing = "left" | "right";
 export type PatrolDirection = -1 | 1;
@@ -205,15 +206,3 @@ const distance = Math.abs(dx);
         }
     }
 }
-
-export const enemies: Enemy[] = [
-    new Enemy(7100, 1200),
-    new Enemy(7900, 1200),
-    new Enemy(8700, 1200),
-    new Enemy(9500, 1200),
-    new Enemy(10300, 1200),
-    new Enemy(11100, 1200),
-    new Enemy(11500, 1200),
-    new Enemy(12300, 1200),
-    new Enemy(12700, 1200)
-];

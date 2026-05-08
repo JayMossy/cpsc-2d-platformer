@@ -3,10 +3,9 @@ import { applySelectedCharacter } from "./systems/playerSetup";
 import { playerMovement } from "./systems/playerMovement";
 import { render, initializeLevels, getCurrentLevel } from "./maps/render";
 import { updateCollectables } from "./collectables/updateCollectables";
-
+import { enemies } from "./systems/state";
 import { player } from "./entities/player";
-import { enemies } from "./entities/enemy";
-import { boss } from "./maps/bossArenaRender";
+import { initWorld } from "./systems/state";
 import { updatePlayerCoins } from "./systems/scoresManager";
 import { toggleGodMode } from "./systems/godMode";
 
@@ -151,7 +150,9 @@ export function startGame(canvas: HTMLCanvasElement): void {
   }
 
   // window.startGame = startGame;
+  
   applySelectedCharacter();
+  initWorld();
   initializeLevels(canvas);
   window.setGamePaused = setGamePaused;
   syncPlayerHealthHud(true);

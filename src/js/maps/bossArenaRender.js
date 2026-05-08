@@ -1,15 +1,10 @@
 import { Boss } from "../entities/boss";
-import { enemies } from "../systems/damageSystem";
+import { enemies } from "../systems/state";
 import { BaseRender } from "./renderBaseClass.js";
 import {
     Mrows, Mcols, tileSize, map,
     tileLocation, TILES
 } from "./bossArena.js";
-
-export const boss = new Boss(40 * tileSize, 3000);
-;
-
-
 
 export class BossArena extends BaseRender {
     constructor(canvas) {
@@ -30,7 +25,15 @@ export class BossArena extends BaseRender {
 
         this.tileData = this.createTiles();
         
-        enemies.push(boss);
+        console.log("ARENA START - Global Enemy Count:", enemies.length);
+
+    }
+
+    setupBoss() {
+        enemies.length = 0;
+        const skeletonKing = new Boss(1860, 1777); 
+        enemies.push(skeletonKing);
+        console.log("Skeleton King has entered the arena.");
     }
 
     drawMap() {
@@ -103,18 +106,42 @@ export class BossArena extends BaseRender {
     }
 
     render() {
-        super.render();
+    super.render(); 
 
-        boss.update(1 / 60, this.player);
+    enemies.forEach(entity => {
+        if (!entity.isDead) {
+            const visualWidth = 400;  
+            const visualHeight = 250; 
 
-        boss.animator.draw(
-            this.ctx,
-            boss.x - this.camera.x,
-            boss.y - this.camera.y,
-            boss.w,
-            boss.h
-        );
-    }
+            const offsetX = (visualWidth - entity.w) / 2;
+            const offsetY = (visualHeight - entity.h);
+
+            let offSet = 0;
+
+            if (entity.facing === "right") {
+                offSet = 30; 
+            } else {
+                offSet = -30; 
+            }
+
+            entity.animator.draw(
+                this.ctx,
+                (entity.x - this.camera.x - offsetX) + offSet, 
+                entity.y - this.camera.y - offsetY, 
+                visualWidth,
+                visualHeight
+            );
+
+            this.ctx.strokeStyle = "red";
+            this.ctx.strokeRect(
+                entity.x - this.camera.x,
+                entity.y - this.camera.y,
+                entity.w,
+                entity.h
+            );
+        }
+    });
+}
 
     createTiles(){
         const og = tileLocation.tileSize;

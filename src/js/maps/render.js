@@ -31,7 +31,7 @@ window.addEventListener("movePlayerBack", () => {
 window.addEventListener("teleportToBossPortal", () => {
     if (levelOne && levelOne.player && levelOne.portal) {
         const portal = levelOne.portal;
-
+        
         levelOne.player.x = portal.x - 80;
         levelOne.player.y = portal.y;
         levelOne.player.vx = 0;
@@ -42,6 +42,9 @@ window.addEventListener("teleportToBossPortal", () => {
 window.addEventListener("enterBoss", () => {
     currentLevel = 1;
     bossArena.setPlayerPos(540, 150);
+    if (bossArena) {
+        bossArena.setupBoss();
+    }
 });
 
 function moveMaps(dt) {

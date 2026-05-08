@@ -3,8 +3,7 @@ import type { Enemy } from "../entities/enemy";
 import type { Damageable } from "../../types/damageable";
 import { Coin, coins } from "../collectables/coins.js";
 import { isGodModeEnabled } from "./godMode";
-
-export const enemies: Enemy[] = [];
+import { enemies } from "../systems/state";
 
 type HitIndicatorLoc = {
   tarX: number;
@@ -140,7 +139,8 @@ export function playerAttack(player: Player, enemies: Enemy[]): void {
     const attackBox = getPlayerAttackBox(player);
 
     for (const enemy of enemies) {
-      if (intersects(attackBox, enemy) && !enemy.isDead) {
+      const enemyRect = { x: enemy.x, y: enemy.y, w: enemy.w, h: enemy.h };
+      if (intersects(attackBox, enemyRect) && !enemy.isDead) {
         const knockbackX = player.lastDir === "right" ? 300 : -300;
         const knockbackY = -120;
         dealDamage(enemy, player.damage, knockbackX, knockbackY);
