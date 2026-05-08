@@ -3,14 +3,10 @@ import { Animator } from "../systems/animator";
 import { ENEMY_DEFAULTS } from "../config/enemyConfig";
 import type { Player } from "./player";
 import { dealDamage } from "../systems/damageSystem";
-<<<<<<< HEAD
 import { enemies } from "../systems/state";
 
 import { applyGravity, clampFallSpeed, integrate } from "../systems/physics";
 import { Damageable } from "../../types/damageable";
-=======
-import { applyGravity, clampFallSpeed, integrate } from "../systems/physics";
->>>>>>> 73c50f273790bea29894d18d41056e2ba2ab9574
 
 const bossSprite = new Image();
 bossSprite.src =
@@ -18,15 +14,9 @@ bossSprite.src =
 
 export class Boss extends Enemy {
   attackCooldownTimer = 0;
-<<<<<<< HEAD
   attackRange = 30;
   followRange = 180;
   attackWidth = 30;
-=======
-  attackRange = 110;
-  followRange = 320;
-  attackWidth = 140;
->>>>>>> 73c50f273790bea29894d18d41056e2ba2ab9574
 
   isAttacking = false;
   attackHasHit = false;
@@ -35,15 +25,11 @@ export class Boss extends Enemy {
   facingLock = 0;
 
   hasExitedAttackRange = true;
-<<<<<<< HEAD
   
-=======
->>>>>>> 73c50f273790bea29894d18d41056e2ba2ab9574
 
   constructor(x: number, y: number) {
     super(x, y);
 
-<<<<<<< HEAD
     this.w = ENEMY_DEFAULTS.size.w * 1.5;
     this.h = ENEMY_DEFAULTS.size.h * 2.5;
 
@@ -52,16 +38,6 @@ export class Boss extends Enemy {
 
     this.damage = ENEMY_DEFAULTS.combat.damage;
     this.moveSpeed = ENEMY_DEFAULTS.movement.followSpeed * 0.5;
-=======
-    this.w = ENEMY_DEFAULTS.size.w * 4;
-    this.h = ENEMY_DEFAULTS.size.h * 3;
-
-    this.health = ENEMY_DEFAULTS.combat.health * 20;
-    this.maxHealth = ENEMY_DEFAULTS.combat.maxHealth * 20;
-
-    this.damage = ENEMY_DEFAULTS.combat.damage;
-    this.moveSpeed = ENEMY_DEFAULTS.movement.followSpeed * 0.8;
->>>>>>> 73c50f273790bea29894d18d41056e2ba2ab9574
 
     this.animator = new Animator(bossSprite, 200, 130);
 
@@ -109,11 +85,7 @@ export class Boss extends Enemy {
       if (distance <= this.attackRange) {
         if (this.attackCooldownTimer <= 0 && this.hasExitedAttackRange) {
           this.isAttacking = true;
-<<<<<<< HEAD
           this.attackCooldownTimer = 1.2;
-=======
-          this.attackCooldownTimer = this.attackCooldownTimer;
->>>>>>> 73c50f273790bea29894d18d41056e2ba2ab9574
           this.attackHasHit = false;
           this.attackLockTimer = 0.4;
           this.hasExitedAttackRange = false;
@@ -182,23 +154,16 @@ export class Boss extends Enemy {
     }
   }
 
-<<<<<<< HEAD
   takeDamage(damage: number, knockbackX = 0, knockbackY = 0) {
     dealDamage(this, damage, knockbackX, knockbackY);
   }
   
 
-=======
->>>>>>> 73c50f273790bea29894d18d41056e2ba2ab9574
   updateAnimation(): void {
     if (this.isAttacking) {
       this.animator.setAnimation(`attack ${this.facing}`);
     } else if (this.vx !== 0) {
-<<<<<<< HEAD
       this.animator.setAnimation(`walk ${this.facing}`);  
-=======
-      this.animator.setAnimation(`walk ${this.facing}`);
->>>>>>> 73c50f273790bea29894d18d41056e2ba2ab9574
     } else {
       this.animator.setAnimation(`idle ${this.facing}`);
     }
