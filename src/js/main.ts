@@ -5,15 +5,9 @@ import { render, initializeLevels, getCurrentLevel } from "./maps/render";
 import { updateCollectables } from "./collectables/updateCollectables";
 import { enemies } from "./systems/state";
 import { player } from "./entities/player";
-<<<<<<< HEAD
 import { initWorld } from "./systems/state";
-=======
-import { enemies } from "./entities/enemy";
-import { boss } from "./maps/bossArenaRender";
->>>>>>> 73c50f273790bea29894d18d41056e2ba2ab9574
 import { updatePlayerCoins } from "./systems/scoresManager";
 import { toggleGodMode } from "./systems/godMode";
-
 
 import {
   combatTimers,
@@ -22,16 +16,9 @@ import {
   removeEnemy,
   removeEnemyInPit,
   resetPlayer,
-<<<<<<< HEAD
   intersects,
   dealDamage,
   getPlayerAttackBox,
-=======
-  
-  intersects,          
-  dealDamage,          
-  getPlayerAttackBox  
->>>>>>> 73c50f273790bea29894d18d41056e2ba2ab9574
 } from "./systems/damageSystem";
 
 let lastTime = 0;
