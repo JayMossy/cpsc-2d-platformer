@@ -21,6 +21,7 @@ import {
   dealDamage,
   getPlayerAttackBox,
 } from "./systems/damageSystem";
+import playSound from "./systems/soundsManager";
 
 let lastTime = 0;
 let lastKnownHealth = player.health;
@@ -110,6 +111,7 @@ function loop(timestamp: number): void {
 
   // player attack input
   if (attackPressed) {
+    if (player.mode === "sword") playSound("sword");
     playerAttack(player, enemies);
     attackPressed = false;
   }
@@ -123,6 +125,7 @@ function loop(timestamp: number): void {
 
   // player death/reset
   if (player.isDead) {
+    playSound("loose")
     const unsavedCoins = player.collectedCoins - lastSavedCoinCount;
     if (unsavedCoins > 0) {
       updatePlayerCoins(unsavedCoins);

@@ -2,6 +2,7 @@ import { map as levelOne, tileSize, TILES } from "../maps/level1Map.js";
 import { map as bossMap, TILES as arenaTILES } from "../maps/bossArena.js";
 import { getCurrentLevel } from "../maps/render.js";
 import { isGodModeEnabled } from "./godMode.ts";
+import playSound from "./soundsManager";
 
 let solidTiles = [TILES.BOX, TILES.GRASS, TILES.DIRT];
 const horizontalBuffer = .3;
@@ -128,6 +129,8 @@ export function checkHazard(entity) {
     for (let row = topTile; row <= bottomTile; row++) {
         for (let col = leftTile; col <= rightTile; col++) {
             if (getTile(col, row) === TILES.SPIKE) {
+                playSound("hurt");
+                playSound("powerDown")
                 resetEntity(entity);
                 return true;
             }

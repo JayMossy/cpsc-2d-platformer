@@ -11,7 +11,7 @@ import { powerUps } from "../collectables/powerUps";
 import { Portal } from "../entities/portal.js";
 import { heal } from "../systems/damageSystem";
 import { hitLocations } from "../systems/damageSystem";
-import { startBGMusic } from "../systems/soundsManager";
+import playSound, { startBGMusic } from "../systems/soundsManager";
 
 export class LevelOneMap extends BaseRender {
     constructor(canvas) {
@@ -204,6 +204,7 @@ export class LevelOneMap extends BaseRender {
 
                 this.ctx.fillText("Entering portal...", this.canvas.width / 2, 60);
                 if (!this.hasTriggeredPortal) {
+                    playSound("portal")
                     this.hasTriggeredPortal = true;
                     console.log("SYNC EVENT FIRED", this.player);
 

@@ -9,6 +9,9 @@ import {
 import { animators } from "./playerSetup";
 import playSound from "./soundsManager";
 
+let stepTimer = 0;
+const stepInterval = .5;
+
 export function playerMovement(dt) {
 
     let moveDirection = 0;
@@ -19,10 +22,23 @@ export function playerMovement(dt) {
     if (keys.left && !keys.right) {
         moveDirection = -1;
         player.lastDir = "left";
+
+        stepTimer -= dt;
+        if (stepTimer <= 0) {
+            playSound("run");
+            stepTimer = stepInterval;
+        }
     } else if (keys.right && !keys.left) {
         moveDirection = 1;
         player.lastDir = "right";
+
+        stepTimer -= dt;
+        if (stepTimer <= 0 && player.grounded) {
+            playSound("run");
+            stepTimer = stepInterval;
+        }
     }
+    else stepTimer = 0;
 
     const moveVX = moveDirection * player.moveSpeed;
 

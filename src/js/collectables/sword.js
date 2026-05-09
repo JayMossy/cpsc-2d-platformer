@@ -1,6 +1,6 @@
 import { Animator } from "../systems/animator.js";
 import { Collectable } from "./collectablesBaseClass.js";
-
+import playSound from "../systems/soundsManager";
 
 const swordSpriteSheet = new Image();
 swordSpriteSheet.src = "/assets/sprites/collectibles/sword_sheet.png"
@@ -24,6 +24,10 @@ class Sword extends Collectable {
         window.dispatchEvent(new CustomEvent("swordCollected", {
             detail: { collected: true }
         }));
+    }
+
+    playSound() {
+        playSound("sword_equip")
     }
 }
 

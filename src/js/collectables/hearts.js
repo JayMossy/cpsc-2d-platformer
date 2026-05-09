@@ -1,5 +1,6 @@
+import { Collectable } from "./collectablesBaseClass";
 import { Animator } from "../systems/animator.js";
-import { Collectable } from "./collectablesBaseClass.js";
+import playSound from "../systems/soundsManager";
 
 const heartSpriteSheet = new Image();
 heartSpriteSheet.src =
@@ -12,6 +13,10 @@ heartAnimator.setAnimation("spin");
 class Heart extends Collectable {
     constructor(x, y) {
         super(x, y, 50, 50, heartAnimator);
+    }
+
+    playSound() {
+        playSound("heart")
     }
 }
 
