@@ -255,7 +255,7 @@ export class LevelOneMap extends BaseRender {
         });
 
         powerUps.forEach(powerUp => {
-            powerUp.draw(this.ctx, this.camera, true);
+            powerUp.draw(this.ctx, this.camera);
             if (powerUp.checkCollision(this.player)) {
                 powerUp.powerUp(this.player);
                 setTimeout(() => powerUp.powerRevert(this.player), 7500);

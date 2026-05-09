@@ -175,8 +175,8 @@ for (let x = 0; x < Mcols; x++){
 /* ------ Generate Level ------ */
 
 //Section 1
-longPit(10, SECTION_1_END);
-densePlatforms(10, SECTION_1_END);
+longPit(15, SECTION_1_END);
+densePlatforms(15, SECTION_1_END);
 
 /* Section 2
  Section 2 has nothing as it gives the player a little free time from platforms and pits

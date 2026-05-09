@@ -7,22 +7,26 @@ const speedUpSpriteSheet: HTMLImageElement = new Image();
 speedUpSpriteSheet.src = "/assets/sprites/collectibles/speedUp_sprite_sheet.png";
 
 const jumpUpSpriteSheet: HTMLImageElement = new Image();
-jumpUpSpriteSheet.src = "";
+jumpUpSpriteSheet.src = "/assets/sprites/collectibles/jumpUp_sprite_sheet.png";
 
 const strengthUpSpriteSheet: HTMLImageElement = new Image();
-jumpUpSpriteSheet.src = "";
+strengthUpSpriteSheet.src = "/assets/sprites/collectibles/strengthUp_sprite_sheet.png";;
 
 export const speedUpAnimator: Animator = new Animator(speedUpSpriteSheet, 189, 176);
-speedUpAnimator.addAnimation("spin", [1, 2, 3, 2])
-speedUpAnimator.setAnimation("spin")
+speedUpAnimator.addAnimation("move", [1, 2, 3, 2]);
+speedUpAnimator.setAnimation("move");
 
-export const jumpUpAnimator: Animator = new Animator(jumpUpSpriteSheet, 16, 16);
+export const jumpUpAnimator: Animator = new Animator(jumpUpSpriteSheet, 1050/3, 237); //TODO: fix x,y in canva
+jumpUpAnimator.addAnimation("bounce", [0, 1, 2, 1]);
+jumpUpAnimator.setAnimation("bounce");
 
-export const strengthUpAnimator: Animator = new Animator(strengthUpSpriteSheet, 16, 16);
+export const strengthUpAnimator: Animator = new Animator(strengthUpSpriteSheet, 978/4, 255);
+strengthUpAnimator.addAnimation("surge", [0, 1, 2, 3, 2, 1]);
+strengthUpAnimator.setAnimation("surge");
 
 abstract class PowerUp extends Collectable {
     constructor(x: number, y: number, animator: Animator) {
-        super(x, y, 50, 50, animator);
+        super(x, y, 55, 55, animator);
     }
 
     playSound(): void {
@@ -40,7 +44,7 @@ class SpeedUp extends PowerUp {
     }
 
     powerUp(player: Player): void {
-        player.moveSpeed = 900;
+        player.moveSpeed = 650;
         console.log("Speed Up");
     }
 
@@ -56,19 +60,19 @@ class JumpUp extends PowerUp {
     }
 
     powerUp(player: Player): void {
-        player.jump = player.jump * 2;
+        player.jump += 300;
         console.log("Jump Up");
     }
 
     powerRevert(player: Player): void {
-        player.jump = player.jump/2;
+        player.jump -= 300;
         console.log("Jump Reverted");
     }
 }
 
 class StrengthUp extends PowerUp {
     constructor(x: number, y: number) {
-        super(x, y, jumpUpAnimator);
+        super(x, y, strengthUpAnimator);
     }
 
     powerUp(player: Player): void {
@@ -84,7 +88,7 @@ class StrengthUp extends PowerUp {
 
 
 export const powerUps: PowerUp[] = [
-    new SpeedUp(4300, 1300),
-    new JumpUp(1800, 1150),
+    new SpeedUp(1575+150, 1400),
+    new JumpUp(3730+150, 1300),
     new StrengthUp(8000, 1700)
 ];
