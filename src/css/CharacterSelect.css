@@ -14,7 +14,7 @@
   justify-content: center;
   padding: 24px;
   width: 95vw;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .retro-wrap {
@@ -48,6 +48,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
     margin-bottom: 20px;
+    height: auto;
   }
 }
 @media screen and (max-width: 575px) {
@@ -56,6 +57,7 @@
     grid-template-columns: repeat(1, 1fr);
     gap: 16px;
     margin-bottom: 20px;
+    height: auto;
   }
 }
 
@@ -63,9 +65,9 @@
   border: 1px solid #333;
   padding: 10px;
   margin-bottom: 12px;
-  font-size: 0.95vw;
+  font-size: 0.93vw;
   color: #aaa;
-  min-height: 10vh;
+  max-height: 10vh;
   border-radius: 2px;
   display: flex;
   align-items: center;
@@ -73,8 +75,8 @@
 }
 
 .selected-preview {
-  width: 128px;
-  height: 128px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
   image-rendering: pixelated;
 }
