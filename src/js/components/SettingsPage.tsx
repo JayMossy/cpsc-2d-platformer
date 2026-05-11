@@ -1,5 +1,6 @@
 import { toggleGodMode } from "../systems/godMode";
 import { setAttackPressed } from "../main";
+import { getCurrentLevel } from "../maps/render";
 
 interface SettingsProps {
     isGodModeOn: boolean;
@@ -43,7 +44,14 @@ function SettingsScreen( {isGodModeOn, setGodMode, setShowSettings }: SettingsPr
                     </div>
 
                     <div style={styles.actions}>
-                        <button style={styles.button} onClick={onTeleport}>
+                        <button 
+                            style={{
+                                ...styles.button, 
+                                ...(getCurrentLevel() === 1 ? styles.disabledButton : {})
+                            }}
+                            onClick={onTeleport}
+                            disabled={getCurrentLevel() === 1}
+                        >
                             Teleport to Portal
                         </button>
                     </div>
