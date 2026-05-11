@@ -1,6 +1,7 @@
 import { LevelOneMap } from "./levelOneMapRender.js";
 import { BossArena, boss } from "./bossArenaRender.js";
 import { enemies } from "../entities/enemy";
+import playSound from "../systems/soundsManager";
 
 let levelOne;
 let bossArena;
@@ -45,6 +46,7 @@ window.addEventListener("enterBoss", () => {
         enemies.push(boss);
     }
 
+    playSound("portal")
     currentLevel = 1;
     bossArena.setPlayerPos(540, 150);
 });

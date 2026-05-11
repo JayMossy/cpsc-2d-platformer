@@ -49,6 +49,7 @@ class SpeedUp extends PowerUp {
     }
 
     powerRevert(player: Player): void {
+        playSound("powerDown");
         player.moveSpeed = 450;
         console.log("Speed Reverted");
     }
@@ -65,6 +66,7 @@ class JumpUp extends PowerUp {
     }
 
     powerRevert(player: Player): void {
+        playSound("powerDown");
         player.jump = player.jump/1.5;
         console.log("Jump Reverted");
     }
@@ -81,6 +83,7 @@ class StrengthUp extends PowerUp {
     }
 
     powerRevert(player: Player): void {
+        playSound("powerDown");
         player.damage = 1;
         console.log("Strength Reverted");
     }
