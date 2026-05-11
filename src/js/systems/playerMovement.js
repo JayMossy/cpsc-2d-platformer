@@ -8,6 +8,7 @@ import {
 } from "./physics.js";
 import { animators } from "./playerSetup";
 import playSound from "./soundsManager";
+import { getCurrentLevel } from "../maps/render.js";
 
 let stepTimer = 0;
 const stepInterval = .5;
@@ -24,8 +25,8 @@ export function playerMovement(dt) {
         player.lastDir = "left";
 
         stepTimer -= dt;
-        if (stepTimer <= 0) {
-            playSound("run");
+        if (stepTimer <= 0 && player.grounded) {
+            getCurrentLevel() % 2 === 0 ? playSound("run") : playSound("runBoss");
             stepTimer = stepInterval;
         }
     } else if (keys.right && !keys.left) {
@@ -34,7 +35,7 @@ export function playerMovement(dt) {
 
         stepTimer -= dt;
         if (stepTimer <= 0 && player.grounded) {
-            playSound("run");
+            getCurrentLevel() % 2 === 0 ? playSound("run") : playSound("runBoss");
             stepTimer = stepInterval;
         }
     }

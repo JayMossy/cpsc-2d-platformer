@@ -8,6 +8,10 @@ const sounds: Record<string, HTMLAudioElement> = {
   run2: new Audio("../../assets/audio/sfx/run2.wav"),
   run3: new Audio("../../assets/audio/sfx/run3.wav"),
   run4: new Audio("../../assets/audio/sfx/run4.wav"),
+  runBoss1: new Audio("../../assets/audio/sfx/foley_footstep_concrete_1.wav"),
+  runBoss2: new Audio("../../assets/audio/sfx/foley_footstep_concrete_2.wav"),
+  runBoss3: new Audio("../../assets/audio/sfx/foley_footstep_concrete_3.wav"),
+  runBoss4: new Audio("../../assets/audio/sfx/foley_footstep_concrete_4.wav"),
   sword: new Audio("../../assets/audio/sfx/sword_slice.wav"),
   splat: new Audio("../../assets/audio/sfx/splat_quick.wav"),
   crunch: new Audio("../../assets/audio/sfx/crunch_quick.wav"),
@@ -22,17 +26,25 @@ const sounds: Record<string, HTMLAudioElement> = {
 // make footsetps quieter
 for (let i = 1; i < 5; i++) {
   const runKey = `run${i}`;
-  sounds[runKey].volume = 0.3 + Math.random() * 0.2;
+  sounds[runKey].volume = 0.1 + Math.random() * 0.2;
 }
+for (let i = 1; i < 5; i++) {
+  const runKey = `runBoss${i}`;
+  sounds[runKey].volume = 0.1 + Math.random() * 0.2;
+}
+
 sounds.punch.volume = 1;
 sounds.hurt.volume = 0.4;
-
 sounds.sword.volume = .5;
 
 function playSound(name: string): void {
   console.log("Played:", name);
-  if (name == "run") {
+  if (name === "run") {
     playRun();
+    return;
+  }
+  if (name === "runBoss") {
+    playRunBoss();
     return;
   }
   const sound = sounds[name];
@@ -63,9 +75,32 @@ function playRun(): void {
   }, 20)
 }
 
+// let rnd = 0;
+function playRunBoss(): void {
+  const runSounds = [
+    sounds.runBoss1,
+    sounds.runBoss2,
+    // sounds.runBoss3,
+    sounds.runBoss4
+  ];
+
+  const rnd = Math.floor(Math.random() * 3);
+  let rnd2 = Math.floor(Math.random() * 3);
+  while (rnd2 === rnd) {
+    rnd2 = Math.floor(Math.random() * runSounds.length);
+  }
+  runSounds[rnd].currentTime = 0;
+  runSounds[rnd].play();
+
+  setTimeout(() => {
+    runSounds[rnd2].currentTime = 0;
+    runSounds[rnd2].play();
+  }, 20)
+}
+
 const bgMusic: HTMLAudioElement = new Audio("../../assets/audio/music/bgMusicTemp.mp3");
 bgMusic.loop = true;
-bgMusic.volume = 0.5;
+bgMusic.volume = 0.4;
 
 export function startBGMusic(): void {
   bgMusic.play().catch(() => { });
