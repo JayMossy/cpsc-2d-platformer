@@ -43,6 +43,66 @@ function SettingsScreen( {isGodModeOn, setGodMode, setShowSettings }: SettingsPr
                         </label>
                     </div>
 
+                    <div className="form-check form-switch">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="flexSwitchCheckDefault"
+                            checked={isGodModeOn}
+                            onChange={() => {
+                                toggleGodMode();
+                                setGodMode(prev => !prev);
+                            }}
+                        />
+                        <label
+                            className="form-check-label"
+                            htmlFor="flexSwitchCheckDefault"
+                        >
+                            Turn on Speed Power-Up
+                        </label>
+                    </div>
+
+                    <div className="form-check form-switch">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="flexSwitchCheckDefault"
+                            checked={isGodModeOn}
+                            onChange={() => {
+                                toggleGodMode();
+                                setGodMode(prev => !prev);
+                            }}
+                        />
+                        <label
+                            className="form-check-label"
+                            htmlFor="flexSwitchCheckDefault"
+                        >
+                            Turn on Jump Power-Up
+                        </label>
+                    </div>
+
+                    <div className="form-check form-switch">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="flexSwitchCheckDefault"
+                            checked={isGodModeOn}
+                            onChange={() => {
+                                toggleGodMode();
+                                setGodMode(prev => !prev);
+                            }}
+                        />
+                        <label
+                            className="form-check-label"
+                            htmlFor="flexSwitchCheckDefault"
+                        >
+                            Turn on Strength Power-Up
+                        </label>
+                    </div>
+
                     <div style={styles.actions}>
                         <button 
                             style={{
