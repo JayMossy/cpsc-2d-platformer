@@ -98,10 +98,7 @@ function DungeonHUD() {
 
   const getTimeAlive = () => {
     const getTimeAliveSeconds = (window as any).getTimeAliveSeconds;
-    if (typeof getTimeAliveSeconds === "function") {
-      return getTimeAliveSeconds();
-    }
-    return 0;
+    return getTimeAliveSeconds() ?? -1;
   };
   // Listen for the sword collection event sent from sword.js
   useEffect(() => {
