@@ -26,11 +26,11 @@ const sounds: Record<string, HTMLAudioElement> = {
 // make footsetps quieter
 for (let i = 1; i < 5; i++) {
   const runKey = `run${i}`;
-  sounds[runKey].volume = 0.1 + Math.random() * 0.2;
+  sounds[runKey].volume = 0.15 + Math.random() * 0.2;
 }
 for (let i = 1; i < 5; i++) {
   const runKey = `runBoss${i}`;
-  sounds[runKey].volume = 0.1 + Math.random() * 0.2;
+  sounds[runKey].volume = 0.15 + Math.random() * 0.2;
 }
 
 sounds.punch.volume = 1;
