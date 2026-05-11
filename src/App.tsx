@@ -4,7 +4,7 @@ import CharacterSelect from './js/components/CharacterSelect';
 import LevelOne from './js/components/LevelOne';
 import LevelSelect from './js/components/LevelSelect';
 import InBetweenScreen from './js/components/InBetweenScreen';
-import { BrowserRouter } from 'react-router';
+import { HashRouter } from 'react-router';
 import PageController from './js/PageController';
 
 const App = () => {
@@ -55,9 +55,9 @@ const App = () => {
                     )} */}
                 {/* </> */}
             {/* )} */}
-            <BrowserRouter>
+            <HashRouter>
                 <PageController />
-            </BrowserRouter>
+            </HashRouter>
         </div>
     );
 };

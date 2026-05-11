@@ -87,6 +87,7 @@ if (production) {
     config.plugins = [
         new CopyPlugin({
             patterns: [
+                { from: "./src/assets", to: "assets" },
                 { from: "./src/images", to: "images" },
                 { from: "./src/bootstrap", to: "bootstrap" }
             ]
