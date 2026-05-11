@@ -1,18 +1,71 @@
 import { toggleGodMode } from "../systems/godMode";
 import { setAttackPressed } from "../main";
 import { getCurrentLevel } from "../maps/render";
+import { player } from "../entities/player";
 
 interface SettingsProps {
+    setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
     isGodModeOn: boolean;
     setGodMode: React.Dispatch<React.SetStateAction<boolean>>;
-    setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
+
+    isSpeedOn: boolean;
+    setSpeedMode: React.Dispatch<React.SetStateAction<boolean>>;
+    isJumpOn: boolean;
+    setJumpMode: React.Dispatch<React.SetStateAction<boolean>>;
+    isStrengthOn: boolean;
+    setStrengthMode: React.Dispatch<React.SetStateAction<boolean>>;
+
+    speedSwitch: boolean,
+    setSpeedSwitch: React.Dispatch<React.SetStateAction<boolean>>;
+    jumpSwitch: boolean,
+    setJumpSwitch: React.Dispatch<React.SetStateAction<boolean>>;
+    strengthSwitch: boolean,
+    setStrengthSwitch: React.Dispatch<React.SetStateAction<boolean>>;
+
 }
 
-function SettingsScreen( {isGodModeOn, setGodMode, setShowSettings }: SettingsProps) {
+function SettingsScreen( 
+    {isGodModeOn, setGodMode, setShowSettings,
+     isSpeedOn, setSpeedMode,
+     isJumpOn, setJumpMode,
+     isStrengthOn, setStrengthMode,
+     speedSwitch, setSpeedSwitch,
+     jumpSwitch, setJumpSwitch,
+     strengthSwitch, setStrengthSwitch
+
+    }: SettingsProps) {
 
     const onTeleport = () => {
         window.dispatchEvent(new Event("teleportToBossPortal"));
     }
+
+    const addSpeed = () => {
+        if (!speedSwitch) {
+            player.moveSpeed = 1500;
+        } 
+        if (speedSwitch) {
+            player.moveSpeed = 450;
+        }
+    }
+
+    const addJump = () => {
+        if (!jumpSwitch) {
+            player.jump = player.jump * 1.5;
+        } 
+        if (jumpSwitch) {
+            player.jump = player.jump/1.5;
+        }
+    }
+
+    const addStrength = () => {
+        if (!strengthSwitch) {
+            player.damage = 2;
+        } 
+        if (strengthSwitch) {
+            player.damage = 1;
+        }
+    }
+
 
     return (
         <div style={styles.overlay}>
@@ -27,7 +80,7 @@ function SettingsScreen( {isGodModeOn, setGodMode, setShowSettings }: SettingsPr
                             className="form-check-input"
                             type="checkbox"
                             role="switch"
-                            id="flexSwitchCheckDefault"
+                            id="godModeSwitch"
                             checked={isGodModeOn}
                             onChange={() => {
                                 toggleGodMode();
@@ -37,7 +90,7 @@ function SettingsScreen( {isGodModeOn, setGodMode, setShowSettings }: SettingsPr
                         />
                         <label
                             className="form-check-label"
-                            htmlFor="flexSwitchCheckDefault"
+                            htmlFor="godModeSwitch"
                         >
                             Turn on Invulnerability
                         </label>
@@ -48,16 +101,17 @@ function SettingsScreen( {isGodModeOn, setGodMode, setShowSettings }: SettingsPr
                             className="form-check-input"
                             type="checkbox"
                             role="switch"
-                            id="flexSwitchCheckDefault"
-                            checked={isGodModeOn}
+                            id="speedSwitch"
+                            checked={isSpeedOn}
                             onChange={() => {
-                                toggleGodMode();
-                                setGodMode(prev => !prev);
+                                setSpeedSwitch(!speedSwitch);
+                                addSpeed();
+                                setSpeedMode(prev => !prev);
                             }}
                         />
                         <label
                             className="form-check-label"
-                            htmlFor="flexSwitchCheckDefault"
+                            htmlFor="speedSwitch"
                         >
                             Turn on Speed Power-Up
                         </label>
@@ -68,16 +122,17 @@ function SettingsScreen( {isGodModeOn, setGodMode, setShowSettings }: SettingsPr
                             className="form-check-input"
                             type="checkbox"
                             role="switch"
-                            id="flexSwitchCheckDefault"
-                            checked={isGodModeOn}
+                            id="jumpSwitch"
+                            checked={isJumpOn}
                             onChange={() => {
-                                toggleGodMode();
-                                setGodMode(prev => !prev);
+                                setJumpSwitch(!jumpSwitch);
+                                addJump();
+                                setJumpMode(prev => !prev);
                             }}
                         />
                         <label
                             className="form-check-label"
-                            htmlFor="flexSwitchCheckDefault"
+                            htmlFor="jumpSwitch"
                         >
                             Turn on Jump Power-Up
                         </label>
@@ -88,16 +143,17 @@ function SettingsScreen( {isGodModeOn, setGodMode, setShowSettings }: SettingsPr
                             className="form-check-input"
                             type="checkbox"
                             role="switch"
-                            id="flexSwitchCheckDefault"
-                            checked={isGodModeOn}
+                            id="strengthSwitch"
+                            checked={isStrengthOn}
                             onChange={() => {
-                                toggleGodMode();
-                                setGodMode(prev => !prev);
+                                setStrengthSwitch(!strengthSwitch);
+                                addStrength();
+                                setStrengthMode(prev => !prev);
                             }}
                         />
                         <label
                             className="form-check-label"
-                            htmlFor="flexSwitchCheckDefault"
+                            htmlFor="strengthSwitch"
                         >
                             Turn on Strength Power-Up
                         </label>
