@@ -3,6 +3,7 @@ import type { Enemy } from "../entities/enemy";
 import type { Damageable } from "../../types/damageable";
 import { Coin, coins } from "../collectables/coins.js";
 import { isGodModeEnabled } from "./godMode";
+import playSound from "./soundsManager";
 
 export const enemies: Enemy[] = [];
 
@@ -141,6 +142,8 @@ export function playerAttack(player: Player, enemies: Enemy[]): void {
 
     for (const enemy of enemies) {
       if (intersects(attackBox, enemy) && !enemy.isDead) {
+        playSound("splat");
+        playSound("crunch");
         const knockbackX = player.lastDir === "right" ? 300 : -300;
         const knockbackY = -120;
         dealDamage(enemy, player.damage, knockbackX, knockbackY);
@@ -158,6 +161,8 @@ export function enemyAttack(player: Player, enemies: Enemy[]): void {
     if (enemy.isDead || enemy.attackTimer > 0) continue;
 
     if (intersects(player, enemy)) {
+      playSound("punch");
+      playSound("hurt");
       const knockbackX = player.x < enemy.x ? -250 : 250;
       const knockbackY = -25;
 
