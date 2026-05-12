@@ -109,6 +109,40 @@ export class BossArena extends BaseRender {
             16 * 40,
             16 * 40
         );
+
+        // Vargus Tribute
+        this.drawNamePlate();
+    }
+
+    drawNamePlate() {
+        const throneX = 25 * this.tileSize - this.camera.x;
+        const throneY = (Mrows - 16) * this.tileSize - this.camera.y;
+
+        const plateX = throneX + 175;
+        const plateY = throneY + 85;
+        const plateW = 270;
+        const plateH = 44;
+
+        this.ctx.save();
+
+        this.ctx.font = "20px serif";
+        this.ctx.textAlign = "center";
+        this.ctx.textBaseline = "middle";
+
+        const text = "Vargus Fellwroth";
+        const textX = plateX + plateW / 2;
+        const textY = plateY + plateH / 2;
+
+        // Dark outline
+        this.ctx.lineWidth = 4;
+        this.ctx.strokeStyle = "rgb(45, 25, 5)";
+        this.ctx.strokeText(text, textX, textY);
+
+        // Gold fill
+        this.ctx.fillStyle = "rgb(240, 178, 9)";
+        this.ctx.fillText(text, textX, textY);
+
+        this.ctx.restore();
     }
 
     render() {

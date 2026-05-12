@@ -117,7 +117,7 @@ function InBetweenScreen({
   return (
     <div style={styles.overlay}>
       <div style={styles.card}>
-        <div style={styles.title}>BOSS PREPARATION</div>
+        <div style={styles.title}>VARGUS FELLWROTH AWAITS</div>
 
         {/* Stats */}
         <div style={styles.section}>
