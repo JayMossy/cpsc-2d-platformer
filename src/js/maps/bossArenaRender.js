@@ -25,7 +25,7 @@ export class BossArena extends BaseRender {
             "/assets/sprites/tiles/boss-tiles-2.png",
         );
 
-
+  
 
         this.background = new Image();
         this.background.src = "/assets/backgrounds/bg-boss-4.png";
@@ -151,18 +151,31 @@ export class BossArena extends BaseRender {
         if (!boss.isDead) {
             boss.update(1 / 60, this.player);
 
+            const visualWidth = 400;  
+            const visualHeight = 250; 
+
+            // Offset to center the hitbox (boss.w) inside the large sprite (visualWidth)
+            const offsetX = (visualWidth - boss.w) / 2;
+            const offsetY = (visualHeight - boss.h);
+
+            // The specific "hardcoded" shift to align his sword swing based on direction
+            let sideShift = boss.facing === "right" ? 30 : -30;
+
             boss.animator.draw(
                 this.ctx,
-                boss.x - this.camera.x,
-                boss.y - this.camera.y,
-                boss.w,
-                boss.h
+                (boss.x - this.camera.x - offsetX) + sideShift, 
+                boss.y - this.camera.y - offsetY, 
+                visualWidth,
+                visualHeight
             );
+            // --- END CUSTOM BRANCH CHARACTERISTICS ---
+
         } else if (!this.hasDispatchedBossDefeated) {
             this.hasDispatchedBossDefeated = true;
             window.dispatchEvent(new Event("bossDefeated"));
         }
 
+        // Keep main branch item logic below
         bossCoins.forEach(coin => {
             coin.draw(this.ctx, this.camera);
             if (coin.checkCollision(this.player)) {

@@ -30,14 +30,14 @@ export class Boss extends Enemy {
 
     this.canFallInPit = false;
 
-    this.w = ENEMY_DEFAULTS.size.w * 4;
-    this.h = ENEMY_DEFAULTS.size.h * 3;
+    this.w = ENEMY_DEFAULTS.size.w * 2;
+    this.h = ENEMY_DEFAULTS.size.h * 2;
 
     this.health = ENEMY_DEFAULTS.combat.health * 6;
     this.maxHealth = ENEMY_DEFAULTS.combat.maxHealth * 6;
 
     this.damage = ENEMY_DEFAULTS.combat.damage;
-    this.moveSpeed = ENEMY_DEFAULTS.movement.followSpeed * 0.8;
+    this.moveSpeed = ENEMY_DEFAULTS.movement.followSpeed * .2;
 
     this.animator = new Animator(bossSprite, 200, 130);
 
